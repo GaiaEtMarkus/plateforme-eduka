@@ -1,0 +1,102 @@
+[
+  {
+    "id": "cours-1",
+    "nom": "Python - Développement avancé et bonnes pratiques",
+    "description": "Formation avancée en Python : POO, patterns de conception, tests unitaires",
+    "niveau": "L3",
+    "matiere": "Développement",
+    "syllabus": "1. Programmation orientée objet avancée\n2. Design patterns (Factory, Singleton, Observer)\n3. Tests unitaires avec pytest\n4. Gestion des dépendances et environnements virtuels",
+    "dureeHeures": 8,
+    "competencesRequises": ["Python", "POO"]
+  },
+  {
+    "id": "cours-2",
+    "nom": "Cybersécurité - Pentest et techniques d'intrusion",
+    "description": "Formation pratique en test d'intrusion et sécurité offensive",
+    "niveau": "M1",
+    "matiere": "Cybersécurité",
+    "syllabus": "1. Reconnaissance et énumération\n2. Exploitation de vulnérabilités web (OWASP Top 10)\n3. Post-exploitation et pivoting\n4. Rapport de pentest professionnel",
+    "dureeHeures": 12,
+    "competencesRequises": ["Linux", "Réseaux", "Sécurité"]
+  },
+  {
+    "id": "cours-3",
+    "nom": "Docker et Kubernetes - Conteneurisation avancée",
+    "description": "Maîtrise de la conteneurisation et orchestration de containers",
+    "niveau": "M1",
+    "matiere": "DevOps",
+    "syllabus": "1. Docker : images, volumes, networking\n2. Docker Compose pour environnements multi-conteneurs\n3. Introduction à Kubernetes\n4. Déploiement et scaling d'applications",
+    "dureeHeures": 10,
+    "competencesRequises": ["Docker", "Linux", "DevOps"]
+  },
+  {
+    "id": "cours-4",
+    "nom": "AWS - Architecture cloud et services managés",
+    "description": "Conception d'architectures cloud sur Amazon Web Services",
+    "niveau": "M2",
+    "matiere": "Cloud",
+    "syllabus": "1. EC2, S3, RDS - Services de base\n2. VPC et networking dans le cloud\n3. Lambda et serverless\n4. Architecture haute disponibilité",
+    "dureeHeures": 16,
+    "competencesRequises": ["Cloud", "Réseaux", "Architecture"]
+  },
+  {
+    "id": "cours-5",
+    "nom": "Infrastructure as Code - Terraform",
+    "description": "Automatisation de l'infrastructure avec Terraform",
+    "niveau": "M1",
+    "matiere": "Infrastructure",
+    "syllabus": "1. Concepts d'Infrastructure as Code\n2. HCL (HashiCorp Configuration Language)\n3. Providers et ressources Terraform\n4. State management et modules",
+    "dureeHeures": 8,
+    "competencesRequises": ["Cloud", "DevOps", "Infrastructure"]
+  },
+  {
+    "id": "cours-6",
+    "nom": "React - Développement d'applications web modernes",
+    "description": "Création d'applications web avec React et l'écosystème moderne",
+    "niveau": "L3",
+    "matiere": "Développement",
+    "syllabus": "1. Components et hooks\n2. State management avec Context API\n3. Routing avec React Router\n4. Intégration d'APIs REST",
+    "dureeHeures": 10,
+    "competencesRequises": ["JavaScript", "HTML/CSS", "React"]
+  },
+  {
+    "id": "cours-7",
+    "nom": "CI/CD - GitLab et automatisation",
+    "description": "Mise en place de pipelines CI/CD avec GitLab",
+    "niveau": "M1",
+    "matiere": "DevOps",
+    "syllabus": "1. Git avancé et workflows\n2. GitLab CI/CD pipelines\n3. Tests automatisés et quality gates\n4. Déploiement continu",
+    "dureeHeures": 8,
+    "competencesRequises": ["Git", "DevOps", "Linux"]
+  },
+  {
+    "id": "cours-8",
+    "nom": "Sécurité des applications web - OWASP",
+    "description": "Sécurisation des applications web contre les vulnérabilités courantes",
+    "niveau": "M1",
+    "matiere": "Cybersécurité",
+    "syllabus": "1. OWASP Top 10\n2. XSS, CSRF, Injection SQL\n3. Authentification et sessions sécurisées\n4. Sécurisation des APIs",
+    "dureeHeures": 8,
+    "competencesRequises": ["Développement web", "Sécurité"]
+  },
+  {
+    "id": "cours-9",
+    "nom": "Microservices - Architecture et Spring Boot",
+    "description": "Conception et développement d'architectures microservices",
+    "niveau": "M2",
+    "matiere": "Développement",
+    "syllabus": "1. Principes des microservices\n2. Spring Boot et Spring Cloud\n3. Communication inter-services (REST, gRPC)\n4. Patterns de résilience (Circuit Breaker, Retry)",
+    "dureeHeures": 12,
+    "competencesRequises": ["Java", "Spring", "Architecture"]
+  },
+  {
+    "id": "cours-10",
+    "nom": "Bases de données NoSQL - MongoDB",
+    "description": "Maîtrise des bases de données NoSQL avec MongoDB",
+    "niveau": "L3",
+    "matiere": "Base de données",
+    "syllabus": "1. Concepts NoSQL vs SQL\n2. CRUD operations avec MongoDB\n3. Agrégation et indexation\n4. Réplication et sharding",
+    "dureeHeures": 8,
+    "competencesRequises": ["Bases de données", "NoSQL"]
+  }
+]

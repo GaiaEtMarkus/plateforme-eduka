@@ -1,0 +1,304 @@
+<div class="max-w-5xl mx-auto">
+  <!-- Header -->
+  <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-6">
+    <div class="h-32 bg-gradient-to-r from-eduka-orange to-orange-600"></div>
+    <div class="px-8 pb-8">
+      <div class="flex items-end -mt-16 mb-6">
+        <img [src]="currentUser()?.avatar || 'https://i.pravatar.cc/150'"
+             alt="Avatar"
+             class="w-32 h-32 rounded-full border-4 border-white shadow-lg" />
+        <div class="ml-6 pb-2">
+          <h1 class="text-3xl font-bold text-gray-800">
+            {{ currentUser()?.prenom }} {{ currentUser()?.nom }}
+          </h1>
+          <p class="text-gray-600">{{ currentUser()?.role }}</p>
+        </div>
+        <div class="ml-auto pb-2">
+          @if (!editMode()) {
+            <button (click)="toggleEditMode()"
+                    class="px-6 py-2 bg-eduka-orange text-white rounded-lg hover:bg-orange-600 transition-colors">
+              ✏️ Modifier le profil
+            </button>
+          } @else {
+            <div class="flex gap-2">
+              <button (click)="save()"
+                      class="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
+                ✓ Enregistrer
+              </button>
+              <button (click)="toggleEditMode()"
+                      class="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
+                ✕ Annuler
+              </button>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenu -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Colonne principale -->
+    <div class="lg:col-span-2 space-y-6">
+      <!-- Informations personnelles -->
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Informations personnelles</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Prénom</label>
+            @if (editMode()) {
+              <input type="text"
+                     [(ngModel)]="formData().prenom"
+                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eduka-orange focus:border-transparent" />
+            } @else {
+              <p class="text-gray-800">{{ currentUser()?.prenom }}</p>
+            }
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Nom</label>
+            @if (editMode()) {
+              <input type="text"
+                     [(ngModel)]="formData().nom"
+                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eduka-orange focus:border-transparent" />
+            } @else {
+              <p class="text-gray-800">{{ currentUser()?.nom }}</p>
+            }
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            @if (editMode()) {
+              <input type="email"
+                     [(ngModel)]="formData().email"
+                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eduka-orange focus:border-transparent" />
+            } @else {
+              <p class="text-gray-800">{{ currentUser()?.email }}</p>
+            }
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Téléphone</label>
+            @if (editMode()) {
+              <input type="tel"
+                     [(ngModel)]="formData().telephone"
+                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eduka-orange focus:border-transparent" />
+            } @else {
+              <p class="text-gray-800">{{ currentUser()?.telephone }}</p>
+            }
+          </div>
+
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Adresse</label>
+            @if (editMode()) {
+              <input type="text"
+                     [(ngModel)]="formData().adresse"
+                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eduka-orange focus:border-transparent" />
+            } @else {
+              <p class="text-gray-800">{{ currentUser()?.adresse || 'Non renseigné' }}</p>
+            }
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Code postal</label>
+            @if (editMode()) {
+              <input type="text"
+                     [(ngModel)]="formData().codePostal"
+                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eduka-orange focus:border-transparent" />
+            } @else {
+              <p class="text-gray-800">{{ currentUser()?.codePostal || 'Non renseigné' }}</p>
+            }
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Ville</label>
+            @if (editMode()) {
+              <input type="text"
+                     [(ngModel)]="formData().ville"
+                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eduka-orange focus:border-transparent" />
+            } @else {
+              <p class="text-gray-800">{{ currentUser()?.ville || 'Non renseigné' }}</p>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Compétences -->
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Compétences techniques</h2>
+
+        <div class="flex flex-wrap gap-2 mb-4">
+          @for (competence of formData().competences; track competence.id) {
+            <div class="flex items-center gap-2 px-3 py-2 bg-blue-100 text-blue-800 rounded-lg">
+              <span class="font-medium">{{ competence.nom }}</span>
+              <span class="text-xs px-2 py-0.5 bg-blue-200 rounded">{{ competence.niveau }}</span>
+              @if (editMode()) {
+                <button (click)="removeCompetence(competence)"
+                        class="text-blue-600 hover:text-blue-800">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              }
+            </div>
+          }
+          @if (formData().competences.length === 0) {
+            <p class="text-gray-500 text-sm">Aucune compétence renseignée</p>
+          }
+        </div>
+
+        @if (editMode()) {
+          <div class="flex gap-2">
+            <input type="text"
+                   [ngModel]="newCompetence()"
+                   (ngModelChange)="newCompetence.set($event)"
+                   (keyup.enter)="addCompetence()"
+                   placeholder="Ajouter une compétence..."
+                   class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eduka-orange focus:border-transparent" />
+            <button (click)="addCompetence()"
+                    class="px-4 py-2 bg-eduka-orange text-white rounded-lg hover:bg-orange-600 transition-colors">
+              + Ajouter
+            </button>
+          </div>
+        }
+      </div>
+
+      <!-- Documents -->
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Documents administratifs</h2>
+
+        <div class="space-y-4">
+          @for (doc of currentUser()?.documents; track doc.id) {
+            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+              <div class="flex items-center gap-3">
+                <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+                <div>
+                  <p class="font-medium text-gray-800">{{ doc.type }}</p>
+                  <p class="text-sm text-gray-500">{{ doc.uploadedAt | date:'short':'':'fr-FR' }}</p>
+                </div>
+              </div>
+              <div class="flex gap-2">
+                <a [href]="doc.url" target="_blank"
+                   class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors text-sm">
+                  📥 Télécharger
+                </a>
+                @if (editMode()) {
+                  <button (click)="deleteDocument(doc.type)"
+                          class="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors text-sm">
+                    🗑️ Supprimer
+                  </button>
+                }
+              </div>
+            </div>
+          }
+          @if (!currentUser()?.documents || currentUser()!.documents!.length === 0) {
+            <p class="text-gray-500 text-sm text-center py-4">Aucun document uploadé</p>
+          }
+        </div>
+
+        @if (editMode()) {
+          <div class="mt-4 grid grid-cols-2 gap-2">
+            <label class="cursor-pointer">
+              <input type="file" (change)="uploadDocument('rib', $event)" class="hidden" accept=".pdf,.jpg,.png" />
+              <div class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-center text-sm">
+                📄 Upload RIB
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="file" (change)="uploadDocument('kbis', $event)" class="hidden" accept=".pdf" />
+              <div class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-center text-sm">
+                📄 Upload KBIS
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="file" (change)="uploadDocument('cv', $event)" class="hidden" accept=".pdf" />
+              <div class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-center text-sm">
+                📄 Upload CV
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="file" (change)="uploadDocument('diplome', $event)" class="hidden" accept=".pdf,.jpg,.png" />
+              <div class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-center text-sm">
+                📄 Upload Diplôme
+              </div>
+            </label>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="space-y-6">
+      <!-- Statistiques -->
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-lg font-bold text-gray-800 mb-4">Statistiques</h2>
+
+        <div class="space-y-4">
+          <div class="flex justify-between items-center">
+            <span class="text-gray-600">Missions effectuées</span>
+            <span class="text-2xl font-bold text-eduka-orange">{{ currentUser()?.nombreMissions || 0 }}</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-600">Heures enseignées</span>
+            <span class="text-2xl font-bold text-eduka-orange">{{ currentUser()?.nombreHeures || 0 }}h</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-600">Note moyenne</span>
+            <div class="flex items-center gap-1">
+              <span class="text-2xl font-bold text-eduka-orange">{{ currentUser()?.noteGlobale || 0 }}</span>
+              <span class="text-yellow-400">⭐</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Disponibilités -->
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-lg font-bold text-gray-800 mb-4">Disponibilités</h2>
+
+        @if (currentUser()?.disponibilites && currentUser()!.disponibilites!.length > 0) {
+          <div class="space-y-2">
+            @for (dispo of currentUser()!.disponibilites!; track dispo.jour) {
+              <div class="flex items-center gap-2 text-sm">
+                <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                <span class="text-gray-700">{{ dispo.jour }}</span>
+                <span class="text-gray-500">{{ dispo.heureDebut }} - {{ dispo.heureFin }}</span>
+              </div>
+            }
+          </div>
+        } @else {
+          <p class="text-gray-500 text-sm">Aucune disponibilité renseignée</p>
+        }
+
+        @if (editMode()) {
+          <button class="mt-4 w-full px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm">
+            + Gérer les disponibilités
+          </button>
+        }
+      </div>
+
+      <!-- Notifications -->
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-lg font-bold text-gray-800 mb-4">Paramètres</h2>
+
+        <div class="space-y-3">
+          <label class="flex items-center justify-between cursor-pointer">
+            <span class="text-sm text-gray-700">Notifications email</span>
+            <input type="checkbox" class="toggle" checked />
+          </label>
+          <label class="flex items-center justify-between cursor-pointer">
+            <span class="text-sm text-gray-700">Alertes SMS</span>
+            <input type="checkbox" class="toggle" />
+          </label>
+          <label class="flex items-center justify-between cursor-pointer">
+            <span class="text-sm text-gray-700">Newsletter</span>
+            <input type="checkbox" class="toggle" checked />
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

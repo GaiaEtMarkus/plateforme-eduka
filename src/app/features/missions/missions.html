@@ -1,0 +1,272 @@
+<div class="flex gap-6 h-full">
+  <!-- Liste des missions -->
+  <div class="flex-1">
+    <div class="bg-white rounded-lg shadow">
+      <!-- Filtres -->
+      <div class="p-6 border-b">
+        <div class="flex gap-2 overflow-x-auto">
+          <button (click)="setFilter('all')"
+                  [class.bg-eduka-orange]="selectedFilter() === 'all'"
+                  [class.text-white]="selectedFilter() === 'all'"
+                  [class.bg-gray-100]="selectedFilter() !== 'all'"
+                  class="px-4 py-2 rounded-lg font-medium transition-colors whitespace-nowrap">
+            Toutes ({{ getFilterCount('all') }})
+          </button>
+          <button (click)="setFilter(StatutMission.PLANIFIEE)"
+                  [class.bg-eduka-orange]="selectedFilter() === StatutMission.PLANIFIEE"
+                  [class.text-white]="selectedFilter() === StatutMission.PLANIFIEE"
+                  [class.bg-gray-100]="selectedFilter() !== StatutMission.PLANIFIEE"
+                  class="px-4 py-2 rounded-lg font-medium transition-colors whitespace-nowrap">
+            Planifiées ({{ getFilterCount(StatutMission.PLANIFIEE) }})
+          </button>
+          <button (click)="setFilter(StatutMission.EN_COURS)"
+                  [class.bg-eduka-orange]="selectedFilter() === StatutMission.EN_COURS"
+                  [class.text-white]="selectedFilter() === StatutMission.EN_COURS"
+                  [class.bg-gray-100]="selectedFilter() !== StatutMission.EN_COURS"
+                  class="px-4 py-2 rounded-lg font-medium transition-colors whitespace-nowrap">
+            En cours ({{ getFilterCount(StatutMission.EN_COURS) }})
+          </button>
+          <button (click)="setFilter(StatutMission.TERMINEE)"
+                  [class.bg-eduka-orange]="selectedFilter() === StatutMission.TERMINEE"
+                  [class.text-white]="selectedFilter() === StatutMission.TERMINEE"
+                  [class.bg-gray-100]="selectedFilter() !== StatutMission.TERMINEE"
+                  class="px-4 py-2 rounded-lg font-medium transition-colors whitespace-nowrap">
+            Terminées ({{ getFilterCount(StatutMission.TERMINEE) }})
+          </button>
+          <button (click)="setFilter(StatutMission.ANNULEE)"
+                  [class.bg-eduka-orange]="selectedFilter() === StatutMission.ANNULEE"
+                  [class.text-white]="selectedFilter() === StatutMission.ANNULEE"
+                  [class.bg-gray-100]="selectedFilter() !== StatutMission.ANNULEE"
+                  class="px-4 py-2 rounded-lg font-medium transition-colors whitespace-nowrap">
+            Annulées ({{ getFilterCount(StatutMission.ANNULEE) }})
+          </button>
+        </div>
+      </div>
+
+      <!-- Tableau des missions -->
+      <div class="p-6">
+        @if (filteredMissions().length === 0) {
+          <div class="text-center py-12">
+            <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            <p class="text-gray-500 text-lg">Aucune mission</p>
+          </div>
+        } @else {
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead class="bg-gray-50 border-b">
+                <tr>
+                  <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Cours</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">École</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Date</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Horaires</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Statut</th>
+                  <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200">
+                @for (mission of filteredMissions(); track mission.id) {
+                  <tr class="hover:bg-gray-50 transition-colors cursor-pointer"
+                      (click)="selectMission(mission)">
+                    <td class="px-4 py-4">
+                      <div class="flex items-center gap-3">
+                        @if (isToday(mission)) {
+                          <span class="w-2 h-2 bg-eduka-orange rounded-full"></span>
+                        }
+                        <div>
+                          <p class="font-medium text-gray-800">{{ mission.cours.nom }}</p>
+                          <p class="text-sm text-gray-500">{{ mission.classe.nom }}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-4 py-4">
+                      <div class="flex items-center gap-2">
+                        <img [src]="getSchoolLogo(mission.ecole)" [alt]="mission.ecole.nom" class="w-8 h-8 bg-gray-100 rounded object-contain p-1" />
+                        <div>
+                          <p class="text-sm text-gray-800">{{ mission.ecole.nom }}</p>
+                          <p class="text-xs text-gray-500">{{ mission.ecole.ville }}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-4 py-4">
+                      <p class="text-sm text-gray-800">
+                        {{ mission.dateDebut | date:'EEE d MMM':'':'fr-FR' }}
+                      </p>
+                      <p class="text-xs text-gray-500">
+                        {{ mission.dateDebut | date:'yyyy':'':'fr-FR' }}
+                      </p>
+                    </td>
+                    <td class="px-4 py-4">
+                      <p class="text-sm text-gray-700">
+                        {{ mission.heureDebut }} - {{ mission.heureFin }}
+                      </p>
+                    </td>
+                    <td class="px-4 py-4">
+                      <span class="inline-block px-3 py-1 rounded-full text-xs font-medium border"
+                            [ngClass]="getStatutColor(mission.statut)">
+                        {{ getStatutLabel(mission.statut) }}
+                      </span>
+                    </td>
+                    <td class="px-4 py-4 text-right">
+                      <button (click)="selectMission(mission); $event.stopPropagation()"
+                              class="text-eduka-orange hover:text-orange-600 font-medium text-sm">
+                        Détails →
+                      </button>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Sidebar détails mission -->
+  @if (selectedMission()) {
+    <div class="w-96 bg-white rounded-lg shadow-lg p-6 overflow-y-auto">
+      <div class="flex items-start justify-between mb-4">
+        <h3 class="text-xl font-bold text-gray-800">Détails de la mission</h3>
+        <button (click)="closeSidebar()"
+                class="p-1 hover:bg-gray-100 rounded transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="space-y-4">
+        <!-- Statut -->
+        <div>
+          <span class="inline-block px-3 py-1 rounded-full text-sm font-medium border"
+                [ngClass]="getStatutColor(selectedMission()!.statut)">
+            {{ getStatutLabel(selectedMission()!.statut) }}
+          </span>
+          @if (isToday(selectedMission()!)) {
+            <span class="ml-2 inline-block px-3 py-1 rounded-full text-sm font-medium bg-eduka-orange text-white">
+              Aujourd'hui
+            </span>
+          }
+        </div>
+
+        <!-- Cours -->
+        <div>
+          <h4 class="text-sm font-semibold text-gray-600 mb-1">Cours</h4>
+          <p class="text-gray-800 font-medium">{{ selectedMission()!.cours.nom }}</p>
+          <p class="text-sm text-gray-600 mt-1">{{ selectedMission()!.cours.description }}</p>
+        </div>
+
+        <!-- École -->
+        <div>
+          <h4 class="text-sm font-semibold text-gray-600 mb-1">École</h4>
+          <div class="flex items-start gap-3">
+            <img [src]="getSchoolLogo(selectedMission()!.ecole)" [alt]="selectedMission()!.ecole.nom" class="w-12 h-12 bg-gray-100 rounded object-contain p-1" />
+            <div>
+              <p class="text-gray-800 font-medium">{{ selectedMission()!.ecole.nom }}</p>
+              <p class="text-sm text-gray-600">
+                {{ selectedMission()!.ecole.adresse }}<br>
+                {{ selectedMission()!.ecole.codePostal }} {{ selectedMission()!.ecole.ville }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Classe -->
+        <div>
+          <h4 class="text-sm font-semibold text-gray-600 mb-1">Classe</h4>
+          <p class="text-gray-800">{{ selectedMission()!.classe.nom }} - {{ selectedMission()!.classe.niveau }}</p>
+          <p class="text-sm text-gray-600">{{ selectedMission()!.classe.nombreEleves }} élèves</p>
+        </div>
+
+        <!-- Date et horaires -->
+        <div>
+          <h4 class="text-sm font-semibold text-gray-600 mb-1">Date et horaires</h4>
+          <p class="text-gray-800">
+            {{ selectedMission()!.dateDebut | date:'fullDate':'':'fr-FR' }}
+          </p>
+          <p class="text-sm text-gray-600">
+            De {{ selectedMission()!.heureDebut }} à {{ selectedMission()!.heureFin }}
+          </p>
+        </div>
+
+        <!-- Syllabus -->
+        @if (selectedMission()!.cours.syllabus) {
+          <div>
+            <h4 class="text-sm font-semibold text-gray-600 mb-1">Syllabus</h4>
+            <pre class="text-sm text-gray-700 whitespace-pre-wrap bg-gray-50 p-3 rounded">{{ selectedMission()!.cours.syllabus }}</pre>
+          </div>
+        }
+
+        <!-- Fichiers de notes -->
+        <div>
+          <h4 class="text-sm font-semibold text-gray-600 mb-2">Fichiers de notes</h4>
+          @if (selectedMission()!.fichiersNotes && selectedMission()!.fichiersNotes!.length > 0) {
+            <div class="space-y-2">
+              @for (fichier of selectedMission()!.fichiersNotes!; track fichier.id) {
+                <a href="{{ fichier.url }}" target="_blank"
+                   class="flex items-center gap-2 p-2 bg-gray-50 rounded hover:bg-gray-100 transition-colors">
+                  <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                  </svg>
+                  <span class="text-sm text-gray-700">{{ fichier.nom }}</span>
+                </a>
+              }
+            </div>
+          } @else {
+            <p class="text-sm text-gray-500">Aucun fichier</p>
+          }
+          <button class="mt-2 w-full px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm">
+            📎 Ajouter un fichier
+          </button>
+        </div>
+
+        <!-- QR Code pour évaluation -->
+        @if (selectedMission()!.statut === StatutMission.EN_COURS || selectedMission()!.statut === StatutMission.TERMINEE) {
+          <div>
+            <h4 class="text-sm font-semibold text-gray-600 mb-2">Évaluation étudiants</h4>
+            @if (selectedMission()!.qrCodeUrl) {
+              <div class="bg-gray-50 p-4 rounded text-center">
+                <img [src]="selectedMission()!.qrCodeUrl" alt="QR Code" class="w-32 h-32 mx-auto mb-2" />
+                <p class="text-xs text-gray-600">Scannez pour évaluer</p>
+              </div>
+            } @else {
+              <button class="w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm">
+                📱 Générer QR Code d'évaluation
+              </button>
+            }
+          </div>
+        }
+
+        <!-- Actions selon le statut -->
+        <div class="pt-4 border-t space-y-2">
+          @if (selectedMission()!.statut === StatutMission.PLANIFIEE && isToday(selectedMission()!)) {
+            <button (click)="demarrerMission(selectedMission()!.id)"
+                    class="w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+              ▶️ Démarrer la mission
+            </button>
+          }
+
+          @if (selectedMission()!.statut === StatutMission.EN_COURS) {
+            <button (click)="terminerMission(selectedMission()!.id)"
+                    class="w-full px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
+              ✓ Terminer la mission
+            </button>
+          }
+
+          @if (selectedMission()!.statut === StatutMission.TERMINEE) {
+            <button (click)="genererFacture(selectedMission()!.id)"
+                    class="w-full px-4 py-2 bg-eduka-orange text-white rounded-lg hover:bg-orange-600 transition-colors">
+              💰 Générer une facture
+            </button>
+          }
+
+          <button class="w-full px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors">
+            📝 Modifier
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,400 @@
+<div class="p-6">
+  <!-- En-tête -->
+  <div class="mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Gestion des Propositions</h1>
+    <p class="text-gray-600 mt-2">Vue d'ensemble et suivi des propositions de missions</p>
+  </div>
+
+  <!-- Statistiques -->
+  <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
+    <div class="bg-white rounded-lg shadow p-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-gray-600 text-sm">Total</p>
+          <p class="text-3xl font-bold text-gray-800 mt-1">{{ stats().total }}</p>
+        </div>
+        <div class="bg-gray-100 rounded-full p-3">
+          <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-gray-600 text-sm">En attente</p>
+          <p class="text-3xl font-bold text-yellow-600 mt-1">{{ stats().enAttente }}</p>
+        </div>
+        <div class="bg-yellow-50 rounded-full p-3">
+          <svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-gray-600 text-sm">Acceptées</p>
+          <p class="text-3xl font-bold text-green-600 mt-1">{{ stats().acceptees }}</p>
+        </div>
+        <div class="bg-green-50 rounded-full p-3">
+          <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-gray-600 text-sm">Refusées</p>
+          <p class="text-3xl font-bold text-red-600 mt-1">{{ stats().refusees }}</p>
+        </div>
+        <div class="bg-red-50 rounded-full p-3">
+          <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-gray-600 text-sm">Expirées</p>
+          <p class="text-3xl font-bold text-orange-600 mt-1">{{ stats().expirees }}</p>
+        </div>
+        <div class="bg-orange-50 rounded-full p-3">
+          <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Propositions urgentes -->
+  @if (urgentProposals().length > 0) {
+    <div class="bg-orange-50 border border-orange-200 rounded-lg p-6 mb-6">
+      <div class="flex items-center gap-3 mb-4">
+        <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+        </svg>
+        <h2 class="text-xl font-bold text-orange-800">Propositions Urgentes (expiration dans 3 jours)</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        @for (proposal of urgentProposals(); track proposal.id) {
+          <div class="bg-white border border-orange-300 rounded-lg p-4">
+            <div class="flex justify-between items-start mb-2">
+              <div>
+                <h3 class="font-medium text-gray-800">{{ proposal.cours.nom }}</h3>
+                <p class="text-sm text-gray-600">{{ proposal.ecole.nom }}</p>
+              </div>
+              <span class="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-xs font-medium">
+                {{ getDaysUntilExpiration(proposal.dateExpiration) }} jour{{ getDaysUntilExpiration(proposal.dateExpiration) > 1 ? 's' : '' }}
+              </span>
+            </div>
+            <div class="flex items-center justify-between mt-3">
+              <span class="text-sm text-gray-600">{{ proposal.candidatures?.length || 0 }} candidature{{ (proposal.candidatures?.length || 0) > 1 ? 's' : '' }}</span>
+              <button
+                (click)="viewProposalDetails(proposal)"
+                class="text-orange-600 hover:text-orange-800 font-medium text-sm"
+              >
+                Voir détails
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Filtres -->
+  <div class="bg-white rounded-lg shadow p-4 mb-6">
+    <div class="flex gap-2">
+      <button
+        (click)="setFilter('all')"
+        [class.bg-eduka-orange]="filterStatus() === 'all'"
+        [class.text-white]="filterStatus() === 'all'"
+        [class.bg-gray-100]="filterStatus() !== 'all'"
+        [class.text-gray-700]="filterStatus() !== 'all'"
+        class="px-4 py-2 rounded-lg font-medium transition-colors"
+      >
+        Toutes ({{ stats().total }})
+      </button>
+      <button
+        (click)="setFilter('en_attente')"
+        [class.bg-yellow-600]="filterStatus() === 'en_attente'"
+        [class.text-white]="filterStatus() === 'en_attente'"
+        [class.bg-gray-100]="filterStatus() !== 'en_attente'"
+        [class.text-gray-700]="filterStatus() !== 'en_attente'"
+        class="px-4 py-2 rounded-lg font-medium transition-colors"
+      >
+        En attente ({{ stats().enAttente }})
+      </button>
+      <button
+        (click)="setFilter('acceptee')"
+        [class.bg-green-600]="filterStatus() === 'acceptee'"
+        [class.text-white]="filterStatus() === 'acceptee'"
+        [class.bg-gray-100]="filterStatus() !== 'acceptee'"
+        [class.text-gray-700]="filterStatus() !== 'acceptee'"
+        class="px-4 py-2 rounded-lg font-medium transition-colors"
+      >
+        Acceptées ({{ stats().acceptees }})
+      </button>
+      <button
+        (click)="setFilter('refusee')"
+        [class.bg-red-600]="filterStatus() === 'refusee'"
+        [class.text-white]="filterStatus() === 'refusee'"
+        [class.bg-gray-100]="filterStatus() !== 'refusee'"
+        [class.text-gray-700]="filterStatus() !== 'refusee'"
+        class="px-4 py-2 rounded-lg font-medium transition-colors"
+      >
+        Refusées ({{ stats().refusees }})
+      </button>
+    </div>
+  </div>
+
+  <!-- Liste des propositions -->
+  <div class="bg-white rounded-lg shadow-md overflow-hidden">
+    <div class="p-6 border-b border-gray-200">
+      <h2 class="text-xl font-bold text-gray-800">Propositions ({{ filteredPropositions().length }})</h2>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Cours / École
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Date mission
+            </th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Rémunération
+            </th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Candidatures
+            </th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Expiration
+            </th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Statut
+            </th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          @for (proposal of filteredPropositions(); track proposal.id) {
+            <tr class="hover:bg-gray-50">
+              <td class="px-6 py-4">
+                <div>
+                  <div class="text-sm font-medium text-gray-900">{{ proposal.cours.nom }}</div>
+                  <div class="text-sm text-gray-500">{{ proposal.ecole.nom }}</div>
+                  <div class="text-xs text-gray-400">{{ proposal.classe.nom }}</div>
+                </div>
+              </td>
+              <td class="px-6 py-4">
+                <div class="text-sm text-gray-900">{{ formatDate(proposal.dateDebut) }}</div>
+                @if (proposal.dateDebut.getTime() !== proposal.dateFin.getTime()) {
+                  <div class="text-xs text-gray-500">au {{ formatDate(proposal.dateFin) }}</div>
+                }
+                <div class="text-xs text-gray-500">{{ proposal.heureDebut }} - {{ proposal.heureFin }}</div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-center">
+                <span class="text-sm font-medium text-gray-900">{{ proposal.remuneration }}€</span>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-center">
+                <span class="text-sm text-gray-900">{{ proposal.candidatures?.length || 0 }}</span>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-center">
+                @if (isExpired(proposal.dateExpiration)) {
+                  <span class="text-sm text-red-600 font-medium">Expirée</span>
+                } @else {
+                  <div class="text-sm text-gray-900">{{ formatDate(proposal.dateExpiration) }}</div>
+                  @if (getDaysUntilExpiration(proposal.dateExpiration) <= 3) {
+                    <div class="text-xs text-orange-600 font-medium">
+                      {{ getDaysUntilExpiration(proposal.dateExpiration) }} jour{{ getDaysUntilExpiration(proposal.dateExpiration) > 1 ? 's' : '' }}
+                    </div>
+                  }
+                }
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-center">
+                <span
+                  class="px-3 py-1 rounded-full text-xs font-medium"
+                  [ngClass]="getStatutColor(proposal.statut)"
+                >
+                  {{ proposal.statut }}
+                </span>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-center">
+                <button
+                  (click)="viewProposalDetails(proposal)"
+                  class="text-eduka-orange hover:text-orange-700 font-medium text-sm"
+                >
+                  Détails
+                </button>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="7" class="px-6 py-8 text-center text-gray-500">
+                Aucune proposition trouvée
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modal des détails de la proposition -->
+  @if (selectedProposal()) {
+    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden">
+        <!-- Header -->
+        <div class="p-6 bg-gradient-to-r from-eduka-orange to-orange-600 text-white">
+          <div class="flex justify-between items-start">
+            <div class="flex-1">
+              <h2 class="text-2xl font-bold">{{ selectedProposal()!.cours.nom }}</h2>
+              <p class="text-orange-100 mt-1">{{ selectedProposal()!.ecole.nom }} - {{ selectedProposal()!.classe.nom }}</p>
+            </div>
+            <button
+              (click)="closeProposalDetails()"
+              class="text-white hover:text-orange-200"
+            >
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Infos principales -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+            <div class="bg-white bg-opacity-20 rounded-lg p-3">
+              <p class="text-orange-100 text-sm">Rémunération</p>
+              <p class="text-2xl font-bold">{{ selectedProposal()!.remuneration }}€</p>
+            </div>
+            <div class="bg-white bg-opacity-20 rounded-lg p-3">
+              <p class="text-orange-100 text-sm">Candidatures</p>
+              <p class="text-2xl font-bold">{{ selectedProposal()!.candidatures?.length || 0 }}</p>
+            </div>
+            <div class="bg-white bg-opacity-20 rounded-lg p-3">
+              <p class="text-orange-100 text-sm">Type</p>
+              <p class="text-lg font-bold">{{ selectedProposal()!.type }}</p>
+            </div>
+            <div class="bg-white bg-opacity-20 rounded-lg p-3">
+              <p class="text-orange-100 text-sm">Statut</p>
+              <p class="text-lg font-bold">{{ selectedProposal()!.statut }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-6 overflow-y-auto max-h-[60vh]">
+          <!-- Description -->
+          <div class="mb-6">
+            <h3 class="font-bold text-gray-800 mb-2">Description</h3>
+            <p class="text-gray-700">{{ selectedProposal()!.description }}</p>
+          </div>
+
+          <!-- Détails de la mission -->
+          <div class="mb-6">
+            <h3 class="font-bold text-gray-800 mb-3">Détails de la mission</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="flex items-center gap-2 text-gray-700">
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                <div>
+                  <p class="text-xs text-gray-500">Date</p>
+                  <p class="font-medium">{{ formatDate(selectedProposal()!.dateDebut) }}</p>
+                  @if (selectedProposal()!.dateDebut.getTime() !== selectedProposal()!.dateFin.getTime()) {
+                    <p class="text-sm">au {{ formatDate(selectedProposal()!.dateFin) }}</p>
+                  }
+                </div>
+              </div>
+              <div class="flex items-center gap-2 text-gray-700">
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <div>
+                  <p class="text-xs text-gray-500">Horaires</p>
+                  <p class="font-medium">{{ selectedProposal()!.heureDebut }} - {{ selectedProposal()!.heureFin }}</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 text-gray-700">
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <div>
+                  <p class="text-xs text-gray-500">Expiration</p>
+                  <p class="font-medium">{{ formatDate(selectedProposal()!.dateExpiration) }}</p>
+                  @if (!isExpired(selectedProposal()!.dateExpiration)) {
+                    <p class="text-sm text-orange-600">{{ getDaysUntilExpiration(selectedProposal()!.dateExpiration) }} jours restants</p>
+                  } @else {
+                    <p class="text-sm text-red-600">Expirée</p>
+                  }
+                </div>
+              </div>
+              <div class="flex items-center gap-2 text-gray-700">
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <div>
+                  <p class="text-xs text-gray-500">Rémunération</p>
+                  <p class="font-medium">{{ selectedProposal()!.remuneration }}€</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Candidatures -->
+          <div>
+            <h3 class="font-bold text-gray-800 mb-3">Candidatures ({{ selectedProposal()!.candidatures?.length || 0 }})</h3>
+            @if (selectedProposal()!.candidatures && selectedProposal()!.candidatures!.length > 0) {
+              <div class="space-y-3">
+                @for (candidature of selectedProposal()!.candidatures; track candidature.formateurId) {
+                  <div class="border border-gray-200 rounded-lg p-4">
+                    <div class="flex justify-between items-start">
+                      <div>
+                        <p class="font-medium text-gray-800">{{ getFormateurName(candidature.formateurId) }}</p>
+                        <p class="text-sm text-gray-600">Postulé le {{ formatDateTime(candidature.createdAt) }}</p>
+                      </div>
+                      <span
+                        class="px-3 py-1 rounded-full text-xs font-medium"
+                        [ngClass]="getCandidatureStatutColor(candidature.statut)"
+                      >
+                        {{ candidature.statut }}
+                      </span>
+                    </div>
+                  </div>
+                }
+              </div>
+            } @else {
+              <p class="text-center text-gray-500 py-6 bg-gray-50 rounded-lg">Aucune candidature pour le moment</p>
+            }
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="p-6 bg-gray-50 border-t border-gray-200">
+          <button
+            (click)="closeProposalDetails()"
+            class="w-full bg-eduka-orange text-white py-2 px-4 rounded-lg hover:bg-orange-600 font-medium"
+          >
+            Fermer
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

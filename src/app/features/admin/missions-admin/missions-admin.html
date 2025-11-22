@@ -1,0 +1,422 @@
+<div class="p-6">
+  <!-- En-tête -->
+  <div class="mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Gestion des Missions</h1>
+    <p class="text-gray-600 mt-2">Suivi complet des missions et alertes intervenants</p>
+  </div>
+
+  <!-- Statistiques -->
+  <div class="grid grid-cols-2 md:grid-cols-6 gap-4 mb-6">
+    <div class="bg-white rounded-lg shadow p-4">
+      <p class="text-sm text-gray-600">Total</p>
+      <p class="text-2xl font-bold text-gray-800">{{ stats().total }}</p>
+    </div>
+    <div class="bg-blue-50 rounded-lg shadow p-4">
+      <p class="text-sm text-blue-600">En cours</p>
+      <p class="text-2xl font-bold text-blue-800">{{ stats().enCours }}</p>
+    </div>
+    <div class="bg-orange-50 rounded-lg shadow p-4">
+      <p class="text-sm text-orange-600">Planifiées</p>
+      <p class="text-2xl font-bold text-orange-800">{{ stats().planifiees }}</p>
+    </div>
+    <div class="bg-green-50 rounded-lg shadow p-4">
+      <p class="text-sm text-green-600">Terminées</p>
+      <p class="text-2xl font-bold text-green-800">{{ stats().terminees }}</p>
+    </div>
+    <div class="bg-red-50 rounded-lg shadow p-4">
+      <p class="text-sm text-red-600">Problèmes</p>
+      <p class="text-2xl font-bold text-red-800">{{ stats().problemes }}</p>
+    </div>
+    <div class="bg-purple-50 rounded-lg shadow p-4">
+      <p class="text-sm text-purple-600">Alertes</p>
+      <p class="text-2xl font-bold text-purple-800">{{ stats().alertes }}</p>
+    </div>
+  </div>
+
+  <!-- Filtres et recherche -->
+  <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <!-- Recherche -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Recherche</label>
+        <input
+          type="text"
+          [value]="searchTerm()"
+          (input)="setSearchTerm($any($event.target).value)"
+          placeholder="Cours, école, formateur..."
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eduka-orange focus:border-transparent"
+        />
+      </div>
+
+      <!-- Filtre statut mission -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Statut Mission</label>
+        <select
+          [value]="selectedStatut()"
+          (change)="setStatutFilter($any($event.target).value)"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eduka-orange focus:border-transparent"
+        >
+          <option value="all">Tous les statuts</option>
+          <option [value]="StatutMission.PLANIFIEE">Planifiée</option>
+          <option [value]="StatutMission.EN_COURS">En cours</option>
+          <option [value]="StatutMission.TERMINEE">Terminée</option>
+          <option [value]="StatutMission.ANNULEE">Annulée</option>
+        </select>
+      </div>
+
+      <!-- Filtre statut suivi -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Statut Suivi</label>
+        <select
+          [value]="selectedSuivi()"
+          (change)="setSuiviFilter($any($event.target).value)"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eduka-orange focus:border-transparent"
+        >
+          <option value="all">Tous les suivis</option>
+          <option [value]="StatutSuiviMission.OK">OK</option>
+          <option [value]="StatutSuiviMission.INTERVENANT_TROUVE">Intervenant trouvé</option>
+          <option [value]="StatutSuiviMission.EN_ATTENTE_INTERVENANT">En attente</option>
+          <option [value]="StatutSuiviMission.PROBLEME_INTERVENANT">Problème</option>
+          <option [value]="StatutSuiviMission.RETARD">Retard</option>
+          <option [value]="StatutSuiviMission.ABSENCE_INTERVENANT">Absence</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table des missions -->
+  <div class="bg-white rounded-lg shadow-md overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Mission</th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Intervenant</th>
+            <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">Date</th>
+            <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">Horaires</th>
+            <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">Statut</th>
+            <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">Suivi Admin</th>
+            <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">Alertes</th>
+            <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          @for (mission of filteredMissions(); track mission.id) {
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-4">
+                <div>
+                  <p class="text-sm font-medium text-gray-900">{{ mission.cours?.nom }}</p>
+                  <p class="text-sm text-gray-600">{{ mission.ecole?.nom }}</p>
+                  <p class="text-xs text-gray-500">{{ mission.classe?.nom }}</p>
+                </div>
+              </td>
+              <td class="px-4 py-4">
+                <p class="text-sm text-gray-900">{{ mission.formateurNom }}</p>
+              </td>
+              <td class="px-4 py-4 text-center">
+                <p class="text-sm text-gray-900">{{ mission.dateDebut | date:'dd/MM/yyyy':'':'fr' }}</p>
+              </td>
+              <td class="px-4 py-4 text-center">
+                <p class="text-sm text-gray-900">{{ mission.heureDebut }} - {{ mission.heureFin }}</p>
+              </td>
+              <td class="px-4 py-4 text-center">
+                <span
+                  class="px-3 py-1 rounded-full text-xs font-medium border"
+                  [ngClass]="getStatutColor(mission.statut)"
+                >
+                  {{ getStatutLabel(mission.statut) }}
+                </span>
+              </td>
+              <td class="px-4 py-4 text-center">
+                <select
+                  [value]="mission.statutSuivi || ''"
+                  (change)="updateStatutSuivi(mission, $any($event.target).value)"
+                  class="px-3 py-1 rounded-full text-xs font-medium border cursor-pointer"
+                  [ngClass]="getSuiviColor(mission.statutSuivi)"
+                >
+                  <option value="">Non défini</option>
+                  <option [value]="StatutSuiviMission.OK">OK</option>
+                  <option [value]="StatutSuiviMission.INTERVENANT_TROUVE">Intervenant trouvé</option>
+                  <option [value]="StatutSuiviMission.EN_ATTENTE_INTERVENANT">En attente</option>
+                  <option [value]="StatutSuiviMission.PROBLEME_INTERVENANT">Problème intervenant</option>
+                  <option [value]="StatutSuiviMission.RETARD">Retard</option>
+                  <option [value]="StatutSuiviMission.ABSENCE_INTERVENANT">Absence</option>
+                  <option [value]="StatutSuiviMission.ANNULATION_DEMANDEE">Annulation demandée</option>
+                  <option [value]="StatutSuiviMission.AUTRE">Autre</option>
+                </select>
+              </td>
+              <td class="px-4 py-4 text-center">
+                @if (hasActiveAlertes(mission)) {
+                  <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-red-100 text-red-800 text-xs font-medium">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                    {{ getActiveAlertesCount(mission) }}
+                  </span>
+                } @else {
+                  <span class="text-gray-400 text-sm">Aucune</span>
+                }
+              </td>
+              <td class="px-4 py-4 text-center">
+                <div class="flex items-center justify-center gap-2">
+                  <button
+                    (click)="selectMission(mission)"
+                    class="text-eduka-orange hover:text-orange-700 font-medium text-sm"
+                    title="Voir détails"
+                  >
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                    </svg>
+                  </button>
+                  <button
+                    (click)="openAlerteModal(mission)"
+                    class="text-red-600 hover:text-red-700 font-medium text-sm"
+                    title="Créer alerte"
+                  >
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="8" class="px-6 py-8 text-center text-gray-500">
+                Aucune mission trouvée
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modal détails mission -->
+  @if (selectedMission() && !showAlerteModal()) {
+    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div class="bg-white rounded-lg max-w-3xl w-full max-h-[90vh] overflow-hidden">
+        <!-- Header -->
+        <div class="p-6 bg-gradient-to-r from-eduka-orange to-orange-600 text-white">
+          <div class="flex justify-between items-start">
+            <div>
+              <h2 class="text-2xl font-bold">{{ selectedMission()?.cours?.nom }}</h2>
+              <p class="text-orange-100 mt-1">{{ selectedMission()?.ecole?.nom }}</p>
+            </div>
+            <button
+              (click)="closeMissionDetails()"
+              class="text-white hover:text-orange-200"
+            >
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Contenu -->
+        <div class="p-6 overflow-y-auto max-h-[calc(90vh-200px)]">
+          <!-- Infos générales -->
+          <div class="grid grid-cols-2 gap-4 mb-6">
+            <div>
+              <p class="text-sm text-gray-600">Intervenant</p>
+              <p class="text-lg font-medium text-gray-900">{{ selectedMission()?.formateurNom }}</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-600">Classe</p>
+              <p class="text-lg font-medium text-gray-900">{{ selectedMission()?.classe?.nom }}</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-600">Date</p>
+              <p class="text-lg font-medium text-gray-900">{{ selectedMission()?.dateDebut | date:'dd MMMM yyyy':'':'fr' }}</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-600">Horaires</p>
+              <p class="text-lg font-medium text-gray-900">{{ selectedMission()?.heureDebut }} - {{ selectedMission()?.heureFin }}</p>
+            </div>
+          </div>
+
+          <!-- Statuts -->
+          <div class="flex gap-4 mb-6">
+            <div>
+              <p class="text-sm text-gray-600 mb-1">Statut Mission</p>
+              <span
+                class="px-3 py-1 rounded-full text-sm font-medium border"
+                [ngClass]="getStatutColor(selectedMission()!.statut)"
+              >
+                {{ getStatutLabel(selectedMission()!.statut) }}
+              </span>
+            </div>
+            <div>
+              <p class="text-sm text-gray-600 mb-1">Statut Suivi</p>
+              <span
+                class="px-3 py-1 rounded-full text-sm font-medium"
+                [ngClass]="getSuiviColor(selectedMission()!.statutSuivi)"
+              >
+                {{ getSuiviLabel(selectedMission()!.statutSuivi) }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Alertes -->
+          @if (selectedMission()?.alertes && selectedMission()!.alertes!.length > 0) {
+            <div class="mb-6">
+              <h3 class="font-bold text-gray-800 mb-3">Alertes ({{ selectedMission()!.alertes!.length }})</h3>
+              <div class="space-y-3">
+                @for (alerte of selectedMission()!.alertes; track alerte.id) {
+                  <div
+                    class="border rounded-lg p-4"
+                    [ngClass]="alerte.resolue ? 'border-gray-200 bg-gray-50' : 'border-red-300 bg-red-50'"
+                  >
+                    <div class="flex items-start justify-between">
+                      <div class="flex items-start gap-3 flex-1">
+                        <span
+                          class="px-2 py-1 rounded text-xs font-medium"
+                          [ngClass]="getAlerteColor(alerte.type)"
+                        >
+                          {{ alerte.type }}
+                        </span>
+                        <div>
+                          <h4 class="font-medium text-gray-800">{{ alerte.titre }}</h4>
+                          <p class="text-sm text-gray-600 mt-1">{{ alerte.description }}</p>
+                          <p class="text-xs text-gray-500 mt-2">
+                            Créée le {{ alerte.createdAt | date:'dd/MM/yyyy HH:mm':'':'fr' }}
+                          </p>
+                          @if (alerte.resolue) {
+                            <p class="text-xs text-green-600 mt-1">
+                              ✓ Résolue le {{ alerte.resolvedAt! | date:'dd/MM/yyyy HH:mm':'':'fr' }}
+                            </p>
+                          }
+                        </div>
+                      </div>
+                      @if (!alerte.resolue) {
+                        <button
+                          (click)="resolveAlerte(selectedMission()!, alerte.id)"
+                          class="text-green-600 hover:text-green-700 text-sm font-medium"
+                        >
+                          Résoudre
+                        </button>
+                      }
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+          }
+
+          <!-- Notes -->
+          @if (selectedMission()?.notes) {
+            <div class="mb-4">
+              <h3 class="font-bold text-gray-800 mb-2">Notes</h3>
+              <p class="text-gray-600">{{ selectedMission()?.notes }}</p>
+            </div>
+          }
+        </div>
+
+        <!-- Footer -->
+        <div class="p-6 bg-gray-50 border-t border-gray-200 flex gap-3">
+          <button
+            (click)="openAlerteModal(selectedMission()!)"
+            class="flex-1 bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 font-medium"
+          >
+            Créer une alerte
+          </button>
+          <button
+            (click)="closeMissionDetails()"
+            class="flex-1 bg-gray-200 text-gray-800 py-2 px-4 rounded-lg hover:bg-gray-300 font-medium"
+          >
+            Fermer
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Modal création alerte -->
+  @if (showAlerteModal()) {
+    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div class="bg-white rounded-lg max-w-lg w-full">
+        <!-- Header -->
+        <div class="p-6 bg-red-600 text-white">
+          <div class="flex justify-between items-start">
+            <div>
+              <h2 class="text-2xl font-bold">Créer une alerte</h2>
+              <p class="text-red-100 mt-1">{{ selectedMission()?.cours?.nom }}</p>
+            </div>
+            <button
+              (click)="closeAlerteModal()"
+              class="text-white hover:text-red-200"
+            >
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Formulaire -->
+        <div class="p-6">
+          <div class="space-y-4">
+            <!-- Type -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Type d'alerte</label>
+              <select
+                [value]="newAlerte().type"
+                (change)="newAlerte.set({ ...newAlerte(), type: $any($event.target).value })"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
+              >
+                <option [value]="TypeAlerte.ABSENCE">Absence</option>
+                <option [value]="TypeAlerte.RETARD">Retard</option>
+                <option [value]="TypeAlerte.PROBLEME_TECHNIQUE">Problème technique</option>
+                <option [value]="TypeAlerte.ANNULATION">Annulation</option>
+                <option [value]="TypeAlerte.AUTRE">Autre</option>
+              </select>
+            </div>
+
+            <!-- Titre -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Titre</label>
+              <input
+                type="text"
+                [value]="newAlerte().titre"
+                (input)="newAlerte.set({ ...newAlerte(), titre: $any($event.target).value })"
+                placeholder="Titre de l'alerte"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
+              />
+            </div>
+
+            <!-- Description -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+              <textarea
+                [value]="newAlerte().description"
+                (input)="newAlerte.set({ ...newAlerte(), description: $any($event.target).value })"
+                placeholder="Décrivez le problème..."
+                rows="4"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="p-6 bg-gray-50 border-t border-gray-200 flex gap-3">
+          <button
+            (click)="createAlerte()"
+            [disabled]="!newAlerte().titre || !newAlerte().description"
+            class="flex-1 bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Créer l'alerte
+          </button>
+          <button
+            (click)="closeAlerteModal()"
+            class="flex-1 bg-gray-200 text-gray-800 py-2 px-4 rounded-lg hover:bg-gray-300 font-medium"
+          >
+            Annuler
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

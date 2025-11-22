@@ -1,0 +1,35 @@
+[
+  {
+    "id": "notif-1",
+    "userId": "user-1",
+    "type": "nouvelle_proposition",
+    "titre": "Nouvelle proposition DevOps",
+    "message": "Une nouvelle mission DevOps - CI/CD avec GitLab est disponible",
+    "lien": "/propositions",
+    "lu": false,
+    "createdAt": "2025-11-18T10:00:00Z",
+    "metadata": {}
+  },
+  {
+    "id": "notif-2",
+    "userId": "user-1",
+    "type": "mission_confirmee",
+    "titre": "Mission confirmée",
+    "message": "Votre mission Kubernetes a été confirmée pour le 25 novembre",
+    "lien": "/missions/mission-3",
+    "lu": false,
+    "createdAt": "2025-11-18T09:00:00Z",
+    "metadata": {}
+  },
+  {
+    "id": "notif-3",
+    "userId": "user-1",
+    "type": "facture_validee",
+    "titre": "Facture validée",
+    "message": "Votre facture FAC-2025-001 a été validée",
+    "lien": "/invoices",
+    "lu": true,
+    "createdAt": "2025-11-17T15:00:00Z",
+    "metadata": {}
+  }
+]

@@ -1,0 +1,294 @@
+<div class="space-y-6">
+  <!-- Statistiques -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <div class="bg-white rounded-lg shadow p-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm text-gray-600">Total factures</p>
+          <p class="text-2xl font-bold text-gray-800">{{ stats().totalFactures }}</p>
+        </div>
+        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+          <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm text-gray-600">Montant total</p>
+          <p class="text-2xl font-bold text-gray-800">{{ stats().totalMontant | number:'1.2-2' }}€</p>
+        </div>
+        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+          <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm text-gray-600">Validées</p>
+          <p class="text-2xl font-bold text-gray-800">{{ stats().validees }}</p>
+        </div>
+        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+          <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm text-gray-600">Payées</p>
+          <p class="text-2xl font-bold text-gray-800">{{ stats().payees }}</p>
+        </div>
+        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+          <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenu principal -->
+  <div class="flex gap-6">
+    <!-- Liste des factures -->
+    <div class="flex-1">
+      <div class="bg-white rounded-lg shadow">
+        <!-- Filtres -->
+        <div class="p-6 border-b">
+          <div class="flex gap-2 overflow-x-auto">
+            <button (click)="setFilter('all')"
+                    [class.bg-eduka-orange]="selectedFilter() === 'all'"
+                    [class.text-white]="selectedFilter() === 'all'"
+                    [class.bg-gray-100]="selectedFilter() !== 'all'"
+                    class="px-4 py-2 rounded-lg font-medium transition-colors whitespace-nowrap">
+              Toutes ({{ getFilterCount('all') }})
+            </button>
+            <button (click)="setFilter(StatutFacture.BROUILLON)"
+                    [class.bg-eduka-orange]="selectedFilter() === StatutFacture.BROUILLON"
+                    [class.text-white]="selectedFilter() === StatutFacture.BROUILLON"
+                    [class.bg-gray-100]="selectedFilter() !== StatutFacture.BROUILLON"
+                    class="px-4 py-2 rounded-lg font-medium transition-colors whitespace-nowrap">
+              Brouillons ({{ getFilterCount(StatutFacture.BROUILLON) }})
+            </button>
+            <button (click)="setFilter(StatutFacture.SOUMISE)"
+                    [class.bg-eduka-orange]="selectedFilter() === StatutFacture.SOUMISE"
+                    [class.text-white]="selectedFilter() === StatutFacture.SOUMISE"
+                    [class.bg-gray-100]="selectedFilter() !== StatutFacture.SOUMISE"
+                    class="px-4 py-2 rounded-lg font-medium transition-colors whitespace-nowrap">
+              Soumises ({{ getFilterCount(StatutFacture.SOUMISE) }})
+            </button>
+            <button (click)="setFilter(StatutFacture.VALIDEE)"
+                    [class.bg-eduka-orange]="selectedFilter() === StatutFacture.VALIDEE"
+                    [class.text-white]="selectedFilter() === StatutFacture.VALIDEE"
+                    [class.bg-gray-100]="selectedFilter() !== StatutFacture.VALIDEE"
+                    class="px-4 py-2 rounded-lg font-medium transition-colors whitespace-nowrap">
+              Validées ({{ getFilterCount(StatutFacture.VALIDEE) }})
+            </button>
+            <button (click)="setFilter(StatutFacture.PAYEE)"
+                    [class.bg-eduka-orange]="selectedFilter() === StatutFacture.PAYEE"
+                    [class.text-white]="selectedFilter() === StatutFacture.PAYEE"
+                    [class.bg-gray-100]="selectedFilter() !== StatutFacture.PAYEE"
+                    class="px-4 py-2 rounded-lg font-medium transition-colors whitespace-nowrap">
+              Payées ({{ getFilterCount(StatutFacture.PAYEE) }})
+            </button>
+          </div>
+        </div>
+
+        <!-- Liste -->
+        <div class="p-6">
+          @if (filteredFactures().length === 0) {
+            <div class="text-center py-12">
+              <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <p class="text-gray-500 text-lg">Aucune facture</p>
+            </div>
+          } @else {
+            <div class="space-y-4">
+              @for (facture of filteredFactures(); track facture.id) {
+                <div class="border rounded-lg p-6 hover:shadow-md transition-shadow cursor-pointer"
+                     (click)="selectFacture(facture)"
+                     [class.border-red-300]="isOverdue(facture)">
+                  <div class="flex items-start justify-between mb-4">
+                    <div class="flex-1">
+                      <div class="flex items-center gap-3 mb-2">
+                        <h3 class="text-lg font-bold text-gray-800">{{ facture.numero }}</h3>
+                        <span class="inline-block px-3 py-1 rounded-full text-xs font-medium border"
+                              [ngClass]="getStatutColor(facture.statut)">
+                          {{ getStatutLabel(facture.statut) }}
+                        </span>
+                        @if (isOverdue(facture)) {
+                          <span class="inline-block px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 border border-red-300">
+                            ⚠️ En retard
+                          </span>
+                        }
+                      </div>
+                      <p class="text-sm text-gray-600">Émise le {{ facture.dateEmission | date:'longDate':'':'fr-FR' }}</p>
+                      @if (facture.dateEcheance) {
+                        <p class="text-sm text-gray-600">Échéance: {{ facture.dateEcheance | date:'longDate':'':'fr-FR' }}</p>
+                      }
+                    </div>
+                    <div class="text-right">
+                      <p class="text-2xl font-bold text-eduka-orange">{{ facture.total | number:'1.2-2' }}€</p>
+                      <p class="text-sm text-gray-500">TTC</p>
+                    </div>
+                  </div>
+
+                  <!-- Lignes de facture -->
+                  <div class="space-y-2 mb-4">
+                    @for (ligne of facture.lignes; track ligne.id) {
+                      <div class="flex justify-between text-sm">
+                        <span class="text-gray-700">{{ ligne.description }}</span>
+                        <span class="text-gray-600">{{ ligne.montant | number:'1.2-2' }}€</span>
+                      </div>
+                    }
+                  </div>
+
+                  <!-- Actions -->
+                  <div class="flex gap-2 pt-4 border-t">
+                    <button (click)="genererPDF(facture); $event.stopPropagation()"
+                            class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm">
+                      📄 Télécharger PDF
+                    </button>
+                    @if (facture.statut === StatutFacture.BROUILLON) {
+                      <button (click)="soumettre(facture.id); $event.stopPropagation()"
+                              class="px-4 py-2 bg-eduka-orange text-white rounded-lg hover:bg-orange-600 transition-colors text-sm">
+                        📤 Soumettre
+                      </button>
+                    }
+                    <button (click)="selectFacture(facture); $event.stopPropagation()"
+                            class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm">
+                      Détails
+                    </button>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar détails facture -->
+    @if (selectedFacture()) {
+      <div class="w-96 bg-white rounded-lg shadow-lg p-6 overflow-y-auto max-h-screen">
+        <div class="flex items-start justify-between mb-4">
+          <h3 class="text-xl font-bold text-gray-800">Détails de la facture</h3>
+          <button (click)="closeSidebar()"
+                  class="p-1 hover:bg-gray-100 rounded transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="space-y-4">
+          <!-- Numéro et statut -->
+          <div>
+            <h4 class="text-2xl font-bold text-gray-800 mb-2">{{ selectedFacture()!.numero }}</h4>
+            <span class="inline-block px-3 py-1 rounded-full text-sm font-medium border"
+                  [ngClass]="getStatutColor(selectedFacture()!.statut)">
+              {{ getStatutLabel(selectedFacture()!.statut) }}
+            </span>
+            @if (isOverdue(selectedFacture()!)) {
+              <span class="ml-2 inline-block px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800 border border-red-300">
+                ⚠️ En retard
+              </span>
+            }
+          </div>
+
+          <!-- Dates -->
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <h4 class="text-sm font-semibold text-gray-600 mb-1">Date d'émission</h4>
+              <p class="text-gray-800">{{ selectedFacture()!.dateEmission | date:'longDate':'':'fr-FR' }}</p>
+            </div>
+            @if (selectedFacture()!.dateEcheance) {
+              <div>
+                <h4 class="text-sm font-semibold text-gray-600 mb-1">Date d'échéance</h4>
+                <p class="text-gray-800">{{ selectedFacture()!.dateEcheance | date:'longDate':'':'fr-FR' }}</p>
+              </div>
+            }
+          </div>
+
+          <!-- Formateur -->
+          <div>
+            <h4 class="text-sm font-semibold text-gray-600 mb-1">Formateur</h4>
+            <p class="text-gray-800">{{ selectedFacture()!.formateurNom }}</p>
+          </div>
+
+          <!-- Lignes de facture -->
+          <div>
+            <h4 class="text-sm font-semibold text-gray-600 mb-3">Détail des prestations</h4>
+            <div class="space-y-3">
+              @for (ligne of selectedFacture()!.lignes; track ligne.id) {
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <p class="font-medium text-gray-800 mb-2">{{ ligne.description }}</p>
+                  <div class="grid grid-cols-2 gap-2 text-sm text-gray-600">
+                    <div>
+                      <span class="text-gray-500">Quantité:</span>
+                      <span class="ml-1 font-medium">{{ ligne.quantite }}h</span>
+                    </div>
+                    <div>
+                      <span class="text-gray-500">Taux horaire:</span>
+                      <span class="ml-1 font-medium">{{ ligne.tauxHoraire }}€</span>
+                    </div>
+                  </div>
+                  <div class="mt-2 pt-2 border-t border-gray-200">
+                    <div class="flex justify-between">
+                      <span class="text-gray-600">Montant:</span>
+                      <span class="font-bold text-gray-800">{{ ligne.montant | number:'1.2-2' }}€</span>
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Totaux -->
+          <div class="bg-gray-50 rounded-lg p-4 space-y-2">
+            <div class="flex justify-between text-gray-700">
+              <span>Sous-total HT:</span>
+              <span class="font-medium">{{ selectedFacture()!.sousTotal | number:'1.2-2' }}€</span>
+            </div>
+            <div class="flex justify-between text-gray-700">
+              <span>TVA (20%):</span>
+              <span class="font-medium">{{ selectedFacture()!.taxe | number:'1.2-2' }}€</span>
+            </div>
+            <div class="flex justify-between text-lg font-bold text-gray-800 pt-2 border-t border-gray-300">
+              <span>Total TTC:</span>
+              <span class="text-eduka-orange">{{ selectedFacture()!.total | number:'1.2-2' }}€</span>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="pt-4 border-t space-y-2">
+            <button (click)="genererPDF(selectedFacture()!)"
+                    class="w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+              📄 Télécharger PDF
+            </button>
+            @if (selectedFacture()!.statut === StatutFacture.BROUILLON) {
+              <button (click)="soumettre(selectedFacture()!.id)"
+                      class="w-full px-4 py-2 bg-eduka-orange text-white rounded-lg hover:bg-orange-600 transition-colors">
+                📤 Soumettre la facture
+              </button>
+            }
+            <button class="w-full px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors">
+              📝 Modifier
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

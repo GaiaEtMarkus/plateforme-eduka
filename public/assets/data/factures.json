@@ -1,0 +1,290 @@
+[
+  {
+    "id": "facture-1",
+    "numero": "FAC-2025-001",
+    "formateurId": "user-1",
+    "formateurNom": "Sophie Martin",
+    "lignes": [
+      {
+        "id": "ligne-1-1",
+        "description": "Formation DevOps CI/CD - EPITECH Paris",
+        "missionId": "mission-1",
+        "quantite": 8,
+        "tauxHoraire": 85,
+        "montant": 680
+      }
+    ],
+    "sousTotal": 680,
+    "taxe": 136,
+    "total": 816,
+    "dateEmission": "2025-11-15",
+    "dateEcheance": "2025-12-15",
+    "statut": "validee",
+    "createdAt": "2025-11-15T10:00:00Z",
+    "updatedAt": "2025-11-16T14:00:00Z"
+  },
+  {
+    "id": "facture-2",
+    "numero": "FAC-2025-002",
+    "formateurId": "user-1",
+    "formateurNom": "Sophie Martin",
+    "lignes": [
+      {
+        "id": "ligne-2-1",
+        "description": "Formation React Advanced - ESGI Lyon",
+        "missionId": "mission-2",
+        "quantite": 12,
+        "tauxHoraire": 85,
+        "montant": 1020
+      }
+    ],
+    "sousTotal": 1020,
+    "taxe": 204,
+    "total": 1224,
+    "dateEmission": "2025-11-10",
+    "dateEcheance": "2025-12-10",
+    "statut": "payee",
+    "createdAt": "2025-11-10T10:00:00Z",
+    "updatedAt": "2025-11-18T14:00:00Z"
+  },
+  {
+    "id": "facture-3",
+    "numero": "FAC-2025-003",
+    "formateurId": "user-1",
+    "formateurNom": "Sophie Martin",
+    "lignes": [
+      {
+        "id": "ligne-3-1",
+        "description": "Formation Cybersécurité - Ynov Campus",
+        "missionId": "mission-3",
+        "quantite": 16,
+        "tauxHoraire": 85,
+        "montant": 1360
+      }
+    ],
+    "sousTotal": 1360,
+    "taxe": 272,
+    "total": 1632,
+    "dateEmission": "2025-11-05",
+    "dateEcheance": "2025-12-05",
+    "statut": "en_attente",
+    "createdAt": "2025-11-05T10:00:00Z",
+    "updatedAt": "2025-11-05T10:00:00Z"
+  },
+  {
+    "id": "facture-4",
+    "numero": "FAC-2025-004",
+    "formateurId": "user-1",
+    "formateurNom": "Sophie Martin",
+    "lignes": [
+      {
+        "id": "ligne-4-1",
+        "description": "Formation AWS Cloud - Epitech Paris",
+        "missionId": "mission-4",
+        "quantite": 10,
+        "tauxHoraire": 85,
+        "montant": 850
+      }
+    ],
+    "sousTotal": 850,
+    "taxe": 170,
+    "total": 1020,
+    "dateEmission": "2025-10-28",
+    "dateEcheance": "2025-11-28",
+    "statut": "payee",
+    "createdAt": "2025-10-28T10:00:00Z",
+    "updatedAt": "2025-11-20T14:00:00Z"
+  },
+  {
+    "id": "facture-5",
+    "numero": "FAC-2025-005",
+    "formateurId": "user-1",
+    "formateurNom": "Sophie Martin",
+    "lignes": [
+      {
+        "id": "ligne-5-1",
+        "description": "Formation Docker & Kubernetes - Sup de Vinci",
+        "missionId": "mission-5",
+        "quantite": 14,
+        "tauxHoraire": 85,
+        "montant": 1190
+      }
+    ],
+    "sousTotal": 1190,
+    "taxe": 238,
+    "total": 1428,
+    "dateEmission": "2025-10-20",
+    "dateEcheance": "2025-11-20",
+    "statut": "validee",
+    "createdAt": "2025-10-20T10:00:00Z",
+    "updatedAt": "2025-10-22T14:00:00Z"
+  },
+  {
+    "id": "facture-6",
+    "numero": "FAC-2025-006",
+    "formateurId": "user-2",
+    "formateurNom": "Jean Dupont",
+    "lignes": [
+      {
+        "id": "ligne-6-1",
+        "description": "Formation Python Django - ESGI Lyon",
+        "missionId": "mission-6",
+        "quantite": 20,
+        "tauxHoraire": 80,
+        "montant": 1600
+      }
+    ],
+    "sousTotal": 1600,
+    "taxe": 320,
+    "total": 1920,
+    "dateEmission": "2025-11-12",
+    "dateEcheance": "2025-12-12",
+    "statut": "payee",
+    "createdAt": "2025-11-12T10:00:00Z",
+    "updatedAt": "2025-11-18T14:00:00Z"
+  },
+  {
+    "id": "facture-7",
+    "numero": "FAC-2025-007",
+    "formateurId": "user-2",
+    "formateurNom": "Jean Dupont",
+    "lignes": [
+      {
+        "id": "ligne-7-1",
+        "description": "Formation Microservices Spring Boot - Ynov Campus",
+        "missionId": "mission-7",
+        "quantite": 18,
+        "tauxHoraire": 80,
+        "montant": 1440
+      }
+    ],
+    "sousTotal": 1440,
+    "taxe": 288,
+    "total": 1728,
+    "dateEmission": "2025-11-08",
+    "dateEcheance": "2025-12-08",
+    "statut": "en_attente",
+    "createdAt": "2025-11-08T10:00:00Z",
+    "updatedAt": "2025-11-08T10:00:00Z"
+  },
+  {
+    "id": "facture-8",
+    "numero": "FAC-2025-008",
+    "formateurId": "user-3",
+    "formateurNom": "Marie Dubois",
+    "lignes": [
+      {
+        "id": "ligne-8-1",
+        "description": "Formation Angular - Epitech Paris",
+        "missionId": "mission-8",
+        "quantite": 16,
+        "tauxHoraire": 90,
+        "montant": 1440
+      }
+    ],
+    "sousTotal": 1440,
+    "taxe": 288,
+    "total": 1728,
+    "dateEmission": "2025-11-01",
+    "dateEcheance": "2025-12-01",
+    "statut": "validee",
+    "createdAt": "2025-11-01T10:00:00Z",
+    "updatedAt": "2025-11-03T14:00:00Z"
+  },
+  {
+    "id": "facture-9",
+    "numero": "FAC-2025-009",
+    "formateurId": "user-3",
+    "formateurNom": "Marie Dubois",
+    "lignes": [
+      {
+        "id": "ligne-9-1",
+        "description": "Formation Vue.js - Hetic Paris",
+        "missionId": "mission-9",
+        "quantite": 12,
+        "tauxHoraire": 90,
+        "montant": 1080
+      }
+    ],
+    "sousTotal": 1080,
+    "taxe": 216,
+    "total": 1296,
+    "dateEmission": "2025-10-25",
+    "dateEcheance": "2025-11-25",
+    "statut": "payee",
+    "createdAt": "2025-10-25T10:00:00Z",
+    "updatedAt": "2025-11-22T14:00:00Z"
+  },
+  {
+    "id": "facture-10",
+    "numero": "FAC-2025-010",
+    "formateurId": "user-4",
+    "formateurNom": "Pierre Bernard",
+    "lignes": [
+      {
+        "id": "ligne-10-1",
+        "description": "Formation MongoDB - ESGI Lyon",
+        "missionId": "mission-10",
+        "quantite": 10,
+        "tauxHoraire": 75,
+        "montant": 750
+      }
+    ],
+    "sousTotal": 750,
+    "taxe": 150,
+    "total": 900,
+    "dateEmission": "2025-11-14",
+    "dateEcheance": "2025-12-14",
+    "statut": "en_attente",
+    "createdAt": "2025-11-14T10:00:00Z",
+    "updatedAt": "2025-11-14T10:00:00Z"
+  },
+  {
+    "id": "facture-11",
+    "numero": "FAC-2025-011",
+    "formateurId": "user-4",
+    "formateurNom": "Pierre Bernard",
+    "lignes": [
+      {
+        "id": "ligne-11-1",
+        "description": "Formation PostgreSQL - Sup de Vinci",
+        "missionId": "mission-11",
+        "quantite": 14,
+        "tauxHoraire": 75,
+        "montant": 1050
+      }
+    ],
+    "sousTotal": 1050,
+    "taxe": 210,
+    "total": 1260,
+    "dateEmission": "2025-10-30",
+    "dateEcheance": "2025-11-30",
+    "statut": "validee",
+    "createdAt": "2025-10-30T10:00:00Z",
+    "updatedAt": "2025-11-01T14:00:00Z"
+  },
+  {
+    "id": "facture-12",
+    "numero": "FAC-2025-012",
+    "formateurId": "user-5",
+    "formateurNom": "Alice Rousseau",
+    "lignes": [
+      {
+        "id": "ligne-12-1",
+        "description": "Formation Terraform IaC - Ynov Campus",
+        "missionId": "mission-12",
+        "quantite": 16,
+        "tauxHoraire": 85,
+        "montant": 1360
+      }
+    ],
+    "sousTotal": 1360,
+    "taxe": 272,
+    "total": 1632,
+    "dateEmission": "2025-11-06",
+    "dateEcheance": "2025-12-06",
+    "statut": "payee",
+    "createdAt": "2025-11-06T10:00:00Z",
+    "updatedAt": "2025-11-19T14:00:00Z"
+  }
+]

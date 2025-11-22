@@ -1,0 +1,231 @@
+<div class="space-y-6">
+  <!-- KPI Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <!-- Total Missions -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+          <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </div>
+      </div>
+      <h3 class="text-2xl font-bold text-gray-800">{{ stats().totalMissions }}</h3>
+      <p class="text-sm text-gray-600 mt-1">Total Missions</p>
+      <div class="mt-4 flex items-center text-sm">
+        <span class="text-blue-600 font-medium">{{ stats().missionsEnCours }}</span>
+        <span class="text-gray-500 ml-1">en cours</span>
+      </div>
+    </div>
+
+    <!-- Formateurs -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+          <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+        </div>
+      </div>
+      <h3 class="text-2xl font-bold text-gray-800">{{ stats().totalFormateurs }}</h3>
+      <p class="text-sm text-gray-600 mt-1">Formateurs</p>
+      <div class="mt-4 flex items-center text-sm">
+        <span class="text-green-600 font-medium">{{ stats().formateursActifs }}</span>
+        <span class="text-gray-500 ml-1">actifs</span>
+      </div>
+    </div>
+
+    <!-- Propositions -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+          <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+        </div>
+      </div>
+      <h3 class="text-2xl font-bold text-gray-800">{{ stats().totalPropositions }}</h3>
+      <p class="text-sm text-gray-600 mt-1">Propositions</p>
+      <div class="mt-4 flex items-center text-sm">
+        <span class="text-yellow-600 font-medium">{{ stats().propositionsEnAttente }}</span>
+        <span class="text-gray-500 ml-1">en attente</span>
+      </div>
+    </div>
+
+    <!-- Chiffre d'affaires -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="w-12 h-12 bg-eduka-orange bg-opacity-20 rounded-lg flex items-center justify-center">
+          <svg class="w-6 h-6 text-eduka-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+      </div>
+      <h3 class="text-2xl font-bold text-gray-800">{{ stats().montantTotal | number:'1.0-0' }}€</h3>
+      <p class="text-sm text-gray-600 mt-1">Chiffre d'affaires</p>
+      <div class="mt-4 flex items-center text-sm">
+        <span class="text-eduka-orange font-medium">{{ stats().facturesPayees }}</span>
+        <span class="text-gray-500 ml-1">factures payées</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grille 2 colonnes -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Missions récentes -->
+    <div class="bg-white rounded-lg shadow">
+      <div class="p-6 border-b">
+        <h2 class="text-lg font-bold text-gray-800">Missions récentes</h2>
+      </div>
+      <div class="p-6">
+        @if (recentMissions().length === 0) {
+          <p class="text-gray-500 text-center py-8">Aucune mission</p>
+        } @else {
+          <div class="space-y-4">
+            @for (mission of recentMissions(); track mission.id) {
+              <div class="flex items-start justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                <div class="flex-1">
+                  <h3 class="font-medium text-gray-800">{{ mission.cours.nom }}</h3>
+                  <p class="text-sm text-gray-600 mt-1">{{ mission.ecole.nom }}</p>
+                  <p class="text-xs text-gray-500 mt-1">
+                    {{ mission.dateDebut | date:'short':'':'fr-FR' }}
+                  </p>
+                </div>
+                <span class="px-3 py-1 rounded-full text-xs font-medium"
+                      [ngClass]="getStatutColor(mission.statut)">
+                  {{ mission.statut }}
+                </span>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Propositions récentes -->
+    <div class="bg-white rounded-lg shadow">
+      <div class="p-6 border-b">
+        <h2 class="text-lg font-bold text-gray-800">Propositions récentes</h2>
+      </div>
+      <div class="p-6">
+        @if (recentPropositions().length === 0) {
+          <p class="text-gray-500 text-center py-8">Aucune proposition</p>
+        } @else {
+          <div class="space-y-4">
+            @for (proposition of recentPropositions(); track proposition.id) {
+              <div class="flex items-start justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                <div class="flex-1">
+                  <h3 class="font-medium text-gray-800">{{ proposition.cours.nom }}</h3>
+                  <p class="text-sm text-gray-600 mt-1">{{ proposition.ecole.nom }}</p>
+                  <div class="flex items-center gap-2 mt-2">
+                    <p class="text-xs text-gray-500">
+                      {{ proposition.dateDebut | date:'short':'':'fr-FR' }}
+                    </p>
+                    <span class="text-xs text-gray-400">•</span>
+                    <p class="text-xs font-medium text-eduka-orange">{{ proposition.remuneration }}€</p>
+                  </div>
+                </div>
+                <div class="flex flex-col items-end gap-2">
+                  <span class="px-3 py-1 rounded-full text-xs font-medium"
+                        [ngClass]="getStatutColor(proposition.statut)">
+                    {{ proposition.statut }}
+                  </span>
+                  @if (proposition.candidatures && proposition.candidatures.length > 0) {
+                    <span class="text-xs text-gray-500">
+                      {{ proposition.candidatures.length }} candidature(s)
+                    </span>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Formateurs -->
+  <div class="bg-white rounded-lg shadow">
+    <div class="p-6 border-b">
+      <h2 class="text-lg font-bold text-gray-800">Top Formateurs</h2>
+    </div>
+    <div class="p-6">
+      @if (formateurs().length === 0) {
+        <p class="text-gray-500 text-center py-8">Aucun formateur</p>
+      } @else {
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          @for (formateur of formateurs().slice(0, 6); track formateur.id) {
+            <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+              <img [src]="formateur.avatar || 'https://i.pravatar.cc/150'"
+                   alt="{{ formateur.prenom }}"
+                   class="w-12 h-12 rounded-full" />
+              <div class="flex-1 min-w-0">
+                <h3 class="font-medium text-gray-800 truncate">
+                  {{ formateur.prenom }} {{ formateur.nom }}
+                </h3>
+                <div class="flex items-center gap-3 mt-1">
+                  <span class="text-xs text-gray-500">
+                    {{ formateur.nombreMissions || 0 }} missions
+                  </span>
+                  <span class="text-xs text-gray-400">•</span>
+                  <div class="flex items-center gap-1">
+                    <span class="text-xs font-medium text-gray-700">{{ formateur.noteGlobale || 0 }}</span>
+                    <span class="text-yellow-400 text-xs">⭐</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Actions rapides -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <a routerLink="/admin/proposals"
+       class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow cursor-pointer border-2 border-transparent hover:border-eduka-orange">
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 bg-eduka-orange bg-opacity-20 rounded-lg flex items-center justify-center">
+          <svg class="w-6 h-6 text-eduka-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="font-bold text-gray-800">Nouvelle Proposition</h3>
+          <p class="text-sm text-gray-600">Créer une mission</p>
+        </div>
+      </div>
+    </a>
+
+    <a routerLink="/admin/trainers"
+       class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow cursor-pointer border-2 border-transparent hover:border-eduka-orange">
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+          <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="font-bold text-gray-800">Gérer Formateurs</h3>
+          <p class="text-sm text-gray-600">Voir tous les formateurs</p>
+        </div>
+      </div>
+    </a>
+
+    <a routerLink="/admin/schools"
+       class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow cursor-pointer border-2 border-transparent hover:border-eduka-orange">
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+          <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="font-bold text-gray-800">Gérer Écoles</h3>
+          <p class="text-sm text-gray-600">Partenaires écoles</p>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>

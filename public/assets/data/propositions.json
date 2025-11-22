@@ -1,0 +1,341 @@
+[
+  {
+    "id": "prop-1",
+    "coursId": "cours-2",
+    "ecoleId": "ecole-2",
+    "classeId": "classe-5",
+    "dateDebut": "2025-12-05",
+    "dateFin": "2025-12-05",
+    "heureDebut": "09:00",
+    "heureFin": "17:00",
+    "type": "publique",
+    "statut": "en_attente",
+    "description": "Formation avancée en cybersécurité et pentest pour étudiants M1. Couverture des techniques OWASP, analyse de vulnérabilités, et méthodologies de pentest professionnel.",
+    "remuneration": 760,
+    "dateExpiration": "2025-11-30T23:59:59Z",
+    "createdBy": "admin-1",
+    "candidatures": [
+      {
+        "formateurId": "user-3",
+        "datePostulation": "2025-11-19T10:00:00Z",
+        "statut": "en_attente"
+      }
+    ],
+    "createdAt": "2025-11-15T10:00:00Z",
+    "updatedAt": "2025-11-19T10:00:00Z"
+  },
+  {
+    "id": "prop-2",
+    "coursId": "cours-9",
+    "ecoleId": "ecole-1",
+    "classeId": "classe-8",
+    "dateDebut": "2025-12-10",
+    "dateFin": "2025-12-10",
+    "heureDebut": "10:00",
+    "heureFin": "18:00",
+    "type": "publique",
+    "statut": "en_attente",
+    "description": "Architecture microservices avec Spring Boot - Formation intensive. Design patterns, API REST, communication inter-services, et déploiement cloud.",
+    "remuneration": 720,
+    "dateExpiration": "2025-12-01T23:59:59Z",
+    "createdBy": "admin-1",
+    "candidatures": [],
+    "createdAt": "2025-11-16T10:00:00Z",
+    "updatedAt": "2025-11-16T10:00:00Z"
+  },
+  {
+    "id": "prop-3",
+    "coursId": "cours-4",
+    "ecoleId": "ecole-3",
+    "classeId": "classe-6",
+    "dateDebut": "2025-12-15",
+    "dateFin": "2025-12-16",
+    "heureDebut": "09:00",
+    "heureFin": "17:00",
+    "type": "publique",
+    "statut": "en_attente",
+    "description": "Formation AWS - Architecture cloud pour étudiants M2. EC2, S3, RDS, Lambda, CloudFormation et bonnes pratiques de sécurité.",
+    "remuneration": 1200,
+    "dateExpiration": "2025-12-05T23:59:59Z",
+    "createdBy": "admin-1",
+    "candidatures": [
+      {
+        "formateurId": "user-2",
+        "datePostulation": "2025-11-19T09:00:00Z",
+        "statut": "en_attente"
+      }
+    ],
+    "createdAt": "2025-11-16T12:00:00Z",
+    "updatedAt": "2025-11-19T09:00:00Z"
+  },
+  {
+    "id": "prop-4",
+    "coursId": "cours-5",
+    "ecoleId": "ecole-1",
+    "classeId": "classe-3",
+    "dateDebut": "2025-12-20",
+    "dateFin": "2025-12-20",
+    "heureDebut": "10:00",
+    "heureFin": "18:00",
+    "type": "publique",
+    "statut": "en_attente",
+    "description": "Infrastructure as Code avec Terraform - Niveau avancé. Provisioning multi-cloud, modules réutilisables, state management et CI/CD.",
+    "remuneration": 640,
+    "dateExpiration": "2025-12-10T23:59:59Z",
+    "createdBy": "admin-1",
+    "candidatures": [
+      {
+        "formateurId": "user-2",
+        "datePostulation": "2025-11-18T14:30:00Z",
+        "statut": "en_attente"
+      }
+    ],
+    "createdAt": "2025-11-17T14:00:00Z",
+    "updatedAt": "2025-11-18T14:30:00Z"
+  },
+  {
+    "id": "prop-5",
+    "coursId": "cours-1",
+    "ecoleId": "ecole-4",
+    "classeId": "classe-1",
+    "dateDebut": "2025-12-12",
+    "dateFin": "2025-12-12",
+    "heureDebut": "09:00",
+    "heureFin": "17:00",
+    "type": "publique",
+    "statut": "en_attente",
+    "description": "Python avancé pour la data science. NumPy, Pandas, Matplotlib, et introduction au machine learning avec scikit-learn.",
+    "remuneration": 600,
+    "dateExpiration": "2025-12-03T23:59:59Z",
+    "createdBy": "admin-1",
+    "candidatures": [
+      {
+        "formateurId": "user-1",
+        "datePostulation": "2025-11-18T11:00:00Z",
+        "statut": "en_attente"
+      }
+    ],
+    "createdAt": "2025-11-17T10:00:00Z",
+    "updatedAt": "2025-11-18T11:00:00Z"
+  },
+  {
+    "id": "prop-6",
+    "coursId": "cours-6",
+    "ecoleId": "ecole-5",
+    "classeId": "classe-2",
+    "dateDebut": "2025-12-18",
+    "dateFin": "2025-12-18",
+    "heureDebut": "09:00",
+    "heureFin": "17:00",
+    "type": "publique",
+    "statut": "en_attente",
+    "description": "Développement React avancé - Hooks, Context API, Redux Toolkit, et optimisation des performances.",
+    "remuneration": 640,
+    "dateExpiration": "2025-12-08T23:59:59Z",
+    "createdBy": "admin-1",
+    "candidatures": [
+      {
+        "formateurId": "user-1",
+        "datePostulation": "2025-11-18T15:00:00Z",
+        "statut": "en_attente"
+      }
+    ],
+    "createdAt": "2025-11-17T11:00:00Z",
+    "updatedAt": "2025-11-18T15:00:00Z"
+  },
+  {
+    "id": "prop-7",
+    "coursId": "cours-3",
+    "ecoleId": "ecole-2",
+    "classeId": "classe-4",
+    "dateDebut": "2025-12-22",
+    "dateFin": "2025-12-23",
+    "heureDebut": "09:00",
+    "heureFin": "17:00",
+    "type": "publique",
+    "statut": "en_attente",
+    "description": "Docker et Kubernetes - Conteneurisation et orchestration. Images, volumes, networking, déploiements K8s et Helm.",
+    "remuneration": 1120,
+    "dateExpiration": "2025-12-12T23:59:59Z",
+    "createdBy": "admin-1",
+    "candidatures": [
+      {
+        "formateurId": "user-2",
+        "datePostulation": "2025-11-18T16:00:00Z",
+        "statut": "en_attente"
+      }
+    ],
+    "createdAt": "2025-11-17T12:00:00Z",
+    "updatedAt": "2025-11-18T16:00:00Z"
+  },
+  {
+    "id": "prop-8",
+    "coursId": "cours-7",
+    "ecoleId": "ecole-3",
+    "classeId": "classe-4",
+    "dateDebut": "2025-12-27",
+    "dateFin": "2025-12-27",
+    "heureDebut": "14:00",
+    "heureFin": "18:00",
+    "type": "publique",
+    "statut": "en_attente",
+    "description": "CI/CD avec GitLab - Pipelines automatisés, tests, déploiement continu et bonnes pratiques DevOps.",
+    "remuneration": 380,
+    "dateExpiration": "2025-12-18T23:59:59Z",
+    "createdBy": "admin-1",
+    "candidatures": [],
+    "createdAt": "2025-11-17T13:00:00Z",
+    "updatedAt": "2025-11-17T13:00:00Z"
+  },
+  {
+    "id": "prop-9",
+    "coursId": "cours-10",
+    "ecoleId": "ecole-1",
+    "classeId": "classe-8",
+    "dateDebut": "2025-12-29",
+    "dateFin": "2025-12-29",
+    "heureDebut": "10:00",
+    "heureFin": "18:00",
+    "type": "publique",
+    "statut": "en_attente",
+    "description": "MongoDB avancé pour le Big Data. Modélisation, indexation, agrégation, sharding et réplication.",
+    "remuneration": 720,
+    "dateExpiration": "2025-12-20T23:59:59Z",
+    "createdBy": "admin-1",
+    "candidatures": [
+      {
+        "formateurId": "user-1",
+        "datePostulation": "2025-11-18T10:00:00Z",
+        "statut": "en_attente"
+      }
+    ],
+    "createdAt": "2025-11-17T14:00:00Z",
+    "updatedAt": "2025-11-18T10:00:00Z"
+  },
+  {
+    "id": "prop-10",
+    "coursId": "cours-8",
+    "ecoleId": "ecole-4",
+    "classeId": "classe-5",
+    "dateDebut": "2026-01-05",
+    "dateFin": "2026-01-05",
+    "heureDebut": "09:00",
+    "heureFin": "17:00",
+    "type": "publique",
+    "statut": "en_attente",
+    "description": "Sécurité applicative OWASP - Top 10 des vulnérabilités web, injection SQL, XSS, CSRF et mitigation.",
+    "remuneration": 760,
+    "dateExpiration": "2025-12-25T23:59:59Z",
+    "createdBy": "admin-1",
+    "candidatures": [
+      {
+        "formateurId": "user-3",
+        "datePostulation": "2025-11-19T08:00:00Z",
+        "statut": "en_attente"
+      }
+    ],
+    "createdAt": "2025-11-17T15:00:00Z",
+    "updatedAt": "2025-11-19T08:00:00Z"
+  },
+  {
+    "id": "prop-11",
+    "coursId": "cours-1",
+    "ecoleId": "ecole-5",
+    "classeId": "classe-1",
+    "dateDebut": "2026-01-08",
+    "dateFin": "2026-01-08",
+    "heureDebut": "09:00",
+    "heureFin": "13:00",
+    "type": "publique",
+    "statut": "en_attente",
+    "description": "Python pour l'automatisation - Scripts, CLI, gestion de fichiers et APIs REST.",
+    "remuneration": 320,
+    "dateExpiration": "2025-12-28T23:59:59Z",
+    "createdBy": "admin-1",
+    "candidatures": [],
+    "createdAt": "2025-11-18T09:00:00Z",
+    "updatedAt": "2025-11-18T09:00:00Z"
+  },
+  {
+    "id": "prop-12",
+    "coursId": "cours-4",
+    "ecoleId": "ecole-2",
+    "classeId": "classe-7",
+    "dateDebut": "2026-01-12",
+    "dateFin": "2026-01-13",
+    "heureDebut": "09:00",
+    "heureFin": "17:00",
+    "type": "publique",
+    "statut": "en_attente",
+    "description": "AWS - Certification Solutions Architect Associate. Préparation intensive avec labs pratiques.",
+    "remuneration": 1200,
+    "dateExpiration": "2026-01-02T23:59:59Z",
+    "createdBy": "admin-1",
+    "candidatures": [],
+    "createdAt": "2025-11-18T10:00:00Z",
+    "updatedAt": "2025-11-18T10:00:00Z"
+  },
+  {
+    "id": "prop-13",
+    "coursId": "cours-6",
+    "ecoleId": "ecole-3",
+    "classeId": "classe-3",
+    "dateDebut": "2026-01-15",
+    "dateFin": "2026-01-15",
+    "heureDebut": "14:00",
+    "heureFin": "18:00",
+    "type": "publique",
+    "statut": "en_attente",
+    "description": "React Native - Développement mobile cross-platform. Navigation, state management et déploiement.",
+    "remuneration": 380,
+    "dateExpiration": "2026-01-05T23:59:59Z",
+    "createdBy": "admin-1",
+    "candidatures": [
+      {
+        "formateurId": "user-1",
+        "datePostulation": "2025-11-19T11:00:00Z",
+        "statut": "en_attente"
+      }
+    ],
+    "createdAt": "2025-11-18T11:00:00Z",
+    "updatedAt": "2025-11-19T11:00:00Z"
+  },
+  {
+    "id": "prop-14",
+    "coursId": "cours-2",
+    "ecoleId": "ecole-1",
+    "classeId": "classe-5",
+    "dateDebut": "2026-01-19",
+    "dateFin": "2026-01-20",
+    "heureDebut": "09:00",
+    "heureFin": "17:00",
+    "type": "publique",
+    "statut": "en_attente",
+    "description": "Pentest avancé - Red team, exploitation de vulnérabilités, post-exploitation et reporting.",
+    "remuneration": 1120,
+    "dateExpiration": "2026-01-09T23:59:59Z",
+    "createdBy": "admin-1",
+    "candidatures": [],
+    "createdAt": "2025-11-18T12:00:00Z",
+    "updatedAt": "2025-11-18T12:00:00Z"
+  },
+  {
+    "id": "prop-15",
+    "coursId": "cours-9",
+    "ecoleId": "ecole-4",
+    "classeId": "classe-8",
+    "dateDebut": "2026-01-22",
+    "dateFin": "2026-01-22",
+    "heureDebut": "09:00",
+    "heureFin": "17:00",
+    "type": "publique",
+    "statut": "en_attente",
+    "description": "Microservices - Event-driven architecture avec Kafka et RabbitMQ.",
+    "remuneration": 760,
+    "dateExpiration": "2026-01-12T23:59:59Z",
+    "createdBy": "admin-1",
+    "candidatures": [],
+    "createdAt": "2025-11-18T13:00:00Z",
+    "updatedAt": "2025-11-18T13:00:00Z"
+  }
+]

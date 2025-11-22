@@ -1,0 +1,470 @@
+[
+  {
+    "id": "user-1",
+    "email": "sophie.martin@email.com",
+    "nom": "Martin",
+    "prenom": "Sophie",
+    "telephone": "06 12 34 56 78",
+    "role": "formateur",
+    "avatar": "https://i.pravatar.cc/150?img=1",
+    "competences": [
+      { "id": "c1", "nom": "Python", "niveau": "expert" },
+      { "id": "c2", "nom": "React", "niveau": "expert" },
+      { "id": "c3", "nom": "JavaScript", "niveau": "expert" },
+      { "id": "c4", "nom": "Node.js", "niveau": "intermediaire" }
+    ],
+    "documents": [
+      {
+        "id": "doc1",
+        "nom": "CV_Sophie_Martin.pdf",
+        "type": "cv",
+        "url": "/assets/documents/cv1.pdf",
+        "uploadedAt": "2024-01-15T10:00:00Z"
+      },
+      {
+        "id": "doc2",
+        "nom": "Diplome_Master.pdf",
+        "type": "diplome",
+        "url": "/assets/documents/diplome1.pdf",
+        "uploadedAt": "2024-01-15T10:05:00Z"
+      }
+    ],
+    "disponibilites": [
+      { "jour": "lundi", "heureDebut": "09:00", "heureFin": "18:00" },
+      { "jour": "mardi", "heureDebut": "09:00", "heureFin": "18:00" },
+      { "jour": "mercredi", "heureDebut": "14:00", "heureFin": "18:00" },
+      { "jour": "jeudi", "heureDebut": "09:00", "heureFin": "18:00" },
+      { "jour": "vendredi", "heureDebut": "09:00", "heureFin": "16:00" }
+    ],
+    "adresse": "12 Rue de la République",
+    "ville": "Paris",
+    "codePostal": "75011",
+    "nombreMissions": 45,
+    "nombreHeures": 320,
+    "noteGlobale": 4.8,
+    "tarifHoraire": 85,
+    "createdAt": "2024-01-10T00:00:00Z",
+    "updatedAt": "2025-11-18T10:00:00Z"
+  },
+  {
+    "id": "user-2",
+    "email": "jean.dupont@email.com",
+    "nom": "Dupont",
+    "prenom": "Jean",
+    "telephone": "06 23 45 67 89",
+    "role": "formateur",
+    "avatar": "https://i.pravatar.cc/150?img=12",
+    "competences": [
+      { "id": "c5", "nom": "AWS", "niveau": "expert" },
+      { "id": "c6", "nom": "Docker", "niveau": "expert" },
+      { "id": "c7", "nom": "Kubernetes", "niveau": "intermediaire" },
+      { "id": "c8", "nom": "Terraform", "niveau": "expert" }
+    ],
+    "documents": [
+      {
+        "id": "doc3",
+        "nom": "CV_Jean_Dupont.pdf",
+        "type": "cv",
+        "url": "/assets/documents/cv2.pdf",
+        "uploadedAt": "2024-02-10T10:00:00Z"
+      }
+    ],
+    "disponibilites": [
+      { "jour": "lundi", "heureDebut": "08:00", "heureFin": "17:00" },
+      { "jour": "mercredi", "heureDebut": "08:00", "heureFin": "17:00" },
+      { "jour": "vendredi", "heureDebut": "08:00", "heureFin": "17:00" }
+    ],
+    "adresse": "45 Avenue des Champs",
+    "ville": "Lyon",
+    "codePostal": "69002",
+    "nombreMissions": 32,
+    "nombreHeures": 256,
+    "noteGlobale": 4.6,
+    "tarifHoraire": 80,
+    "createdAt": "2024-02-05T00:00:00Z",
+    "updatedAt": "2025-11-18T10:00:00Z"
+  },
+  {
+    "id": "user-3",
+    "email": "marie.bernard@email.com",
+    "nom": "Bernard",
+    "prenom": "Marie",
+    "telephone": "06 34 56 78 90",
+    "role": "formateur",
+    "avatar": "https://i.pravatar.cc/150?img=5",
+    "competences": [
+      { "id": "c9", "nom": "Cybersécurité", "niveau": "expert" },
+      { "id": "c10", "nom": "Pentest", "niveau": "expert" },
+      { "id": "c11", "nom": "Linux", "niveau": "expert" },
+      { "id": "c12", "nom": "Réseaux", "niveau": "intermediaire" }
+    ],
+    "disponibilites": [
+      { "jour": "mardi", "heureDebut": "09:00", "heureFin": "18:00" },
+      { "jour": "jeudi", "heureDebut": "09:00", "heureFin": "18:00" }
+    ],
+    "adresse": "78 Rue Victor Hugo",
+    "ville": "Marseille",
+    "codePostal": "13001",
+    "nombreMissions": 28,
+    "nombreHeures": 210,
+    "noteGlobale": 4.9,
+    "tarifHoraire": 90,
+    "createdAt": "2024-03-01T00:00:00Z",
+    "updatedAt": "2025-11-18T10:00:00Z"
+  },
+  {
+    "id": "user-4",
+    "email": "pierre.lefevre@email.com",
+    "nom": "Lefevre",
+    "prenom": "Pierre",
+    "telephone": "06 45 67 89 01",
+    "role": "formateur",
+    "avatar": "https://i.pravatar.cc/150?img=13",
+    "competences": [
+      { "id": "c13", "nom": "MongoDB", "niveau": "expert" },
+      { "id": "c14", "nom": "PostgreSQL", "niveau": "expert" },
+      { "id": "c15", "nom": "Redis", "niveau": "intermediaire" },
+      { "id": "c16", "nom": "SQL", "niveau": "expert" }
+    ],
+    "documents": [
+      {
+        "id": "doc4",
+        "nom": "CV_Pierre_Lefevre.pdf",
+        "type": "cv",
+        "url": "/assets/documents/cv4.pdf",
+        "uploadedAt": "2024-01-20T10:00:00Z"
+      }
+    ],
+    "disponibilites": [
+      { "jour": "lundi", "heureDebut": "10:00", "heureFin": "19:00" },
+      { "jour": "mardi", "heureDebut": "10:00", "heureFin": "19:00" },
+      { "jour": "mercredi", "heureDebut": "10:00", "heureFin": "19:00" },
+      { "jour": "jeudi", "heureDebut": "10:00", "heureFin": "19:00" }
+    ],
+    "adresse": "23 Boulevard Haussmann",
+    "ville": "Paris",
+    "codePostal": "75009",
+    "nombreMissions": 38,
+    "nombreHeures": 290,
+    "noteGlobale": 4.7,
+    "tarifHoraire": 75,
+    "createdAt": "2024-01-20T00:00:00Z",
+    "updatedAt": "2025-11-18T10:00:00Z"
+  },
+  {
+    "id": "user-5",
+    "email": "alice.rousseau@email.com",
+    "nom": "Rousseau",
+    "prenom": "Alice",
+    "telephone": "06 56 78 90 12",
+    "role": "formateur",
+    "avatar": "https://i.pravatar.cc/150?img=9",
+    "competences": [
+      { "id": "c17", "nom": "Terraform", "niveau": "expert" },
+      { "id": "c18", "nom": "CI/CD", "niveau": "expert" },
+      { "id": "c19", "nom": "GitLab", "niveau": "expert" },
+      { "id": "c20", "nom": "Jenkins", "niveau": "intermediaire" }
+    ],
+    "disponibilites": [
+      { "jour": "lundi", "heureDebut": "09:00", "heureFin": "17:00" },
+      { "jour": "mardi", "heureDebut": "09:00", "heureFin": "17:00" },
+      { "jour": "jeudi", "heureDebut": "09:00", "heureFin": "17:00" },
+      { "jour": "vendredi", "heureDebut": "09:00", "heureFin": "17:00" }
+    ],
+    "adresse": "56 Rue de la Paix",
+    "ville": "Bordeaux",
+    "codePostal": "33000",
+    "nombreMissions": 41,
+    "nombreHeures": 315,
+    "noteGlobale": 4.8,
+    "tarifHoraire": 85,
+    "createdAt": "2024-02-15T00:00:00Z",
+    "updatedAt": "2025-11-18T10:00:00Z"
+  },
+  {
+    "id": "user-6",
+    "email": "thomas.petit@email.com",
+    "nom": "Petit",
+    "prenom": "Thomas",
+    "telephone": "06 67 89 01 23",
+    "role": "formateur",
+    "avatar": "https://i.pravatar.cc/150?img=14",
+    "competences": [
+      { "id": "c21", "nom": "Angular", "niveau": "expert" },
+      { "id": "c22", "nom": "TypeScript", "niveau": "expert" },
+      { "id": "c23", "nom": "RxJS", "niveau": "expert" },
+      { "id": "c24", "nom": "NestJS", "niveau": "intermediaire" }
+    ],
+    "documents": [
+      {
+        "id": "doc6",
+        "nom": "CV_Thomas_Petit.pdf",
+        "type": "cv",
+        "url": "/assets/documents/cv6.pdf",
+        "uploadedAt": "2024-03-10T10:00:00Z"
+      }
+    ],
+    "disponibilites": [
+      { "jour": "lundi", "heureDebut": "08:30", "heureFin": "18:30" },
+      { "jour": "mercredi", "heureDebut": "08:30", "heureFin": "18:30" },
+      { "jour": "vendredi", "heureDebut": "08:30", "heureFin": "18:30" }
+    ],
+    "adresse": "89 Avenue de la Liberté",
+    "ville": "Lille",
+    "codePostal": "59000",
+    "nombreMissions": 35,
+    "nombreHeures": 275,
+    "noteGlobale": 4.6,
+    "tarifHoraire": 82,
+    "createdAt": "2024-03-10T00:00:00Z",
+    "updatedAt": "2025-11-18T10:00:00Z"
+  },
+  {
+    "id": "user-7",
+    "email": "laura.moreau@email.com",
+    "nom": "Moreau",
+    "prenom": "Laura",
+    "telephone": "06 78 90 12 34",
+    "role": "formateur",
+    "avatar": "https://i.pravatar.cc/150?img=10",
+    "competences": [
+      { "id": "c25", "nom": "Vue.js", "niveau": "expert" },
+      { "id": "c26", "nom": "Nuxt.js", "niveau": "expert" },
+      { "id": "c27", "nom": "JavaScript", "niveau": "expert" },
+      { "id": "c28", "nom": "CSS", "niveau": "expert" }
+    ],
+    "documents": [
+      {
+        "id": "doc7",
+        "nom": "CV_Laura_Moreau.pdf",
+        "type": "cv",
+        "url": "/assets/documents/cv7.pdf",
+        "uploadedAt": "2024-04-01T10:00:00Z"
+      }
+    ],
+    "disponibilites": [
+      { "jour": "mardi", "heureDebut": "10:00", "heureFin": "18:00" },
+      { "jour": "mercredi", "heureDebut": "10:00", "heureFin": "18:00" },
+      { "jour": "jeudi", "heureDebut": "10:00", "heureFin": "18:00" }
+    ],
+    "adresse": "34 Rue Jean Jaurès",
+    "ville": "Toulouse",
+    "codePostal": "31000",
+    "nombreMissions": 29,
+    "nombreHeures": 225,
+    "noteGlobale": 4.7,
+    "tarifHoraire": 78,
+    "createdAt": "2024-04-01T00:00:00Z",
+    "updatedAt": "2025-11-18T10:00:00Z"
+  },
+  {
+    "id": "user-8",
+    "email": "nicolas.simon@email.com",
+    "nom": "Simon",
+    "prenom": "Nicolas",
+    "telephone": "06 89 01 23 45",
+    "role": "formateur",
+    "avatar": "https://i.pravatar.cc/150?img=15",
+    "competences": [
+      { "id": "c29", "nom": "Spring Boot", "niveau": "expert" },
+      { "id": "c30", "nom": "Java", "niveau": "expert" },
+      { "id": "c31", "nom": "Microservices", "niveau": "expert" },
+      { "id": "c32", "nom": "Kafka", "niveau": "intermediaire" }
+    ],
+    "documents": [
+      {
+        "id": "doc8",
+        "nom": "CV_Nicolas_Simon.pdf",
+        "type": "cv",
+        "url": "/assets/documents/cv8.pdf",
+        "uploadedAt": "2024-01-25T10:00:00Z"
+      },
+      {
+        "id": "doc9",
+        "nom": "Certification_Java.pdf",
+        "type": "diplome",
+        "url": "/assets/documents/cert1.pdf",
+        "uploadedAt": "2024-01-25T10:05:00Z"
+      }
+    ],
+    "disponibilites": [
+      { "jour": "lundi", "heureDebut": "09:00", "heureFin": "18:00" },
+      { "jour": "mardi", "heureDebut": "09:00", "heureFin": "18:00" },
+      { "jour": "mercredi", "heureDebut": "09:00", "heureFin": "18:00" },
+      { "jour": "jeudi", "heureDebut": "09:00", "heureFin": "18:00" },
+      { "jour": "vendredi", "heureDebut": "09:00", "heureFin": "15:00" }
+    ],
+    "adresse": "67 Rue de Rivoli",
+    "ville": "Paris",
+    "codePostal": "75004",
+    "nombreMissions": 43,
+    "nombreHeures": 340,
+    "noteGlobale": 4.9,
+    "tarifHoraire": 88,
+    "createdAt": "2024-01-25T00:00:00Z",
+    "updatedAt": "2025-11-18T10:00:00Z"
+  },
+  {
+    "id": "user-9",
+    "email": "camille.durand@email.com",
+    "nom": "Durand",
+    "prenom": "Camille",
+    "telephone": "06 90 12 34 56",
+    "role": "formateur",
+    "avatar": "https://i.pravatar.cc/150?img=8",
+    "competences": [
+      { "id": "c33", "nom": "UI/UX Design", "niveau": "expert" },
+      { "id": "c34", "nom": "Figma", "niveau": "expert" },
+      { "id": "c35", "nom": "Adobe XD", "niveau": "expert" },
+      { "id": "c36", "nom": "Design System", "niveau": "intermediaire" }
+    ],
+    "documents": [
+      {
+        "id": "doc10",
+        "nom": "Portfolio_Camille_Durand.pdf",
+        "type": "cv",
+        "url": "/assets/documents/cv9.pdf",
+        "uploadedAt": "2024-05-01T10:00:00Z"
+      }
+    ],
+    "disponibilites": [
+      { "jour": "lundi", "heureDebut": "10:00", "heureFin": "17:00" },
+      { "jour": "mercredi", "heureDebut": "10:00", "heureFin": "17:00" },
+      { "jour": "vendredi", "heureDebut": "10:00", "heureFin": "17:00" }
+    ],
+    "adresse": "45 Cours Gambetta",
+    "ville": "Lyon",
+    "codePostal": "69007",
+    "nombreMissions": 26,
+    "nombreHeures": 195,
+    "noteGlobale": 4.8,
+    "tarifHoraire": 72,
+    "createdAt": "2024-05-01T00:00:00Z",
+    "updatedAt": "2025-11-18T10:00:00Z"
+  },
+  {
+    "id": "user-10",
+    "email": "maxime.laurent@email.com",
+    "nom": "Laurent",
+    "prenom": "Maxime",
+    "telephone": "06 01 23 45 67",
+    "role": "formateur",
+    "avatar": "https://i.pravatar.cc/150?img=16",
+    "competences": [
+      { "id": "c37", "nom": "Data Science", "niveau": "expert" },
+      { "id": "c38", "nom": "Machine Learning", "niveau": "expert" },
+      { "id": "c39", "nom": "Python", "niveau": "expert" },
+      { "id": "c40", "nom": "TensorFlow", "niveau": "intermediaire" }
+    ],
+    "documents": [
+      {
+        "id": "doc11",
+        "nom": "CV_Maxime_Laurent.pdf",
+        "type": "cv",
+        "url": "/assets/documents/cv10.pdf",
+        "uploadedAt": "2024-03-20T10:00:00Z"
+      }
+    ],
+    "disponibilites": [
+      { "jour": "mardi", "heureDebut": "09:00", "heureFin": "18:00" },
+      { "jour": "jeudi", "heureDebut": "09:00", "heureFin": "18:00" }
+    ],
+    "adresse": "12 Rue Pasteur",
+    "ville": "Nantes",
+    "codePostal": "44000",
+    "nombreMissions": 31,
+    "nombreHeures": 245,
+    "noteGlobale": 4.7,
+    "tarifHoraire": 92,
+    "createdAt": "2024-03-20T00:00:00Z",
+    "updatedAt": "2025-11-18T10:00:00Z"
+  },
+  {
+    "id": "user-11",
+    "email": "emma.garcia@email.com",
+    "nom": "Garcia",
+    "prenom": "Emma",
+    "telephone": "06 12 34 56 89",
+    "role": "formateur",
+    "avatar": "https://i.pravatar.cc/150?img=7",
+    "competences": [
+      { "id": "c41", "nom": "DevOps", "niveau": "expert" },
+      { "id": "c42", "nom": "Azure", "niveau": "expert" },
+      { "id": "c43", "nom": "Ansible", "niveau": "expert" },
+      { "id": "c44", "nom": "Monitoring", "niveau": "intermediaire" }
+    ],
+    "documents": [
+      {
+        "id": "doc12",
+        "nom": "CV_Emma_Garcia.pdf",
+        "type": "cv",
+        "url": "/assets/documents/cv11.pdf",
+        "uploadedAt": "2024-02-28T10:00:00Z"
+      }
+    ],
+    "disponibilites": [
+      { "jour": "lundi", "heureDebut": "08:00", "heureFin": "17:00" },
+      { "jour": "mardi", "heureDebut": "08:00", "heureFin": "17:00" },
+      { "jour": "mercredi", "heureDebut": "08:00", "heureFin": "17:00" },
+      { "jour": "jeudi", "heureDebut": "08:00", "heureFin": "17:00" }
+    ],
+    "adresse": "78 Avenue de Saxe",
+    "ville": "Lyon",
+    "codePostal": "69003",
+    "nombreMissions": 37,
+    "nombreHeures": 285,
+    "noteGlobale": 4.8,
+    "tarifHoraire": 86,
+    "createdAt": "2024-02-28T00:00:00Z",
+    "updatedAt": "2025-11-18T10:00:00Z"
+  },
+  {
+    "id": "user-12",
+    "email": "lucas.martinez@email.com",
+    "nom": "Martinez",
+    "prenom": "Lucas",
+    "telephone": "06 23 45 67 90",
+    "role": "formateur",
+    "avatar": "https://i.pravatar.cc/150?img=17",
+    "competences": [
+      { "id": "c45", "nom": "GraphQL", "niveau": "expert" },
+      { "id": "c46", "nom": "Apollo", "niveau": "expert" },
+      { "id": "c47", "nom": "Node.js", "niveau": "expert" },
+      { "id": "c48", "nom": "React", "niveau": "intermediaire" }
+    ],
+    "documents": [
+      {
+        "id": "doc13",
+        "nom": "CV_Lucas_Martinez.pdf",
+        "type": "cv",
+        "url": "/assets/documents/cv12.pdf",
+        "uploadedAt": "2024-06-01T10:00:00Z"
+      }
+    ],
+    "disponibilites": [
+      { "jour": "mardi", "heureDebut": "10:00", "heureFin": "19:00" },
+      { "jour": "mercredi", "heureDebut": "10:00", "heureFin": "19:00" },
+      { "jour": "jeudi", "heureDebut": "10:00", "heureFin": "19:00" }
+    ],
+    "adresse": "23 Place Bellecour",
+    "ville": "Lyon",
+    "codePostal": "69002",
+    "nombreMissions": 24,
+    "nombreHeures": 185,
+    "noteGlobale": 4.6,
+    "tarifHoraire": 76,
+    "createdAt": "2024-06-01T00:00:00Z",
+    "updatedAt": "2025-11-18T10:00:00Z"
+  },
+  {
+    "id": "admin-1",
+    "email": "admin@eduka.fr",
+    "nom": "Admin",
+    "prenom": "Eduka",
+    "telephone": "01 23 45 67 89",
+    "role": "admin",
+    "avatar": "https://i.pravatar.cc/150?img=20",
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2025-11-18T10:00:00Z"
+  }
+]

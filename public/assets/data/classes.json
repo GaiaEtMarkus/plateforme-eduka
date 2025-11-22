@@ -1,0 +1,58 @@
+[
+  {
+    "id": "classe-1",
+    "nom": "L2 Dev Web",
+    "niveau": "L2",
+    "nombreEleves": 28,
+    "ecoleId": "ecole-1"
+  },
+  {
+    "id": "classe-2",
+    "nom": "M2 Architecture Logicielle",
+    "niveau": "M2",
+    "nombreEleves": 25,
+    "ecoleId": "ecole-1"
+  },
+  {
+    "id": "classe-3",
+    "nom": "M1 DevOps & Cloud",
+    "niveau": "M1",
+    "nombreEleves": 30,
+    "ecoleId": "ecole-2"
+  },
+  {
+    "id": "classe-4",
+    "nom": "M1 Cybersécurité",
+    "niveau": "M1",
+    "nombreEleves": 32,
+    "ecoleId": "ecole-2"
+  },
+  {
+    "id": "classe-5",
+    "nom": "L3 Développement Full Stack",
+    "niveau": "L3",
+    "nombreEleves": 35,
+    "ecoleId": "ecole-3"
+  },
+  {
+    "id": "classe-6",
+    "nom": "M2 Data Engineering",
+    "niveau": "M2",
+    "nombreEleves": 26,
+    "ecoleId": "ecole-4"
+  },
+  {
+    "id": "classe-7",
+    "nom": "L3 Infrastructure & Réseaux",
+    "niveau": "L3",
+    "nombreEleves": 28,
+    "ecoleId": "ecole-3"
+  },
+  {
+    "id": "classe-8",
+    "nom": "M1 Intelligence Artificielle",
+    "niveau": "M1",
+    "nombreEleves": 30,
+    "ecoleId": "ecole-4"
+  }
+]
