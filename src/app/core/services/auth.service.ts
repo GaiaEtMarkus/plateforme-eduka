@@ -29,7 +29,7 @@ export class AuthService {
     // Simulation d'un appel API
     return new Observable<User>(observer => {
       // Charger les utilisateurs mockés
-      fetch('/assets/data/users.json')
+      fetch('assets/data/users.json')
         .then(res => res.json())
         .then((users: User[]) => {
           const user = users.find(u => u.email === email);
@@ -87,7 +87,7 @@ export class AuthService {
    */
   autoLogin(userId: string = 'user-1'): Observable<User> {
     return new Observable<User>(observer => {
-      fetch('/assets/data/users.json')
+      fetch('assets/data/users.json')
         .then(res => res.json())
         .then((users: User[]) => {
           const user = users.find(u => u.id === userId);

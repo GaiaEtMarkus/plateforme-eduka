@@ -13,7 +13,7 @@ export class DataService {
    */
   loadJsonData<T>(fileName: string): Observable<T> {
     return from(
-      fetch(`/assets/data/${fileName}.json`)
+      fetch(`assets/data/${fileName}.json`)
         .then(response => {
           if (!response.ok) {
             throw new Error(`Erreur lors du chargement de ${fileName}`);
