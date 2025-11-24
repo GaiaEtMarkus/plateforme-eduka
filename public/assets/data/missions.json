@@ -135,5 +135,181 @@
     "fichiersNotes": [],
     "createdAt": "2025-09-25T10:00:00Z",
     "updatedAt": "2025-09-25T10:00:00Z"
+  },
+  {
+    "id": "mission-8",
+    "coursId": "cours-8",
+    "ecoleId": "ecole-3",
+    "classeId": "classe-1",
+    "formateurId": "user-1",
+    "statut": "en_cours",
+    "volumeHoraire": 24,
+    "sessions": [
+      {"numero": 1, "dateDebut": "2025-11-18", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 2, "dateDebut": "2025-11-19", "heureDebut": "09:00", "heureFin": "13:00", "duree": 4},
+      {"numero": 3, "dateDebut": "2025-11-25", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 4, "dateDebut": "2025-12-02", "heureDebut": "09:00", "heureFin": "12:00", "duree": 3},
+      {"numero": 5, "dateDebut": "2025-12-09", "heureDebut": "09:00", "heureFin": "12:00", "duree": 3}
+    ],
+    "fichiersNotes": [],
+    "createdAt": "2025-11-01T10:00:00Z",
+    "updatedAt": "2025-11-19T13:00:00Z"
+  },
+  {
+    "id": "mission-9",
+    "coursId": "cours-9",
+    "ecoleId": "ecole-4",
+    "classeId": "classe-6",
+    "formateurId": "user-3",
+    "statut": "en_cours",
+    "volumeHoraire": 36,
+    "sessions": [
+      {"numero": 1, "dateDebut": "2025-11-12", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 2, "dateDebut": "2025-11-13", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 3, "dateDebut": "2025-11-19", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 4, "dateDebut": "2025-11-20", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 5, "dateDebut": "2025-11-26", "heureDebut": "09:00", "heureFin": "13:00", "duree": 4},
+      {"numero": 6, "dateDebut": "2025-11-27", "heureDebut": "09:00", "heureFin": "13:00", "duree": 4}
+    ],
+    "fichiersNotes": [],
+    "createdAt": "2025-11-01T10:00:00Z",
+    "updatedAt": "2025-11-20T16:00:00Z"
+  },
+  {
+    "id": "mission-10",
+    "coursId": "cours-10",
+    "ecoleId": "ecole-1",
+    "classeId": "classe-3",
+    "formateurId": "user-2",
+    "statut": "en_cours",
+    "volumeHoraire": 28,
+    "sessions": [
+      {"numero": 1, "dateDebut": "2025-11-14", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 2, "dateDebut": "2025-11-15", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 3, "dateDebut": "2025-11-21", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 4, "dateDebut": "2025-11-22", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7}
+    ],
+    "fichiersNotes": [],
+    "createdAt": "2025-11-05T10:00:00Z",
+    "updatedAt": "2025-11-15T16:00:00Z"
+  },
+  {
+    "id": "mission-11",
+    "coursId": "cours-1",
+    "ecoleId": "ecole-2",
+    "classeId": "classe-5",
+    "formateurId": "user-1",
+    "statut": "planifiee",
+    "volumeHoraire": 35,
+    "sessions": [
+      {"numero": 1, "dateDebut": "2025-12-05", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 2, "dateDebut": "2025-12-06", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 3, "dateDebut": "2025-12-12", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 4, "dateDebut": "2025-12-13", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 5, "dateDebut": "2025-12-19", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7}
+    ],
+    "fichiersNotes": [],
+    "createdAt": "2025-11-10T10:00:00Z",
+    "updatedAt": "2025-11-10T10:00:00Z"
+  },
+  {
+    "id": "mission-12",
+    "coursId": "cours-3",
+    "ecoleId": "ecole-5",
+    "classeId": "classe-2",
+    "formateurId": "user-3",
+    "statut": "planifiee",
+    "volumeHoraire": 30,
+    "sessions": [
+      {"numero": 1, "dateDebut": "2025-12-04", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 2, "dateDebut": "2025-12-05", "heureDebut": "09:00", "heureFin": "13:00", "duree": 4},
+      {"numero": 3, "dateDebut": "2025-12-11", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 4, "dateDebut": "2025-12-12", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 5, "dateDebut": "2025-12-18", "heureDebut": "09:00", "heureFin": "14:00", "duree": 5}
+    ],
+    "fichiersNotes": [],
+    "createdAt": "2025-11-12T10:00:00Z",
+    "updatedAt": "2025-11-12T10:00:00Z"
+  },
+  {
+    "id": "mission-13",
+    "coursId": "cours-4",
+    "ecoleId": "ecole-3",
+    "classeId": "classe-4",
+    "formateurId": "user-2",
+    "statut": "planifiee",
+    "volumeHoraire": 48,
+    "sessions": [
+      {"numero": 1, "dateDebut": "2026-01-08", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 2, "dateDebut": "2026-01-09", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 3, "dateDebut": "2026-01-15", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 4, "dateDebut": "2026-01-16", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 5, "dateDebut": "2026-01-22", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 6, "dateDebut": "2026-01-23", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 7, "dateDebut": "2026-01-29", "heureDebut": "09:00", "heureFin": "13:00", "duree": 6}
+    ],
+    "fichiersNotes": [],
+    "createdAt": "2025-11-15T10:00:00Z",
+    "updatedAt": "2025-11-15T10:00:00Z"
+  },
+  {
+    "id": "mission-14",
+    "coursId": "cours-6",
+    "ecoleId": "ecole-1",
+    "classeId": "classe-1",
+    "formateurId": "user-1",
+    "statut": "planifiee",
+    "volumeHoraire": 40,
+    "sessions": [
+      {"numero": 1, "dateDebut": "2026-01-13", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 2, "dateDebut": "2026-01-14", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 3, "dateDebut": "2026-01-20", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 4, "dateDebut": "2026-01-21", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 5, "dateDebut": "2026-01-27", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 6, "dateDebut": "2026-01-28", "heureDebut": "09:00", "heureFin": "14:00", "duree": 5}
+    ],
+    "fichiersNotes": [],
+    "createdAt": "2025-11-18T10:00:00Z",
+    "updatedAt": "2025-11-18T10:00:00Z"
+  },
+  {
+    "id": "mission-15",
+    "coursId": "cours-2",
+    "ecoleId": "ecole-4",
+    "classeId": "classe-6",
+    "formateurId": "user-3",
+    "statut": "planifiee",
+    "volumeHoraire": 36,
+    "sessions": [
+      {"numero": 1, "dateDebut": "2026-01-09", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 2, "dateDebut": "2026-01-10", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 3, "dateDebut": "2026-01-16", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 4, "dateDebut": "2026-01-17", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 5, "dateDebut": "2026-01-23", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 6, "dateDebut": "2026-01-24", "heureDebut": "09:00", "heureFin": "13:00", "duree": 4}
+    ],
+    "fichiersNotes": [],
+    "createdAt": "2025-11-20T10:00:00Z",
+    "updatedAt": "2025-11-20T10:00:00Z"
+  },
+  {
+    "id": "mission-16",
+    "coursId": "cours-5",
+    "ecoleId": "ecole-2",
+    "classeId": "classe-3",
+    "formateurId": "user-2",
+    "statut": "planifiee",
+    "volumeHoraire": 24,
+    "sessions": [
+      {"numero": 1, "dateDebut": "2026-01-12", "heureDebut": "09:00", "heureFin": "13:00", "duree": 4},
+      {"numero": 2, "dateDebut": "2026-01-13", "heureDebut": "09:00", "heureFin": "13:00", "duree": 4},
+      {"numero": 3, "dateDebut": "2026-01-19", "heureDebut": "09:00", "heureFin": "13:00", "duree": 4},
+      {"numero": 4, "dateDebut": "2026-01-20", "heureDebut": "09:00", "heureFin": "13:00", "duree": 4},
+      {"numero": 5, "dateDebut": "2026-01-26", "heureDebut": "09:00", "heureFin": "13:00", "duree": 4},
+      {"numero": 6, "dateDebut": "2026-01-27", "heureDebut": "09:00", "heureFin": "13:00", "duree": 4}
+    ],
+    "fichiersNotes": [],
+    "createdAt": "2025-11-22T10:00:00Z",
+    "updatedAt": "2025-11-22T10:00:00Z"
   }
 ]
