@@ -64,6 +64,7 @@ La plateforme utilise des données JSON mockées. Voici les comptes disponibles 
 - **Signals** - Gestion d'état
 - **jsPDF** - Génération de PDF
 
+
 ## 📁 Structure du projet
 
 ```
