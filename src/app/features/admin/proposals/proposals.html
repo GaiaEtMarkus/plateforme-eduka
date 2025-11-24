@@ -1,8 +1,18 @@
 <div class="p-6">
   <!-- En-tête -->
-  <div class="mb-6">
-    <h1 class="text-3xl font-bold text-gray-800">Gestion des Propositions</h1>
-    <p class="text-gray-600 mt-2">Vue d'ensemble et suivi des propositions de missions</p>
+  <div class="mb-6 flex items-center justify-between">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-800">Gestion des Propositions</h1>
+      <p class="text-gray-600 mt-2">Vue d'ensemble et suivi des propositions de missions</p>
+    </div>
+    <button
+      class="px-6 py-3 bg-eduka-orange text-white rounded-lg hover:bg-orange-600 font-medium flex items-center gap-2"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+      </svg>
+      Créer une proposition
+    </button>
   </div>
 
   <!-- Statistiques -->
@@ -78,6 +88,53 @@
     </div>
   </div>
 
+  <!-- Filtres et recherche -->
+  <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <!-- Recherche -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Recherche</label>
+        <input
+          type="text"
+          [value]="searchTerm()"
+          (input)="setSearchTerm($any($event.target).value)"
+          placeholder="Cours, école, classe, description..."
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eduka-orange focus:border-transparent"
+        />
+      </div>
+
+      <!-- Filtre statut -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Statut</label>
+        <select
+          [value]="filterStatus()"
+          (change)="setStatusFilter($any($event.target).value)"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eduka-orange focus:border-transparent"
+        >
+          <option value="all">Tous les statuts</option>
+          <option value="en_attente">En attente</option>
+          <option value="acceptee">Acceptée</option>
+          <option value="refusee">Refusée</option>
+          <option value="expiree">Expirée</option>
+        </select>
+      </div>
+
+      <!-- Filtre type -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Type</label>
+        <select
+          [value]="filterType()"
+          (change)="setTypeFilter($any($event.target).value)"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eduka-orange focus:border-transparent"
+        >
+          <option value="all">Tous les types</option>
+          <option value="publique">Publique</option>
+          <option value="directe">Directe</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
   <!-- Propositions urgentes -->
   @if (urgentProposals().length > 0) {
     <div class="bg-orange-50 border border-orange-200 rounded-lg p-6 mb-6">
@@ -118,7 +175,7 @@
   <div class="bg-white rounded-lg shadow p-4 mb-6">
     <div class="flex gap-2">
       <button
-        (click)="setFilter('all')"
+        (click)="setStatusFilter('all')"
         [class.bg-eduka-orange]="filterStatus() === 'all'"
         [class.text-white]="filterStatus() === 'all'"
         [class.bg-gray-100]="filterStatus() !== 'all'"
@@ -128,7 +185,7 @@
         Toutes ({{ stats().total }})
       </button>
       <button
-        (click)="setFilter('en_attente')"
+        (click)="setStatusFilter('en_attente')"
         [class.bg-yellow-600]="filterStatus() === 'en_attente'"
         [class.text-white]="filterStatus() === 'en_attente'"
         [class.bg-gray-100]="filterStatus() !== 'en_attente'"
@@ -138,7 +195,7 @@
         En attente ({{ stats().enAttente }})
       </button>
       <button
-        (click)="setFilter('acceptee')"
+        (click)="setStatusFilter('acceptee')"
         [class.bg-green-600]="filterStatus() === 'acceptee'"
         [class.text-white]="filterStatus() === 'acceptee'"
         [class.bg-gray-100]="filterStatus() !== 'acceptee'"
@@ -148,7 +205,7 @@
         Acceptées ({{ stats().acceptees }})
       </button>
       <button
-        (click)="setFilter('refusee')"
+        (click)="setStatusFilter('refusee')"
         [class.bg-red-600]="filterStatus() === 'refusee'"
         [class.text-white]="filterStatus() === 'refusee'"
         [class.bg-gray-100]="filterStatus() !== 'refusee'"
@@ -204,11 +261,19 @@
                 </div>
               </td>
               <td class="px-6 py-4">
-                <div class="text-sm text-gray-900">{{ formatDate(proposal.dateDebut) }}</div>
-                @if (proposal.dateDebut.getTime() !== proposal.dateFin.getTime()) {
+                @if (proposal.sessions && proposal.sessions.length > 0) {
+                  <!-- Propositions multi-sessions -->
+                  <div class="text-sm text-gray-900">{{ formatDate(proposal.dateDebut) }}</div>
                   <div class="text-xs text-gray-500">au {{ formatDate(proposal.dateFin) }}</div>
+                  <div class="text-xs text-gray-600 font-medium">{{ proposal.sessions.length }} session(s) - {{ proposal.volumeHoraire }}h</div>
+                } @else {
+                  <!-- Propositions sur une journée -->
+                  <div class="text-sm text-gray-900">{{ formatDate(proposal.dateDebut) }}</div>
+                  @if (proposal.dateDebut && proposal.dateFin && proposal.dateDebut.getTime() !== proposal.dateFin.getTime()) {
+                    <div class="text-xs text-gray-500">au {{ formatDate(proposal.dateFin) }}</div>
+                  }
+                  <div class="text-xs text-gray-500">{{ proposal.heureDebut }} - {{ proposal.heureFin }}</div>
                 }
-                <div class="text-xs text-gray-500">{{ proposal.heureDebut }} - {{ proposal.heureFin }}</div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-center">
                 <span class="text-sm font-medium text-gray-900">{{ proposal.remuneration }}€</span>
@@ -309,26 +374,14 @@
           <!-- Détails de la mission -->
           <div class="mb-6">
             <h3 class="font-bold text-gray-800 mb-3">Détails de la mission</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div class="flex items-center gap-2 text-gray-700">
-                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                </svg>
-                <div>
-                  <p class="text-xs text-gray-500">Date</p>
-                  <p class="font-medium">{{ formatDate(selectedProposal()!.dateDebut) }}</p>
-                  @if (selectedProposal()!.dateDebut.getTime() !== selectedProposal()!.dateFin.getTime()) {
-                    <p class="text-sm">au {{ formatDate(selectedProposal()!.dateFin) }}</p>
-                  }
-                </div>
-              </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div class="flex items-center gap-2 text-gray-700">
                 <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
                 <div>
-                  <p class="text-xs text-gray-500">Horaires</p>
-                  <p class="font-medium">{{ selectedProposal()!.heureDebut }} - {{ selectedProposal()!.heureFin }}</p>
+                  <p class="text-xs text-gray-500">Volume horaire total</p>
+                  <p class="font-medium">{{ selectedProposal()!.volumeHoraire || 'N/A' }}h</p>
                 </div>
               </div>
               <div class="flex items-center gap-2 text-gray-700">
@@ -355,6 +408,33 @@
                 </div>
               </div>
             </div>
+
+            <!-- Planning des sessions -->
+            @if (selectedProposal()!.sessions && selectedProposal()!.sessions!.length > 0) {
+              <div class="mt-4">
+                <h4 class="font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                  </svg>
+                  Planning des sessions ({{ selectedProposal()!.sessions!.length }} sessions)
+                </h4>
+                <div class="bg-gray-50 rounded-lg p-3 max-h-60 overflow-y-auto">
+                  @for (session of selectedProposal()!.sessions; track session.numero) {
+                    <div class="flex items-center justify-between py-2 px-3 bg-white rounded mb-2 last:mb-0 border border-gray-200">
+                      <div class="flex items-center gap-3">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-full bg-orange-100 text-orange-600 text-sm font-semibold">
+                          {{ session.numero }}
+                        </span>
+                        <div>
+                          <p class="font-medium text-gray-900">{{ session.dateDebut | date:'EEEE d MMMM yyyy':'':'fr' }}</p>
+                          <p class="text-sm text-gray-600">{{ session.heureDebut }} - {{ session.heureFin }} ({{ session.duree }}h)</p>
+                        </div>
+                      </div>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
           </div>
 
           <!-- Candidatures -->
@@ -366,7 +446,12 @@
                   <div class="border border-gray-200 rounded-lg p-4">
                     <div class="flex justify-between items-start">
                       <div>
-                        <p class="font-medium text-gray-800">{{ getFormateurName(candidature.formateurId) }}</p>
+                        <button
+                          (click)="viewTrainerDetails(candidature.formateurId); $event.stopPropagation()"
+                          class="font-medium text-eduka-orange hover:text-orange-700 hover:underline text-left"
+                        >
+                          {{ getFormateurName(candidature.formateurId) }}
+                        </button>
                         <p class="text-sm text-gray-600">Postulé le {{ formatDateTime(candidature.createdAt) }}</p>
                       </div>
                       <span
@@ -391,6 +476,100 @@
             (click)="closeProposalDetails()"
             class="w-full bg-eduka-orange text-white py-2 px-4 rounded-lg hover:bg-orange-600 font-medium"
           >
+            Fermer
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Modal détails formateur -->
+  @if (selectedTrainer() && !selectedProposal()) {
+    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div class="bg-white rounded-lg max-w-3xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+        <!-- Header -->
+        <div class="p-6 bg-gradient-to-r from-eduka-orange to-orange-600 text-white flex-shrink-0">
+          <div class="flex justify-between items-start">
+            <div>
+              <h2 class="text-2xl font-bold">
+                {{ selectedTrainer()?.prenom }} {{ selectedTrainer()?.nom }}
+              </h2>
+              <p class="text-orange-100 mt-1">{{ selectedTrainer()?.email }}</p>
+              <p class="text-orange-100 text-sm">{{ selectedTrainer()?.telephone }}</p>
+            </div>
+            <button (click)="closeTrainerDetails()" class="text-white hover:text-orange-200">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Contenu -->
+        <div class="overflow-y-auto flex-1 p-6">
+          <!-- Compétences -->
+          @if (selectedTrainer()?.competences && selectedTrainer()!.competences!.length > 0) {
+            <div class="mb-6">
+              <h3 class="font-bold text-gray-800 mb-3">Compétences</h3>
+              <div class="flex flex-wrap gap-2">
+                @for (comp of selectedTrainer()!.competences; track comp.id) {
+                  <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                    {{ comp.nom }} <span class="text-blue-600">({{ comp.niveau }})</span>
+                  </span>
+                }
+              </div>
+            </div>
+          }
+
+          <!-- Missions du formateur -->
+          <div class="mb-6">
+            <h3 class="font-bold text-gray-800 mb-4">Missions ({{ trainerMissions().length }})</h3>
+            <div class="space-y-3">
+              @for (mission of trainerMissions(); track mission.id) {
+                <div class="border border-gray-200 rounded-lg p-4 hover:border-eduka-orange">
+                  <div class="flex justify-between items-start mb-2">
+                    <div class="flex items-start gap-3 flex-1">
+                      <img [src]="getSchoolLogo(mission.ecole.id)" [alt]="mission.ecole.nom" class="w-10 h-10 bg-gray-100 rounded object-contain p-1" />
+                      <div>
+                        <h4 class="font-medium text-gray-800">{{ mission.cours.nom }}</h4>
+                        <p class="text-sm text-gray-600">{{ mission.ecole.nom }}</p>
+                      </div>
+                    </div>
+                    <span class="px-3 py-1 rounded-full text-xs font-medium" [ngClass]="getStatutColorMission(mission.statut)">
+                      {{ mission.statut }}
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-4 text-sm text-gray-600 mt-2">
+                    @if (mission.dateDebut) {
+                      <div class="flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                        <span>{{ mission.dateDebut | date:'dd MMMM yyyy':'':'fr' }}</span>
+                      </div>
+                    }
+                    @if (mission.sessions && mission.sessions.length > 0) {
+                      <span class="text-gray-600">{{ mission.sessions.length }} session(s) - {{ mission.volumeHoraire }}h</span>
+                    } @else if (mission.heureDebut && mission.heureFin) {
+                      <div class="flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span>{{ mission.heureDebut }} - {{ mission.heureFin }}</span>
+                      </div>
+                    }
+                  </div>
+                </div>
+              } @empty {
+                <p class="text-center text-gray-500 py-8">Aucune mission trouvée</p>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="p-6 bg-gray-50 border-t border-gray-200 flex-shrink-0">
+          <button (click)="closeTrainerDetails()" class="w-full bg-gray-200 text-gray-800 py-2 px-4 rounded-lg hover:bg-gray-300 font-medium">
             Fermer
           </button>
         </div>

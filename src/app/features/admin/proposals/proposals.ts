@@ -1,19 +1,22 @@
 import { Component, OnInit, inject, signal, computed, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { PropositionService } from '../../../core/services/proposition.service';
 import { DataService } from '../../../core/services/data.service';
-import { Proposition, Ecole, Classe, Cours, User } from '../../../core/models';
+import { MissionService } from '../../../core/services/mission.service';
+import { Proposition, Ecole, Classe, Cours, User, Mission } from '../../../core/models';
 
 @Component({
   selector: 'app-proposals',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './proposals.html',
   styleUrl: './proposals.css',
 })
 export class Proposals implements OnInit {
   private propositionService = inject(PropositionService);
   private dataService = inject(DataService);
+  private missionService = inject(MissionService);
   private cdr = inject(ChangeDetectorRef);
 
   propositions = signal<Proposition[]>([]);
@@ -21,22 +24,48 @@ export class Proposals implements OnInit {
   classes = signal<Classe[]>([]);
   cours = signal<Cours[]>([]);
   formateurs = signal<User[]>([]);
+  missions = signal<Mission[]>([]);
 
   selectedProposal = signal<Proposition | null>(null);
+  selectedTrainer = signal<User | null>(null);
+  trainerMissions = signal<Mission[]>([]);
 
-  // Filtre
+  // Filtres
+  searchTerm = signal<string>('');
   filterStatus = signal<string>('all');
+  filterType = signal<string>('all');
 
   // Propositions filtrées
   filteredPropositions = computed(() => {
-    const filter = this.filterStatus();
-    const propositions = this.propositions();
+    let propositions = this.propositions();
+    const search = this.searchTerm().toLowerCase();
+    const status = this.filterStatus();
+    const type = this.filterType();
 
-    if (filter === 'all') {
-      return propositions;
+    // Filtre par recherche
+    if (search) {
+      propositions = propositions.filter(p =>
+        p.cours?.nom.toLowerCase().includes(search) ||
+        p.ecole?.nom.toLowerCase().includes(search) ||
+        p.classe?.nom.toLowerCase().includes(search) ||
+        p.description.toLowerCase().includes(search)
+      );
     }
 
-    return propositions.filter(p => p.statut === filter);
+    // Filtre par statut
+    if (status !== 'all') {
+      propositions = propositions.filter(p => p.statut === status);
+    }
+
+    // Filtre par type
+    if (type !== 'all') {
+      propositions = propositions.filter(p => p.type === type);
+    }
+
+    // Trier par date (plus récentes en premier)
+    return propositions.sort((a, b) =>
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
   });
 
   // Statistiques
@@ -88,6 +117,15 @@ export class Proposals implements OnInit {
       error: (err: any) => console.error('Erreur propositions', err)
     });
 
+    // Charger les missions
+    this.missionService.missions$.subscribe({
+      next: (missions: Mission[]) => {
+        this.missions.set(missions);
+        this.cdr.markForCheck();
+      },
+      error: (err: any) => console.error('Erreur missions', err)
+    });
+
     // Charger les écoles
     this.dataService.loadJsonData<Ecole[]>('ecoles').subscribe({
       next: (ecoles: Ecole[]) => {
@@ -126,8 +164,16 @@ export class Proposals implements OnInit {
     });
   }
 
-  setFilter(status: string) {
+  setSearchTerm(term: string) {
+    this.searchTerm.set(term);
+  }
+
+  setStatusFilter(status: string) {
     this.filterStatus.set(status);
+  }
+
+  setTypeFilter(type: string) {
+    this.filterType.set(type);
   }
 
   viewProposalDetails(proposal: Proposition) {
@@ -161,7 +207,8 @@ export class Proposals implements OnInit {
     }
   }
 
-  formatDate(date: Date): string {
+  formatDate(date: Date | undefined): string {
+    if (!date) return 'N/A';
     return date.toLocaleDateString('fr-FR', {
       year: 'numeric',
       month: 'long',
@@ -187,5 +234,38 @@ export class Proposals implements OnInit {
     const now = new Date();
     const diff = dateExpiration.getTime() - now.getTime();
     return Math.ceil(diff / (1000 * 60 * 60 * 24));
+  }
+
+  viewTrainerDetails(formateurId: string) {
+    const formateur = this.formateurs().find(f => f.id === formateurId);
+    if (formateur) {
+      this.selectedTrainer.set(formateur);
+      const missions = this.missions().filter(m => m.formateurId === formateurId);
+      this.trainerMissions.set(missions);
+    }
+  }
+
+  closeTrainerDetails() {
+    this.selectedTrainer.set(null);
+    this.trainerMissions.set([]);
+  }
+
+  getSchoolLogo(ecoleId: string): string {
+    const ecole = this.ecoles().find(e => e.id === ecoleId);
+    if (ecole?.logo) {
+      return ecole.logo.startsWith('/') ? ecole.logo.substring(1) : `assets/logos/${ecole.logo}`;
+    }
+    const logos = ['eni.png', 'epitech.png', 'esgi.png', 'estiam.png', 'isitech.png', 'ynov.png', 'supdevinci.jpeg'];
+    const randomLogo = logos[Math.floor(Math.random() * logos.length)];
+    return `assets/logos/${randomLogo}`;
+  }
+
+  getStatutColorMission(statut: string): string {
+    switch (statut) {
+      case 'en_cours': return 'bg-blue-100 text-blue-800';
+      case 'terminee': return 'bg-green-100 text-green-800';
+      case 'planifiee': return 'bg-orange-100 text-orange-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
   }
 }

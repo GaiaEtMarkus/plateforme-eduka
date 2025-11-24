@@ -82,8 +82,9 @@ export class MissionService {
             classe: classes.find(c => c.id === m.classeId),
             formateurNom: users.find((u: any) => u.id === m.formateurId)?.prenom + ' ' +
                           users.find((u: any) => u.id === m.formateurId)?.nom,
-            dateDebut: new Date(m.dateDebut),
-            dateFin: new Date(m.dateFin),
+            // Support nouvelle structure avec sessions
+            dateDebut: m.dateDebut ? new Date(m.dateDebut) : (m.sessions && m.sessions.length > 0 ? new Date(m.sessions[0].dateDebut) : undefined),
+            dateFin: m.dateFin ? new Date(m.dateFin) : (m.sessions && m.sessions.length > 0 ? new Date(m.sessions[m.sessions.length - 1].dateDebut) : undefined),
             createdAt: new Date(m.createdAt),
             updatedAt: new Date(m.updatedAt)
           }))

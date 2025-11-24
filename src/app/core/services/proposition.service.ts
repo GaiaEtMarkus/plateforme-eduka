@@ -38,8 +38,9 @@ export class PropositionService {
             cours: cours.find((c: any) => c.id === p.coursId),
             ecole: ecoles.find((e: any) => e.id === p.ecoleId),
             classe: classes.find((c: any) => c.id === p.classeId),
-            dateDebut: new Date(p.dateDebut),
-            dateFin: new Date(p.dateFin),
+            // Support nouvelle structure avec sessions
+            dateDebut: p.dateDebut ? new Date(p.dateDebut) : (p.sessions && p.sessions.length > 0 ? new Date(p.sessions[0].dateDebut) : undefined),
+            dateFin: p.dateFin ? new Date(p.dateFin) : (p.sessions && p.sessions.length > 0 ? new Date(p.sessions[p.sessions.length - 1].dateDebut) : undefined),
             dateExpiration: new Date(p.dateExpiration),
             createdAt: new Date(p.createdAt),
             updatedAt: new Date(p.updatedAt),

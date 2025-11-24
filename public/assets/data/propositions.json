@@ -4,22 +4,22 @@
     "coursId": "cours-2",
     "ecoleId": "ecole-2",
     "classeId": "classe-5",
-    "dateDebut": "2025-12-05",
-    "dateFin": "2025-12-05",
-    "heureDebut": "09:00",
-    "heureFin": "17:00",
     "type": "publique",
     "statut": "en_attente",
-    "description": "Formation avancée en cybersécurité et pentest pour étudiants M1. Couverture des techniques OWASP, analyse de vulnérabilités, et méthodologies de pentest professionnel.",
-    "remuneration": 760,
+    "description": "Formation avancée en cybersécurité et pentest pour étudiants M1. Module de 35h réparti sur 5 sessions : techniques OWASP, analyse de vulnérabilités, méthodologies de pentest professionnel, exploitation et reporting.",
+    "volumeHoraire": 35,
     "dateExpiration": "2025-11-30T23:59:59Z",
     "createdBy": "admin-1",
+    "sessions": [
+      {"numero": 1, "dateDebut": "2025-12-05", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 2, "dateDebut": "2025-12-06", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 3, "dateDebut": "2025-12-12", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 4, "dateDebut": "2025-12-13", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 5, "dateDebut": "2025-12-19", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7}
+    ],
+    "remuneration": 2800,
     "candidatures": [
-      {
-        "formateurId": "user-3",
-        "datePostulation": "2025-11-19T10:00:00Z",
-        "statut": "en_attente"
-      }
+      {"formateurId": "user-3", "datePostulation": "2025-11-19T10:00:00Z", "statut": "en_attente"}
     ],
     "createdAt": "2025-11-15T10:00:00Z",
     "updatedAt": "2025-11-19T10:00:00Z"
@@ -29,16 +29,28 @@
     "coursId": "cours-9",
     "ecoleId": "ecole-1",
     "classeId": "classe-8",
-    "dateDebut": "2025-12-10",
-    "dateFin": "2025-12-10",
-    "heureDebut": "10:00",
-    "heureFin": "18:00",
     "type": "publique",
     "statut": "en_attente",
-    "description": "Architecture microservices avec Spring Boot - Formation intensive. Design patterns, API REST, communication inter-services, et déploiement cloud.",
-    "remuneration": 720,
+    "description": "Architecture microservices avec Spring Boot - Formation intensive de 50h. Design patterns, API REST, communication inter-services, déploiement cloud et monitoring. Répartie sur 13 sessions de 3-4h.",
+    "volumeHoraire": 50,
     "dateExpiration": "2025-12-01T23:59:59Z",
     "createdBy": "admin-1",
+    "sessions": [
+      {"numero": 1, "dateDebut": "2025-12-10", "heureDebut": "14:00", "heureFin": "18:00", "duree": 4},
+      {"numero": 2, "dateDebut": "2025-12-11", "heureDebut": "14:00", "heureFin": "18:00", "duree": 4},
+      {"numero": 3, "dateDebut": "2025-12-17", "heureDebut": "14:00", "heureFin": "18:00", "duree": 4},
+      {"numero": 4, "dateDebut": "2025-12-18", "heureDebut": "14:00", "heureFin": "18:00", "duree": 4},
+      {"numero": 5, "dateDebut": "2026-01-07", "heureDebut": "14:00", "heureFin": "18:00", "duree": 4},
+      {"numero": 6, "dateDebut": "2026-01-08", "heureDebut": "14:00", "heureFin": "18:00", "duree": 4},
+      {"numero": 7, "dateDebut": "2026-01-14", "heureDebut": "14:00", "heureFin": "18:00", "duree": 4},
+      {"numero": 8, "dateDebut": "2026-01-15", "heureDebut": "14:00", "heureFin": "18:00", "duree": 4},
+      {"numero": 9, "dateDebut": "2026-01-21", "heureDebut": "14:00", "heureFin": "17:00", "duree": 3},
+      {"numero": 10, "dateDebut": "2026-01-22", "heureDebut": "14:00", "heureFin": "17:00", "duree": 3},
+      {"numero": 11, "dateDebut": "2026-01-28", "heureDebut": "14:00", "heureFin": "18:00", "duree": 4},
+      {"numero": 12, "dateDebut": "2026-01-29", "heureDebut": "14:00", "heureFin": "18:00", "duree": 4},
+      {"numero": 13, "dateDebut": "2026-02-04", "heureDebut": "14:00", "heureFin": "19:00", "duree": 5}
+    ],
+    "remuneration": 4000,
     "candidatures": [],
     "createdAt": "2025-11-16T10:00:00Z",
     "updatedAt": "2025-11-16T10:00:00Z"
@@ -48,22 +60,21 @@
     "coursId": "cours-4",
     "ecoleId": "ecole-3",
     "classeId": "classe-6",
-    "dateDebut": "2025-12-15",
-    "dateFin": "2025-12-16",
-    "heureDebut": "09:00",
-    "heureFin": "17:00",
     "type": "publique",
     "statut": "en_attente",
-    "description": "Formation AWS - Architecture cloud pour étudiants M2. EC2, S3, RDS, Lambda, CloudFormation et bonnes pratiques de sécurité.",
-    "remuneration": 1200,
+    "description": "Formation AWS - Architecture cloud pour étudiants M2. Module de 28h sur 4 semaines : EC2, S3, RDS, Lambda, CloudFormation et bonnes pratiques de sécurité.",
+    "volumeHoraire": 28,
     "dateExpiration": "2025-12-05T23:59:59Z",
     "createdBy": "admin-1",
+    "sessions": [
+      {"numero": 1, "dateDebut": "2025-12-15", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 2, "dateDebut": "2025-12-16", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 3, "dateDebut": "2025-12-22", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 4, "dateDebut": "2025-12-23", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7}
+    ],
+    "remuneration": 2240,
     "candidatures": [
-      {
-        "formateurId": "user-2",
-        "datePostulation": "2025-11-19T09:00:00Z",
-        "statut": "en_attente"
-      }
+      {"formateurId": "user-2", "datePostulation": "2025-11-19T09:00:00Z", "statut": "en_attente"}
     ],
     "createdAt": "2025-11-16T12:00:00Z",
     "updatedAt": "2025-11-19T09:00:00Z"
@@ -73,22 +84,22 @@
     "coursId": "cours-5",
     "ecoleId": "ecole-1",
     "classeId": "classe-3",
-    "dateDebut": "2025-12-20",
-    "dateFin": "2025-12-20",
-    "heureDebut": "10:00",
-    "heureFin": "18:00",
     "type": "publique",
     "statut": "en_attente",
-    "description": "Infrastructure as Code avec Terraform - Niveau avancé. Provisioning multi-cloud, modules réutilisables, state management et CI/CD.",
-    "remuneration": 640,
+    "description": "Infrastructure as Code avec Terraform - Niveau avancé. Module de 20h : Provisioning multi-cloud, modules réutilisables, state management et CI/CD.",
+    "volumeHoraire": 20,
     "dateExpiration": "2025-12-10T23:59:59Z",
     "createdBy": "admin-1",
+    "sessions": [
+      {"numero": 1, "dateDebut": "2025-12-20", "heureDebut": "09:00", "heureFin": "13:00", "duree": 4},
+      {"numero": 2, "dateDebut": "2025-12-27", "heureDebut": "09:00", "heureFin": "13:00", "duree": 4},
+      {"numero": 3, "dateDebut": "2026-01-03", "heureDebut": "09:00", "heureFin": "13:00", "duree": 4},
+      {"numero": 4, "dateDebut": "2026-01-10", "heureDebut": "09:00", "heureFin": "13:00", "duree": 4},
+      {"numero": 5, "dateDebut": "2026-01-17", "heureDebut": "09:00", "heureFin": "13:00", "duree": 4}
+    ],
+    "remuneration": 1600,
     "candidatures": [
-      {
-        "formateurId": "user-2",
-        "datePostulation": "2025-11-18T14:30:00Z",
-        "statut": "en_attente"
-      }
+      {"formateurId": "user-2", "datePostulation": "2025-11-18T14:30:00Z", "statut": "en_attente"}
     ],
     "createdAt": "2025-11-17T14:00:00Z",
     "updatedAt": "2025-11-18T14:30:00Z"
@@ -98,22 +109,33 @@
     "coursId": "cours-1",
     "ecoleId": "ecole-4",
     "classeId": "classe-1",
-    "dateDebut": "2025-12-12",
-    "dateFin": "2025-12-12",
-    "heureDebut": "09:00",
-    "heureFin": "17:00",
     "type": "publique",
     "statut": "en_attente",
-    "description": "Python avancé pour la data science. NumPy, Pandas, Matplotlib, et introduction au machine learning avec scikit-learn.",
-    "remuneration": 600,
+    "description": "Python avancé pour la data science. Module de 80h réparti sur 8 semaines : NumPy, Pandas, Matplotlib, machine learning avec scikit-learn, deep learning avec TensorFlow.",
+    "volumeHoraire": 80,
     "dateExpiration": "2025-12-03T23:59:59Z",
     "createdBy": "admin-1",
+    "sessions": [
+      {"numero": 1, "dateDebut": "2026-01-13", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 2, "dateDebut": "2026-01-14", "heureDebut": "09:00", "heureFin": "12:00", "duree": 3},
+      {"numero": 3, "dateDebut": "2026-01-20", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 4, "dateDebut": "2026-01-21", "heureDebut": "09:00", "heureFin": "12:00", "duree": 3},
+      {"numero": 5, "dateDebut": "2026-01-27", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 6, "dateDebut": "2026-01-28", "heureDebut": "09:00", "heureFin": "12:00", "duree": 3},
+      {"numero": 7, "dateDebut": "2026-02-03", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 8, "dateDebut": "2026-02-04", "heureDebut": "09:00", "heureFin": "12:00", "duree": 3},
+      {"numero": 9, "dateDebut": "2026-02-10", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 10, "dateDebut": "2026-02-11", "heureDebut": "09:00", "heureFin": "12:00", "duree": 3},
+      {"numero": 11, "dateDebut": "2026-02-17", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 12, "dateDebut": "2026-02-18", "heureDebut": "09:00", "heureFin": "12:00", "duree": 3},
+      {"numero": 13, "dateDebut": "2026-02-24", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 14, "dateDebut": "2026-02-25", "heureDebut": "09:00", "heureFin": "12:00", "duree": 3},
+      {"numero": 15, "dateDebut": "2026-03-03", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 16, "dateDebut": "2026-03-04", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7}
+    ],
+    "remuneration": 6400,
     "candidatures": [
-      {
-        "formateurId": "user-1",
-        "datePostulation": "2025-11-18T11:00:00Z",
-        "statut": "en_attente"
-      }
+      {"formateurId": "user-1", "datePostulation": "2025-11-18T11:00:00Z", "statut": "en_attente"}
     ],
     "createdAt": "2025-11-17T10:00:00Z",
     "updatedAt": "2025-11-18T11:00:00Z"
@@ -123,22 +145,23 @@
     "coursId": "cours-6",
     "ecoleId": "ecole-5",
     "classeId": "classe-2",
-    "dateDebut": "2025-12-18",
-    "dateFin": "2025-12-18",
-    "heureDebut": "09:00",
-    "heureFin": "17:00",
     "type": "publique",
     "statut": "en_attente",
-    "description": "Développement React avancé - Hooks, Context API, Redux Toolkit, et optimisation des performances.",
-    "remuneration": 640,
+    "description": "Développement React avancé - Module de 24h : Hooks, Context API, Redux Toolkit, optimisation des performances et tests.",
+    "volumeHoraire": 24,
     "dateExpiration": "2025-12-08T23:59:59Z",
     "createdBy": "admin-1",
+    "sessions": [
+      {"numero": 1, "dateDebut": "2025-12-18", "heureDebut": "09:00", "heureFin": "13:00", "duree": 4},
+      {"numero": 2, "dateDebut": "2025-12-19", "heureDebut": "09:00", "heureFin": "13:00", "duree": 4},
+      {"numero": 3, "dateDebut": "2026-01-08", "heureDebut": "09:00", "heureFin": "13:00", "duree": 4},
+      {"numero": 4, "dateDebut": "2026-01-09", "heureDebut": "09:00", "heureFin": "13:00", "duree": 4},
+      {"numero": 5, "dateDebut": "2026-01-15", "heureDebut": "09:00", "heureFin": "13:00", "duree": 4},
+      {"numero": 6, "dateDebut": "2026-01-16", "heureDebut": "09:00", "heureFin": "13:00", "duree": 4}
+    ],
+    "remuneration": 1920,
     "candidatures": [
-      {
-        "formateurId": "user-1",
-        "datePostulation": "2025-11-18T15:00:00Z",
-        "statut": "en_attente"
-      }
+      {"formateurId": "user-1", "datePostulation": "2025-11-18T15:00:00Z", "statut": "en_attente"}
     ],
     "createdAt": "2025-11-17T11:00:00Z",
     "updatedAt": "2025-11-18T15:00:00Z"
@@ -148,22 +171,23 @@
     "coursId": "cours-3",
     "ecoleId": "ecole-2",
     "classeId": "classe-4",
-    "dateDebut": "2025-12-22",
-    "dateFin": "2025-12-23",
-    "heureDebut": "09:00",
-    "heureFin": "17:00",
     "type": "publique",
     "statut": "en_attente",
-    "description": "Docker et Kubernetes - Conteneurisation et orchestration. Images, volumes, networking, déploiements K8s et Helm.",
-    "remuneration": 1120,
+    "description": "Docker et Kubernetes - Module de 42h : Conteneurisation, orchestration, images, volumes, networking, déploiements K8s, Helm et production.",
+    "volumeHoraire": 42,
     "dateExpiration": "2025-12-12T23:59:59Z",
     "createdBy": "admin-1",
+    "sessions": [
+      {"numero": 1, "dateDebut": "2025-12-22", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 2, "dateDebut": "2025-12-23", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 3, "dateDebut": "2026-01-05", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 4, "dateDebut": "2026-01-06", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 5, "dateDebut": "2026-01-12", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 6, "dateDebut": "2026-01-13", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7}
+    ],
+    "remuneration": 3360,
     "candidatures": [
-      {
-        "formateurId": "user-2",
-        "datePostulation": "2025-11-18T16:00:00Z",
-        "statut": "en_attente"
-      }
+      {"formateurId": "user-2", "datePostulation": "2025-11-18T16:00:00Z", "statut": "en_attente"}
     ],
     "createdAt": "2025-11-17T12:00:00Z",
     "updatedAt": "2025-11-18T16:00:00Z"
@@ -173,169 +197,20 @@
     "coursId": "cours-7",
     "ecoleId": "ecole-3",
     "classeId": "classe-4",
-    "dateDebut": "2025-12-27",
-    "dateFin": "2025-12-27",
-    "heureDebut": "14:00",
-    "heureFin": "18:00",
     "type": "publique",
     "statut": "en_attente",
-    "description": "CI/CD avec GitLab - Pipelines automatisés, tests, déploiement continu et bonnes pratiques DevOps.",
-    "remuneration": 380,
+    "description": "CI/CD avec GitLab - Module de 21h : Pipelines automatisés, tests unitaires et d'intégration, déploiement continu et bonnes pratiques DevOps.",
+    "volumeHoraire": 21,
     "dateExpiration": "2025-12-18T23:59:59Z",
     "createdBy": "admin-1",
+    "sessions": [
+      {"numero": 1, "dateDebut": "2025-12-27", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 2, "dateDebut": "2026-01-03", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7},
+      {"numero": 3, "dateDebut": "2026-01-10", "heureDebut": "09:00", "heureFin": "16:00", "duree": 7}
+    ],
+    "remuneration": 1680,
     "candidatures": [],
     "createdAt": "2025-11-17T13:00:00Z",
     "updatedAt": "2025-11-17T13:00:00Z"
-  },
-  {
-    "id": "prop-9",
-    "coursId": "cours-10",
-    "ecoleId": "ecole-1",
-    "classeId": "classe-8",
-    "dateDebut": "2025-12-29",
-    "dateFin": "2025-12-29",
-    "heureDebut": "10:00",
-    "heureFin": "18:00",
-    "type": "publique",
-    "statut": "en_attente",
-    "description": "MongoDB avancé pour le Big Data. Modélisation, indexation, agrégation, sharding et réplication.",
-    "remuneration": 720,
-    "dateExpiration": "2025-12-20T23:59:59Z",
-    "createdBy": "admin-1",
-    "candidatures": [
-      {
-        "formateurId": "user-1",
-        "datePostulation": "2025-11-18T10:00:00Z",
-        "statut": "en_attente"
-      }
-    ],
-    "createdAt": "2025-11-17T14:00:00Z",
-    "updatedAt": "2025-11-18T10:00:00Z"
-  },
-  {
-    "id": "prop-10",
-    "coursId": "cours-8",
-    "ecoleId": "ecole-4",
-    "classeId": "classe-5",
-    "dateDebut": "2026-01-05",
-    "dateFin": "2026-01-05",
-    "heureDebut": "09:00",
-    "heureFin": "17:00",
-    "type": "publique",
-    "statut": "en_attente",
-    "description": "Sécurité applicative OWASP - Top 10 des vulnérabilités web, injection SQL, XSS, CSRF et mitigation.",
-    "remuneration": 760,
-    "dateExpiration": "2025-12-25T23:59:59Z",
-    "createdBy": "admin-1",
-    "candidatures": [
-      {
-        "formateurId": "user-3",
-        "datePostulation": "2025-11-19T08:00:00Z",
-        "statut": "en_attente"
-      }
-    ],
-    "createdAt": "2025-11-17T15:00:00Z",
-    "updatedAt": "2025-11-19T08:00:00Z"
-  },
-  {
-    "id": "prop-11",
-    "coursId": "cours-1",
-    "ecoleId": "ecole-5",
-    "classeId": "classe-1",
-    "dateDebut": "2026-01-08",
-    "dateFin": "2026-01-08",
-    "heureDebut": "09:00",
-    "heureFin": "13:00",
-    "type": "publique",
-    "statut": "en_attente",
-    "description": "Python pour l'automatisation - Scripts, CLI, gestion de fichiers et APIs REST.",
-    "remuneration": 320,
-    "dateExpiration": "2025-12-28T23:59:59Z",
-    "createdBy": "admin-1",
-    "candidatures": [],
-    "createdAt": "2025-11-18T09:00:00Z",
-    "updatedAt": "2025-11-18T09:00:00Z"
-  },
-  {
-    "id": "prop-12",
-    "coursId": "cours-4",
-    "ecoleId": "ecole-2",
-    "classeId": "classe-7",
-    "dateDebut": "2026-01-12",
-    "dateFin": "2026-01-13",
-    "heureDebut": "09:00",
-    "heureFin": "17:00",
-    "type": "publique",
-    "statut": "en_attente",
-    "description": "AWS - Certification Solutions Architect Associate. Préparation intensive avec labs pratiques.",
-    "remuneration": 1200,
-    "dateExpiration": "2026-01-02T23:59:59Z",
-    "createdBy": "admin-1",
-    "candidatures": [],
-    "createdAt": "2025-11-18T10:00:00Z",
-    "updatedAt": "2025-11-18T10:00:00Z"
-  },
-  {
-    "id": "prop-13",
-    "coursId": "cours-6",
-    "ecoleId": "ecole-3",
-    "classeId": "classe-3",
-    "dateDebut": "2026-01-15",
-    "dateFin": "2026-01-15",
-    "heureDebut": "14:00",
-    "heureFin": "18:00",
-    "type": "publique",
-    "statut": "en_attente",
-    "description": "React Native - Développement mobile cross-platform. Navigation, state management et déploiement.",
-    "remuneration": 380,
-    "dateExpiration": "2026-01-05T23:59:59Z",
-    "createdBy": "admin-1",
-    "candidatures": [
-      {
-        "formateurId": "user-1",
-        "datePostulation": "2025-11-19T11:00:00Z",
-        "statut": "en_attente"
-      }
-    ],
-    "createdAt": "2025-11-18T11:00:00Z",
-    "updatedAt": "2025-11-19T11:00:00Z"
-  },
-  {
-    "id": "prop-14",
-    "coursId": "cours-2",
-    "ecoleId": "ecole-1",
-    "classeId": "classe-5",
-    "dateDebut": "2026-01-19",
-    "dateFin": "2026-01-20",
-    "heureDebut": "09:00",
-    "heureFin": "17:00",
-    "type": "publique",
-    "statut": "en_attente",
-    "description": "Pentest avancé - Red team, exploitation de vulnérabilités, post-exploitation et reporting.",
-    "remuneration": 1120,
-    "dateExpiration": "2026-01-09T23:59:59Z",
-    "createdBy": "admin-1",
-    "candidatures": [],
-    "createdAt": "2025-11-18T12:00:00Z",
-    "updatedAt": "2025-11-18T12:00:00Z"
-  },
-  {
-    "id": "prop-15",
-    "coursId": "cours-9",
-    "ecoleId": "ecole-4",
-    "classeId": "classe-8",
-    "dateDebut": "2026-01-22",
-    "dateFin": "2026-01-22",
-    "heureDebut": "09:00",
-    "heureFin": "17:00",
-    "type": "publique",
-    "statut": "en_attente",
-    "description": "Microservices - Event-driven architecture avec Kafka et RabbitMQ.",
-    "remuneration": 760,
-    "dateExpiration": "2026-01-12T23:59:59Z",
-    "createdBy": "admin-1",
-    "candidatures": [],
-    "createdAt": "2025-11-18T13:00:00Z",
-    "updatedAt": "2025-11-18T13:00:00Z"
   }
 ]

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MissionService } from '../../../core/services/mission.service';
 import { DataService } from '../../../core/services/data.service';
-import { Mission, StatutMission, StatutSuiviMission, TypeAlerte, Alerte, User } from '../../../core/models';
+import { Mission, StatutMission, StatutSuiviMission, TypeAlerte, TypeIncident, Alerte, User } from '../../../core/models';
 
 @Component({
   selector: 'app-missions-admin',
@@ -29,6 +29,8 @@ export class MissionsAdmin implements OnInit {
   selectedSuivi = signal<'all' | StatutSuiviMission>('all');
 
   selectedMission = signal<Mission | null>(null);
+  selectedTrainer = signal<User | null>(null);
+  trainerMissions = signal<Mission[]>([]);
   showAlerteModal = signal<boolean>(false);
 
   // Formulaire alerte
@@ -69,9 +71,11 @@ export class MissionsAdmin implements OnInit {
     }
 
     // Trier par date (plus récentes en premier)
-    return missions.sort((a, b) =>
-      new Date(b.dateDebut).getTime() - new Date(a.dateDebut).getTime()
-    );
+    return missions.sort((a, b) => {
+      const dateA = a.dateDebut ? a.dateDebut.getTime() : 0;
+      const dateB = b.dateDebut ? b.dateDebut.getTime() : 0;
+      return dateB - dateA;
+    });
   });
 
   // Statistiques
@@ -80,6 +84,9 @@ export class MissionsAdmin implements OnInit {
     const alertesNonResolues = missions.reduce((sum, m) =>
       sum + (m.alertes?.filter(a => !a.resolue).length || 0), 0
     );
+    const incidentsSignales = missions.reduce((sum, m) =>
+      sum + (m.incidents?.length || 0), 0
+    );
 
     return {
       total: missions.length,
@@ -87,11 +94,13 @@ export class MissionsAdmin implements OnInit {
       planifiees: missions.filter(m => m.statut === StatutMission.PLANIFIEE).length,
       terminees: missions.filter(m => m.statut === StatutMission.TERMINEE).length,
       alertes: alertesNonResolues,
+      incidents: incidentsSignales,
       problemes: missions.filter(m =>
         m.statutSuivi === StatutSuiviMission.PROBLEME_INTERVENANT ||
         m.statutSuivi === StatutSuiviMission.ABSENCE_INTERVENANT ||
         m.statutSuivi === StatutSuiviMission.RETARD
-      ).length
+      ).length,
+      missionsDemarrees: missions.filter(m => m.missionDemarree).length
     };
   });
 
@@ -191,16 +200,20 @@ export class MissionsAdmin implements OnInit {
     // Ajouter l'alerte à la mission
     const updatedMissions = this.missions().map(m => {
       if (m.id === mission.id) {
-        return {
+        const updatedMission = {
           ...m,
           alertes: [...(m.alertes || []), newAlerte]
         };
+        // Mettre à jour aussi la mission sélectionnée
+        this.selectedMission.set(updatedMission);
+        return updatedMission;
       }
       return m;
     });
 
     this.missions.set(updatedMissions);
     this.closeAlerteModal();
+    this.cdr.markForCheck();
 
     // TODO: Persister dans le backend
     console.log('Alerte créée:', newAlerte);
@@ -209,7 +222,7 @@ export class MissionsAdmin implements OnInit {
   resolveAlerte(mission: Mission, alerteId: string) {
     const updatedMissions = this.missions().map(m => {
       if (m.id === mission.id) {
-        return {
+        const updatedMission = {
           ...m,
           alertes: m.alertes?.map(a =>
             a.id === alerteId
@@ -217,11 +230,17 @@ export class MissionsAdmin implements OnInit {
               : a
           )
         };
+        // Mettre à jour aussi la mission sélectionnée si elle existe
+        if (this.selectedMission()?.id === mission.id) {
+          this.selectedMission.set(updatedMission);
+        }
+        return updatedMission;
       }
       return m;
     });
 
     this.missions.set(updatedMissions);
+    this.cdr.markForCheck();
 
     // TODO: Persister dans le backend
     console.log('Alerte résolue:', alerteId);
@@ -262,10 +281,7 @@ export class MissionsAdmin implements OnInit {
 
     switch (suivi) {
       case StatutSuiviMission.OK:
-      case StatutSuiviMission.INTERVENANT_TROUVE:
         return 'bg-green-100 text-green-800';
-      case StatutSuiviMission.EN_ATTENTE_INTERVENANT:
-        return 'bg-yellow-100 text-yellow-800';
       case StatutSuiviMission.PROBLEME_INTERVENANT:
       case StatutSuiviMission.ABSENCE_INTERVENANT:
       case StatutSuiviMission.RETARD:
@@ -282,10 +298,6 @@ export class MissionsAdmin implements OnInit {
     switch (suivi) {
       case StatutSuiviMission.OK:
         return 'OK';
-      case StatutSuiviMission.INTERVENANT_TROUVE:
-        return 'Intervenant trouvé';
-      case StatutSuiviMission.EN_ATTENTE_INTERVENANT:
-        return 'En attente intervenant';
       case StatutSuiviMission.PROBLEME_INTERVENANT:
         return 'Problème intervenant';
       case StatutSuiviMission.RETARD:
@@ -334,5 +346,99 @@ export class MissionsAdmin implements OnInit {
 
   getActiveAlertesCount(mission: Mission): number {
     return mission.alertes?.filter(a => !a.resolue).length || 0;
+  }
+
+  getAlerteLabel(type: TypeAlerte): string {
+    switch (type) {
+      case TypeAlerte.ABSENCE:
+        return 'Absence';
+      case TypeAlerte.RETARD:
+        return 'Retard';
+      case TypeAlerte.PROBLEME_TECHNIQUE:
+        return 'Problème technique';
+      case TypeAlerte.ANNULATION:
+        return 'Annulation';
+      default:
+        return 'Autre';
+    }
+  }
+
+  updateAlerteType(value: string) {
+    const current = this.newAlerte();
+    this.newAlerte.set({
+      type: value as TypeAlerte,
+      titre: current.titre,
+      description: current.description
+    });
+  }
+
+  updateAlerteTitre(value: string) {
+    const current = this.newAlerte();
+    this.newAlerte.set({
+      type: current.type,
+      titre: value,
+      description: current.description
+    });
+  }
+
+  updateAlerteDescription(value: string) {
+    const current = this.newAlerte();
+    this.newAlerte.set({
+      type: current.type,
+      titre: current.titre,
+      description: value
+    });
+  }
+
+  getIncidentLabel(type: TypeIncident): string {
+    switch (type) {
+      case TypeIncident.RETARD:
+        return 'Retard';
+      case TypeIncident.ABSENCE:
+        return 'Absence';
+      case TypeIncident.PROBLEME_ECOLE:
+        return 'Problème école';
+      case TypeIncident.PROBLEME_ELEVE:
+        return 'Problème élève';
+      case TypeIncident.AUTRE:
+        return 'Autre';
+      default:
+        return type;
+    }
+  }
+
+  viewTrainerDetails(formateurId: string) {
+    const formateur = this.formateurs().find(f => f.id === formateurId);
+    if (formateur) {
+      this.selectedTrainer.set(formateur);
+      const missions = this.missions().filter(m => m.formateurId === formateurId);
+      this.trainerMissions.set(missions);
+    }
+  }
+
+  closeTrainerDetails() {
+    this.selectedTrainer.set(null);
+    this.trainerMissions.set([]);
+  }
+
+  getSchoolLogo(ecoleId: string): string {
+    const logos = ['eni.png', 'epitech.png', 'esgi.png', 'estiam.png', 'isitech.png', 'ynov.png', 'supdevinci.jpeg'];
+    const randomLogo = logos[Math.floor(Math.random() * logos.length)];
+    return `assets/logos/${randomLogo}`;
+  }
+
+  getStatutColorMission(statut: StatutMission): string {
+    switch (statut) {
+      case StatutMission.EN_COURS:
+        return 'bg-blue-100 text-blue-800';
+      case StatutMission.TERMINEE:
+        return 'bg-green-100 text-green-800';
+      case StatutMission.PLANIFIEE:
+        return 'bg-orange-100 text-orange-800';
+      case StatutMission.ANNULEE:
+        return 'bg-red-100 text-red-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
+    }
   }
 }

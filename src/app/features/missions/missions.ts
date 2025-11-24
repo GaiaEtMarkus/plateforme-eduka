@@ -1,27 +1,44 @@
 import { Component, OnInit, inject, signal, computed, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { MissionService } from '../../core/services/mission.service';
 import { AuthService } from '../../core/services/auth.service';
-import { Mission, StatutMission } from '../../core/models';
+import { NotificationService } from '../../core/services/notification.service';
+import { Mission, StatutMission, TypeIncident, Incident, TypeNotification } from '../../core/models';
 
 @Component({
   selector: 'app-missions',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './missions.html',
   styleUrl: './missions.css',
 })
 export class Missions implements OnInit {
   private missionService = inject(MissionService);
   private authService = inject(AuthService);
+  private notificationService = inject(NotificationService);
   private cdr = inject(ChangeDetectorRef);
 
-  // Expose enum pour le template
+  // Expose enums pour le template
   readonly StatutMission = StatutMission;
+  readonly TypeIncident = TypeIncident;
 
   missions = signal<Mission[]>([]);
   selectedMission = this.missionService.selectedMission;
   selectedFilter = signal<'all' | StatutMission>('all');
+
+  // Modal démarrage mission avec incident
+  showStartModal = signal<boolean>(false);
+  missionToStart = signal<Mission | null>(null);
+  showIncidentForm = signal<boolean>(false);
+
+  newIncident = signal<{
+    type: TypeIncident;
+    description: string;
+  }>({
+    type: TypeIncident.AUTRE,
+    description: ''
+  });
 
   filteredMissions = computed(() => {
     const filter = this.selectedFilter();
@@ -100,9 +117,77 @@ export class Missions implements OnInit {
     return this.missions().filter(m => m.statut === filter).length;
   }
 
-  demarrerMission(missionId: string) {
-    // Implémenter le démarrage de mission
-    console.log('Démarrer mission', missionId);
+  openStartModal(mission: Mission) {
+    this.missionToStart.set(mission);
+    this.showStartModal.set(true);
+    this.showIncidentForm.set(false);
+    this.newIncident.set({
+      type: TypeIncident.AUTRE,
+      description: ''
+    });
+  }
+
+  closeStartModal() {
+    this.showStartModal.set(false);
+    this.missionToStart.set(null);
+    this.showIncidentForm.set(false);
+  }
+
+  toggleIncidentForm() {
+    this.showIncidentForm.set(!this.showIncidentForm());
+  }
+
+  demarrerMission() {
+    const mission = this.missionToStart();
+    if (!mission) return;
+
+    const userId = this.authService.currentUser()?.id;
+    if (!userId) return;
+
+    // Créer un incident si le formulaire est rempli
+    let incident: Incident | undefined;
+    if (this.showIncidentForm() && this.newIncident().description) {
+      incident = {
+        id: `incident-${Date.now()}`,
+        type: this.newIncident().type,
+        description: this.newIncident().description,
+        createdAt: new Date(),
+        createdBy: userId
+      };
+    }
+
+    // Mettre à jour la mission
+    const updatedMissions = this.missions().map(m => {
+      if (m.id === mission.id) {
+        return {
+          ...m,
+          missionDemarree: true,
+          dateDemarrage: new Date(),
+          incidents: incident ? [...(m.incidents || []), incident] : m.incidents
+        };
+      }
+      return m;
+    });
+
+    this.missions.set(updatedMissions);
+    this.closeStartModal();
+
+    // Créer une notification pour l'admin si incident
+    if (incident) {
+      this.notificationService.createNotification({
+        userId: 'admin-1', // TODO: Récupérer les IDs des admins
+        type: TypeNotification.INCIDENT_SIGNALE,
+        titre: `Incident signalé - ${mission.cours.nom}`,
+        message: `${this.getIncidentLabel(incident.type)}: ${incident.description}`,
+        lu: false,
+        metadata: {
+          missionId: mission.id
+        }
+      }).subscribe();
+    }
+
+    // TODO: Persister dans le backend
+    console.log('Mission démarrée:', mission.id, incident);
   }
 
   terminerMission(missionId: string) {
@@ -115,16 +200,53 @@ export class Missions implements OnInit {
     console.log('Générer facture pour mission', missionId);
   }
 
+  updateIncidentType(value: string) {
+    const current = this.newIncident();
+    this.newIncident.set({
+      type: value as TypeIncident,
+      description: current.description
+    });
+  }
+
+  updateIncidentDescription(value: string) {
+    const current = this.newIncident();
+    this.newIncident.set({
+      type: current.type,
+      description: value
+    });
+  }
+
+  getIncidentLabel(type: TypeIncident): string {
+    switch (type) {
+      case TypeIncident.RETARD:
+        return 'Retard';
+      case TypeIncident.ABSENCE:
+        return 'Absence';
+      case TypeIncident.PROBLEME_ECOLE:
+        return 'Problème école';
+      case TypeIncident.PROBLEME_ELEVE:
+        return 'Problème élève';
+      default:
+        return 'Autre';
+    }
+  }
+
+  canStartMission(mission: Mission): boolean {
+    // Peut démarrer si la mission est planifiée et que c'est aujourd'hui
+    return mission.statut === StatutMission.PLANIFIEE && this.isToday(mission) && !mission.missionDemarree;
+  }
+
   isPast(mission: Mission): boolean {
-    return new Date(mission.dateFin) < new Date();
+    if (!mission.dateFin) return false;
+    return mission.dateFin < new Date();
   }
 
   isToday(mission: Mission): boolean {
+    if (!mission.dateDebut) return false;
     const today = new Date();
-    const missionDate = new Date(mission.dateDebut);
-    return missionDate.getDate() === today.getDate() &&
-           missionDate.getMonth() === today.getMonth() &&
-           missionDate.getFullYear() === today.getFullYear();
+    return mission.dateDebut.getDate() === today.getDate() &&
+           mission.dateDebut.getMonth() === today.getMonth() &&
+           mission.dateDebut.getFullYear() === today.getFullYear();
   }
 
   getSchoolLogo(ecole: any): string {

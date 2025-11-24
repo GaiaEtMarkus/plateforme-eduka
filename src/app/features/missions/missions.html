@@ -90,17 +90,34 @@
                       </div>
                     </td>
                     <td class="px-4 py-4">
-                      <p class="text-sm text-gray-800">
-                        {{ mission.dateDebut | date:'EEE d MMM':'':'fr-FR' }}
-                      </p>
-                      <p class="text-xs text-gray-500">
-                        {{ mission.dateDebut | date:'yyyy':'':'fr-FR' }}
-                      </p>
+                      @if (mission.sessions && mission.sessions.length > 0) {
+                        <!-- Missions multi-sessions -->
+                        <p class="text-sm text-gray-800">
+                          {{ mission.dateDebut | date:'dd/MM':'':'fr-FR' }} au {{ mission.dateFin | date:'dd/MM/yy':'':'fr-FR' }}
+                        </p>
+                        <p class="text-xs text-gray-500">
+                          {{ mission.sessions.length }} session(s)
+                        </p>
+                      } @else {
+                        <!-- Missions sur une journée -->
+                        <p class="text-sm text-gray-800">
+                          {{ mission.dateDebut | date:'EEE d MMM':'':'fr-FR' }}
+                        </p>
+                        <p class="text-xs text-gray-500">
+                          {{ mission.dateDebut | date:'yyyy':'':'fr-FR' }}
+                        </p>
+                      }
                     </td>
                     <td class="px-4 py-4">
-                      <p class="text-sm text-gray-700">
-                        {{ mission.heureDebut }} - {{ mission.heureFin }}
-                      </p>
+                      @if (mission.sessions && mission.sessions.length > 0) {
+                        <p class="text-sm text-gray-700">
+                          {{ mission.volumeHoraire }}h total
+                        </p>
+                      } @else {
+                        <p class="text-sm text-gray-700">
+                          {{ mission.heureDebut }} - {{ mission.heureFin }}
+                        </p>
+                      }
                     </td>
                     <td class="px-4 py-4">
                       <span class="inline-block px-3 py-1 rounded-full text-xs font-medium border"
@@ -180,16 +197,63 @@
           <p class="text-sm text-gray-600">{{ selectedMission()!.classe.nombreEleves }} élèves</p>
         </div>
 
-        <!-- Date et horaires -->
-        <div>
-          <h4 class="text-sm font-semibold text-gray-600 mb-1">Date et horaires</h4>
-          <p class="text-gray-800">
-            {{ selectedMission()!.dateDebut | date:'fullDate':'':'fr-FR' }}
-          </p>
-          <p class="text-sm text-gray-600">
-            De {{ selectedMission()!.heureDebut }} à {{ selectedMission()!.heureFin }}
-          </p>
-        </div>
+        <!-- Volume horaire total -->
+        @if (selectedMission()!.volumeHoraire) {
+          <div>
+            <h4 class="text-sm font-semibold text-gray-600 mb-1">Volume horaire total</h4>
+            <p class="text-2xl font-bold text-eduka-orange">{{ selectedMission()!.volumeHoraire }}h</p>
+          </div>
+        }
+
+        <!-- Planning des sessions -->
+        @if (selectedMission()!.sessions && selectedMission()!.sessions!.length > 0) {
+          <div>
+            <h4 class="text-sm font-semibold text-gray-600 mb-2 flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+              Planning des sessions ({{ selectedMission()!.sessions!.length }} sessions)
+            </h4>
+            <div class="bg-gray-50 rounded-lg p-3 max-h-60 overflow-y-auto">
+              @for (session of selectedMission()!.sessions; track session.numero) {
+                <div class="flex items-center justify-between py-2 px-3 bg-white rounded mb-2 last:mb-0 border border-gray-200">
+                  <div class="flex items-center gap-3 flex-1">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-full bg-eduka-orange text-white text-sm font-semibold">
+                      {{ session.numero }}
+                    </span>
+                    <div class="flex-1">
+                      <p class="font-medium text-gray-900">{{ session.dateDebut | date:'EEEE d MMMM yyyy':'':'fr' }}</p>
+                      <p class="text-sm text-gray-600">{{ session.heureDebut }} - {{ session.heureFin }} ({{ session.duree }}h)</p>
+                    </div>
+                  </div>
+                  @if (session.effectuee) {
+                    <span class="flex items-center gap-1 px-2 py-1 rounded-full bg-green-100 text-green-800 text-xs font-medium">
+                      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg>
+                      Effectuée
+                    </span>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        } @else {
+          <!-- Fallback pour anciennes missions sans sessions -->
+          <div>
+            <h4 class="text-sm font-semibold text-gray-600 mb-1">Date et horaires</h4>
+            @if (selectedMission()!.dateDebut) {
+              <p class="text-gray-800">
+                {{ selectedMission()!.dateDebut | date:'fullDate':'':'fr-FR' }}
+              </p>
+            }
+            @if (selectedMission()!.heureDebut && selectedMission()!.heureFin) {
+              <p class="text-sm text-gray-600">
+                De {{ selectedMission()!.heureDebut }} à {{ selectedMission()!.heureFin }}
+              </p>
+            }
+          </div>
+        }
 
         <!-- Syllabus -->
         @if (selectedMission()!.cours.syllabus) {
@@ -241,8 +305,8 @@
 
         <!-- Actions selon le statut -->
         <div class="pt-4 border-t space-y-2">
-          @if (selectedMission()!.statut === StatutMission.PLANIFIEE && isToday(selectedMission()!)) {
-            <button (click)="demarrerMission(selectedMission()!.id)"
+          @if (canStartMission(selectedMission()!)) {
+            <button (click)="openStartModal(selectedMission()!)"
                     class="w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
               ▶️ Démarrer la mission
             </button>
@@ -264,6 +328,100 @@
 
           <button class="w-full px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors">
             📝 Modifier
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Modal Démarrage Mission -->
+  @if (showStartModal()) {
+    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <!-- Header -->
+        <div class="flex items-center justify-between p-6 border-b">
+          <h2 class="text-2xl font-bold text-gray-900">Démarrer la mission</h2>
+          <button (click)="closeStartModal()" class="text-gray-400 hover:text-gray-600">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Content -->
+        <div class="p-6">
+          @if (missionToStart(); as mission) {
+            <div class="mb-6">
+              <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ mission.cours.nom }}</h3>
+              <p class="text-gray-600">{{ mission.ecole.nom }} - {{ mission.classe.nom }}</p>
+            </div>
+
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+              <p class="text-blue-800">
+                Vous êtes sur le point de démarrer cette mission. Si vous rencontrez un incident (retard, absence, problème), vous pouvez le signaler ci-dessous.
+              </p>
+            </div>
+
+            <!-- Checkbox pour signaler un incident -->
+            <div class="mb-4">
+              <label class="flex items-center space-x-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  [checked]="showIncidentForm()"
+                  (change)="toggleIncidentForm()"
+                  class="w-5 h-5 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                />
+                <span class="text-gray-700 font-medium">Signaler un incident</span>
+              </label>
+            </div>
+
+            <!-- Formulaire incident -->
+            @if (showIncidentForm()) {
+              <div class="bg-red-50 border border-red-200 rounded-lg p-4 space-y-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Type d'incident</label>
+                  <select
+                    [value]="newIncident().type"
+                    (change)="updateIncidentType($any($event.target).value)"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
+                  >
+                    <option [value]="TypeIncident.RETARD">Retard</option>
+                    <option [value]="TypeIncident.ABSENCE">Absence</option>
+                    <option [value]="TypeIncident.PROBLEME_ECOLE">Problème lié à l'école</option>
+                    <option [value]="TypeIncident.PROBLEME_ELEVE">Problème lié aux élèves</option>
+                    <option [value]="TypeIncident.AUTRE">Autre</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                  <textarea
+                    [value]="newIncident().description"
+                    (input)="updateIncidentDescription($any($event.target).value)"
+                    placeholder="Décrivez l'incident..."
+                    rows="4"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
+                  ></textarea>
+                </div>
+              </div>
+            }
+          }
+        </div>
+
+        <!-- Footer -->
+        <div class="p-6 bg-gray-50 border-t flex gap-3">
+          <button
+            (click)="demarrerMission()"
+            [disabled]="showIncidentForm() && !newIncident().description"
+            class="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Confirmer le démarrage
+          </button>
+          <button
+            (click)="closeStartModal()"
+            class="flex-1 bg-gray-200 text-gray-800 py-2 px-4 rounded-lg hover:bg-gray-300 font-medium"
+          >
+            Annuler
           </button>
         </div>
       </div>

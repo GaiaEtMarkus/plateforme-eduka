@@ -1,8 +1,18 @@
 <div class="p-6">
   <!-- En-tête -->
-  <div class="mb-6">
-    <h1 class="text-3xl font-bold text-gray-800">Gestion des Formateurs</h1>
-    <p class="text-gray-600 mt-2">Vue d'ensemble et statistiques des formateurs</p>
+  <div class="mb-6 flex items-center justify-between">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-800">Gestion des Formateurs</h1>
+      <p class="text-gray-600 mt-2">Vue d'ensemble et statistiques des formateurs</p>
+    </div>
+    <button
+      class="px-6 py-3 bg-eduka-orange text-white rounded-lg hover:bg-orange-600 font-medium flex items-center gap-2"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+      </svg>
+      Ajouter un intervenant
+    </button>
   </div>
 
   <!-- Top Formateurs -->
@@ -67,6 +77,9 @@
               Revenu total
             </th>
             <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Alertes
+            </th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
               Actions
             </th>
           </tr>
@@ -115,17 +128,39 @@
                 </span>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-center">
-                <button
-                  (click)="viewTrainerDetails(trainer)"
-                  class="text-eduka-orange hover:text-orange-700 font-medium text-sm"
-                >
-                  Détails
-                </button>
+                @if (hasActiveAlertes(trainer)) {
+                  <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-red-100 text-red-800 text-xs font-medium">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                    {{ getActiveAlertesCount(trainer) }}
+                  </span>
+                } @else {
+                  <span class="text-gray-400 text-sm">Aucune</span>
+                }
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-center">
+                <div class="flex items-center justify-center gap-2">
+                  <button
+                    (click)="viewTrainerDetails(trainer)"
+                    class="text-eduka-orange hover:text-orange-700 font-medium text-sm"
+                    title="Voir détails"
+                  >
+                    Détails
+                  </button>
+                  <button
+                    (click)="openAlerteModal(trainer)"
+                    class="text-red-600 hover:text-red-700 font-medium text-sm"
+                    title="Créer alerte"
+                  >
+                    Alerte
+                  </button>
+                </div>
               </td>
             </tr>
           } @empty {
             <tr>
-              <td colspan="8" class="px-6 py-8 text-center text-gray-500">
+              <td colspan="9" class="px-6 py-8 text-center text-gray-500">
                 Aucun formateur trouvé
               </td>
             </tr>
@@ -138,9 +173,9 @@
   <!-- Modal des détails du formateur -->
   @if (selectedTrainer()) {
     <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden">
+      <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
         <!-- Header -->
-        <div class="p-6 bg-gradient-to-r from-eduka-orange to-orange-600 text-white">
+        <div class="p-6 bg-gradient-to-r from-eduka-orange to-orange-600 text-white flex-shrink-0">
           <div class="flex justify-between items-start">
             <div class="flex items-start gap-4">
               <!-- Avatar -->
@@ -198,67 +233,395 @@
           </div>
         </div>
 
-        <!-- Compétences -->
-        <div class="p-6 border-b border-gray-200">
-          <h3 class="font-bold text-gray-800 mb-3">Compétences</h3>
-          <div class="flex flex-wrap gap-2">
-            @for (comp of selectedTrainer()?.competences; track comp.id) {
-              <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
-                {{ comp.nom }}
-              </span>
-            }
+        <!-- Scroll container for content -->
+        <div class="overflow-y-auto flex-1">
+          <!-- Informations personnelles -->
+          <div class="p-6 border-b border-gray-200">
+            <h3 class="font-bold text-gray-800 mb-4">Informations personnelles</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              @if (selectedTrainer()?.adresse) {
+                <div>
+                  <p class="text-sm text-gray-600">Adresse</p>
+                  <p class="font-medium text-gray-800">{{ selectedTrainer()?.adresse }}</p>
+                </div>
+              }
+              @if (selectedTrainer()?.ville) {
+                <div>
+                  <p class="text-sm text-gray-600">Ville</p>
+                  <p class="font-medium text-gray-800">{{ selectedTrainer()?.ville }} {{ selectedTrainer()?.codePostal }}</p>
+                </div>
+              }
+              @if (selectedTrainer()?.tarifHoraire) {
+                <div>
+                  <p class="text-sm text-gray-600">Tarif horaire</p>
+                  <p class="font-medium text-gray-800">{{ selectedTrainer()?.tarifHoraire }}€/h</p>
+                </div>
+              }
+              @if (selectedTrainer()?.noteGlobale) {
+                <div>
+                  <p class="text-sm text-gray-600">Note globale</p>
+                  <p class="font-medium text-gray-800">{{ selectedTrainer()?.noteGlobale | number:'1.1-1' }}/5</p>
+                </div>
+              }
+            </div>
           </div>
-        </div>
 
-        <!-- Missions -->
-        <div class="p-6 overflow-y-auto max-h-96">
-          <h3 class="font-bold text-gray-800 mb-4">Missions ({{ trainerMissions().length }})</h3>
-          <div class="space-y-3">
-            @for (mission of trainerMissions(); track mission.id) {
-              <div class="border border-gray-200 rounded-lg p-4 hover:border-eduka-orange">
-                <div class="flex justify-between items-start mb-2">
-                  <div class="flex items-start gap-3 flex-1">
-                    <img [src]="getSchoolLogo(mission.ecole.id)" [alt]="mission.ecole.nom" class="w-10 h-10 bg-gray-100 rounded object-contain p-1" />
-                    <div>
-                      <h4 class="font-medium text-gray-800">{{ mission.cours.nom }}</h4>
-                      <p class="text-sm text-gray-600">{{ mission.ecole.nom }}</p>
+          <!-- Documents -->
+          @if (selectedTrainer()?.documents && selectedTrainer()!.documents!.length > 0) {
+            <div class="p-6 border-b border-gray-200">
+              <h3 class="font-bold text-gray-800 mb-4">Documents</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                @for (doc of selectedTrainer()!.documents; track doc.id) {
+                  <a
+                    [href]="doc.url"
+                    target="_blank"
+                    class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-eduka-orange hover:bg-orange-50 transition-colors"
+                  >
+                    <div class="flex-shrink-0">
+                      <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                      </svg>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <p class="font-medium text-gray-800 truncate">{{ doc.nom }}</p>
+                      <p class="text-xs text-gray-500">{{ doc.type }}</p>
+                    </div>
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                    </svg>
+                  </a>
+                }
+              </div>
+            </div>
+          }
+
+          <!-- Compétences -->
+          <div class="p-6 border-b border-gray-200">
+            <h3 class="font-bold text-gray-800 mb-3">Compétences</h3>
+            <div class="flex flex-wrap gap-2">
+              @for (comp of selectedTrainer()?.competences; track comp.id) {
+                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                  {{ comp.nom }} <span class="text-blue-600">({{ comp.niveau }})</span>
+                </span>
+              }
+            </div>
+          </div>
+
+          <!-- Disponibilités -->
+          @if (selectedTrainer()?.disponibilites && selectedTrainer()!.disponibilites!.length > 0) {
+            <div class="p-6 border-b border-gray-200">
+              <h3 class="font-bold text-gray-800 mb-4">Disponibilités</h3>
+              <div class="space-y-2">
+                @for (dispo of selectedTrainer()!.disponibilites; track dispo.jour) {
+                  <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
+                    <span class="font-medium text-gray-700">{{ dispo.jour }}</span>
+                    <span class="text-sm text-gray-600">{{ dispo.heureDebut }} - {{ dispo.heureFin }}</span>
+                  </div>
+                }
+              </div>
+            </div>
+          }
+
+          <!-- Planning / Calendrier -->
+          <div class="p-6 border-b border-gray-200">
+            <h3 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+              Planning des missions
+            </h3>
+
+            @if (trainerMissions().length > 0) {
+              <!-- Timeline view of upcoming and ongoing missions -->
+              <div class="space-y-3">
+                @for (mission of trainerMissions(); track mission.id) {
+                  <div class="relative border-l-4 pl-4 pb-3"
+                       [ngClass]="{
+                         'border-blue-500': mission.statut === 'en_cours',
+                         'border-orange-500': mission.statut === 'planifiee',
+                         'border-green-500': mission.statut === 'terminee',
+                         'border-gray-300': mission.statut === 'annulee'
+                       }">
+
+                    <!-- Status badge -->
+                    <div class="absolute -left-2 top-0 w-4 h-4 rounded-full border-2 border-white"
+                         [ngClass]="{
+                           'bg-blue-500': mission.statut === 'en_cours',
+                           'bg-orange-500': mission.statut === 'planifiee',
+                           'bg-green-500': mission.statut === 'terminee',
+                           'bg-gray-300': mission.statut === 'annulee'
+                         }">
+                    </div>
+
+                    <!-- Mission info -->
+                    <div class="bg-gray-50 rounded-lg p-3">
+                      <div class="flex items-start justify-between mb-2">
+                        <div class="flex items-center gap-2 flex-1">
+                          <img [src]="getSchoolLogo(mission.ecole.id)" [alt]="mission.ecole.nom" class="w-8 h-8 bg-white rounded object-contain p-1 border" />
+                          <div class="flex-1">
+                            <h4 class="font-medium text-gray-900 text-sm">{{ mission.cours.nom }}</h4>
+                            <p class="text-xs text-gray-600">{{ mission.ecole.nom }}</p>
+                          </div>
+                        </div>
+                        <span class="px-2 py-1 rounded-full text-xs font-medium"
+                              [ngClass]="getStatutColor(mission.statut)">
+                          {{ mission.statut }}
+                        </span>
+                      </div>
+
+                      <!-- Sessions or single date -->
+                      @if (mission.sessions && mission.sessions.length > 0) {
+                        <div class="mt-2">
+                          <p class="text-xs font-medium text-gray-700 mb-1">
+                            {{ mission.sessions.length }} session(s) - {{ mission.volumeHoraire }}h total
+                          </p>
+                          <div class="space-y-1 max-h-32 overflow-y-auto">
+                            @for (session of mission.sessions.slice(0, 5); track session.numero) {
+                              <div class="flex items-center justify-between text-xs bg-white rounded px-2 py-1">
+                                <div class="flex items-center gap-2">
+                                  <span class="w-5 h-5 rounded-full bg-eduka-orange text-white text-[10px] flex items-center justify-center font-semibold">
+                                    {{ session.numero }}
+                                  </span>
+                                  <span class="text-gray-700">{{ session.dateDebut | date:'dd/MM':'':'fr' }}</span>
+                                  <span class="text-gray-500">{{ session.heureDebut }}-{{ session.heureFin }}</span>
+                                </div>
+                                @if (session.effectuee) {
+                                  <span class="text-green-600">✓</span>
+                                }
+                              </div>
+                            }
+                            @if (mission.sessions.length > 5) {
+                              <p class="text-xs text-gray-500 text-center py-1">
+                                +{{ mission.sessions.length - 5 }} autres sessions
+                              </p>
+                            }
+                          </div>
+                        </div>
+                      } @else {
+                        <div class="mt-2 flex items-center gap-3 text-xs text-gray-600">
+                          @if (mission.dateDebut) {
+                            <div class="flex items-center gap-1">
+                              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                              </svg>
+                              <span>{{ mission.dateDebut | date:'dd MMMM yyyy':'':'fr' }}</span>
+                            </div>
+                          }
+                          @if (mission.heureDebut && mission.heureFin) {
+                            <div class="flex items-center gap-1">
+                              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                              </svg>
+                              <span>{{ mission.heureDebut }} - {{ mission.heureFin }}</span>
+                            </div>
+                          }
+                        </div>
+                      }
                     </div>
                   </div>
-                  <span
-                    class="px-3 py-1 rounded-full text-xs font-medium"
-                    [ngClass]="getStatutColor(mission.statut)"
-                  >
-                    {{ mission.statut }}
-                  </span>
-                </div>
-                <div class="flex items-center gap-4 text-sm text-gray-600 mt-2">
-                  <div class="flex items-center gap-1">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                    </svg>
-                    <span>{{ mission.dateDebut | date:'dd MMMM yyyy':'':'fr' }}</span>
-                  </div>
-                  <div class="flex items-center gap-1">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <span>{{ mission.heureDebut }} - {{ mission.heureFin }}</span>
-                  </div>
-                </div>
+                }
               </div>
-            } @empty {
-              <p class="text-center text-gray-500 py-8">Aucune mission trouvée</p>
+            } @else {
+              <div class="text-center py-8 bg-gray-50 rounded-lg">
+                <svg class="w-12 h-12 mx-auto text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                <p class="text-gray-500 text-sm">Aucune mission planifiée</p>
+              </div>
             }
+          </div>
+
+        <!-- Alertes Intervenant -->
+        @if (selectedTrainer()?.alertes && selectedTrainer()!.alertes!.length > 0) {
+          <div class="p-6 border-b border-gray-200">
+            <h3 class="font-bold text-gray-800 mb-3">Alertes Intervenant ({{ selectedTrainer()!.alertes!.length }})</h3>
+            <div class="space-y-3">
+              @for (alerte of selectedTrainer()!.alertes; track alerte.id) {
+                <div
+                  class="border rounded-lg p-4"
+                  [ngClass]="alerte.resolue ? 'border-gray-200 bg-gray-50' : 'border-red-300 bg-red-50'"
+                >
+                  <div class="flex items-start justify-between">
+                    <div class="flex items-start gap-3 flex-1">
+                      <span
+                        class="px-2 py-1 rounded text-xs font-medium"
+                        [ngClass]="getAlerteIntervenantColor(alerte.type)"
+                      >
+                        {{ getAlerteIntervenantLabel(alerte.type) }}
+                      </span>
+                      <div>
+                        <h4 class="font-medium text-gray-800">{{ alerte.titre }}</h4>
+                        <p class="text-sm text-gray-600 mt-1">{{ alerte.description }}</p>
+                        <p class="text-xs text-gray-500 mt-2">
+                          Créée le {{ alerte.createdAt | date:'dd/MM/yyyy HH:mm':'':'fr' }}
+                        </p>
+                        @if (alerte.resolue) {
+                          <p class="text-xs text-green-600 mt-1">
+                            ✓ Résolue le {{ alerte.resolvedAt! | date:'dd/MM/yyyy HH:mm':'':'fr' }}
+                          </p>
+                        }
+                      </div>
+                    </div>
+                    @if (!alerte.resolue) {
+                      <button
+                        (click)="resolveAlerteIntervenant(selectedTrainer()!, alerte.id)"
+                        class="text-green-600 hover:text-green-700 text-sm font-medium"
+                      >
+                        Résoudre
+                      </button>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+          <!-- Missions -->
+          <div class="p-6 border-b border-gray-200">
+            <h3 class="font-bold text-gray-800 mb-4">Missions ({{ trainerMissions().length }})</h3>
+            <div class="space-y-3">
+              @for (mission of trainerMissions(); track mission.id) {
+                <div class="border border-gray-200 rounded-lg p-4 hover:border-eduka-orange">
+                  <div class="flex justify-between items-start mb-2">
+                    <div class="flex items-start gap-3 flex-1">
+                      <img [src]="getSchoolLogo(mission.ecole.id)" [alt]="mission.ecole.nom" class="w-10 h-10 bg-gray-100 rounded object-contain p-1" />
+                      <div>
+                        <h4 class="font-medium text-gray-800">{{ mission.cours.nom }}</h4>
+                        <p class="text-sm text-gray-600">{{ mission.ecole.nom }}</p>
+                      </div>
+                    </div>
+                    <span
+                      class="px-3 py-1 rounded-full text-xs font-medium"
+                      [ngClass]="getStatutColor(mission.statut)"
+                    >
+                      {{ mission.statut }}
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-4 text-sm text-gray-600 mt-2">
+                    <div class="flex items-center gap-1">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                      </svg>
+                      <span>{{ mission.dateDebut | date:'dd MMMM yyyy':'':'fr' }}</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      </svg>
+                      <span>{{ mission.heureDebut }} - {{ mission.heureFin }}</span>
+                    </div>
+                  </div>
+                </div>
+              } @empty {
+                <p class="text-center text-gray-500 py-8">Aucune mission trouvée</p>
+              }
+            </div>
           </div>
         </div>
 
         <!-- Footer -->
-        <div class="p-6 bg-gray-50 border-t border-gray-200">
+        <div class="p-6 bg-gray-50 border-t border-gray-200 flex gap-3 flex-shrink-0">
+          <button
+            (click)="openAlerteModal(selectedTrainer()!)"
+            class="flex-1 bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 font-medium"
+          >
+            Créer une alerte
+          </button>
           <button
             (click)="closeTrainerDetails()"
-            class="w-full bg-eduka-orange text-white py-2 px-4 rounded-lg hover:bg-orange-600 font-medium"
+            class="flex-1 bg-gray-200 text-gray-800 py-2 px-4 rounded-lg hover:bg-gray-300 font-medium"
           >
             Fermer
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Modal création alerte intervenant -->
+  @if (showAlerteModal()) {
+    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div class="bg-white rounded-lg max-w-lg w-full">
+        <!-- Header -->
+        <div class="p-6 bg-red-600 text-white">
+          <div class="flex justify-between items-start">
+            <div>
+              <h2 class="text-2xl font-bold">Créer une alerte intervenant</h2>
+              <p class="text-red-100 mt-1">{{ selectedTrainer()?.prenom }} {{ selectedTrainer()?.nom }}</p>
+            </div>
+            <button
+              (click)="closeAlerteModal()"
+              class="text-white hover:text-red-200"
+            >
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Formulaire -->
+        <div class="p-6">
+          <div class="space-y-4">
+            <!-- Type -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Type d'alerte</label>
+              <select
+                [value]="newAlerteIntervenant().type"
+                (change)="updateAlerteType($any($event.target).value)"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
+              >
+                <option [value]="TypeAlerteIntervenant.ABSENCE_RECURRENTE">Absence récurrente</option>
+                <option [value]="TypeAlerteIntervenant.RETARD_FREQUENT">Retard fréquent</option>
+                <option [value]="TypeAlerteIntervenant.EVALUATION_NEGATIVE">Évaluation négative</option>
+                <option [value]="TypeAlerteIntervenant.PROBLEME_COMPORTEMENT">Problème comportement</option>
+                <option [value]="TypeAlerteIntervenant.DISPONIBILITE">Disponibilité</option>
+                <option [value]="TypeAlerteIntervenant.DOCUMENT_MANQUANT">Document manquant</option>
+                <option [value]="TypeAlerteIntervenant.AUTRE">Autre</option>
+              </select>
+            </div>
+
+            <!-- Titre -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Titre</label>
+              <input
+                type="text"
+                [value]="newAlerteIntervenant().titre"
+                (input)="updateAlerteTitre($any($event.target).value)"
+                placeholder="Titre de l'alerte"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
+              />
+            </div>
+
+            <!-- Description -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+              <textarea
+                [value]="newAlerteIntervenant().description"
+                (input)="updateAlerteDescription($any($event.target).value)"
+                placeholder="Décrivez le problème..."
+                rows="4"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="p-6 bg-gray-50 border-t border-gray-200 flex gap-3">
+          <button
+            (click)="createAlerteIntervenant()"
+            [disabled]="!newAlerteIntervenant().titre || !newAlerteIntervenant().description"
+            class="flex-1 bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Créer l'alerte
+          </button>
+          <button
+            (click)="closeAlerteModal()"
+            class="flex-1 bg-gray-200 text-gray-800 py-2 px-4 rounded-lg hover:bg-gray-300 font-medium"
+          >
+            Annuler
           </button>
         </div>
       </div>

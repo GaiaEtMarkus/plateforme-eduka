@@ -26,7 +26,8 @@ export class History implements OnInit {
   filteredMissions = computed(() => {
     const year = this.selectedYear();
     return this.completedMissions().filter(m => {
-      const missionYear = new Date(m.dateDebut).getFullYear();
+      if (!m.dateDebut) return false;
+      const missionYear = m.dateDebut.getFullYear();
       return year === 0 || missionYear === year;
     });
   });
@@ -35,7 +36,9 @@ export class History implements OnInit {
   availableYears = computed(() => {
     const years = new Set<number>();
     this.completedMissions().forEach(m => {
-      years.add(new Date(m.dateDebut).getFullYear());
+      if (m.dateDebut) {
+        years.add(m.dateDebut.getFullYear());
+      }
     });
     return Array.from(years).sort((a, b) => b - a);
   });
@@ -83,8 +86,10 @@ export class History implements OnInit {
 
     const monthCounts = new Map<number, number>();
     missions.forEach(m => {
-      const month = new Date(m.dateDebut).getMonth();
-      monthCounts.set(month, (monthCounts.get(month) || 0) + 1);
+      if (m.dateDebut) {
+        const month = m.dateDebut.getMonth();
+        monthCounts.set(month, (monthCounts.get(month) || 0) + 1);
+      }
     });
 
     let maxMonth = 0;
@@ -101,7 +106,8 @@ export class History implements OnInit {
     return monthNames[maxMonth];
   }
 
-  getMonthYear(date: string | Date): string {
+  getMonthYear(date: string | Date | undefined): string {
+    if (!date) return 'N/A';
     const d = typeof date === 'string' ? new Date(date) : date;
     const monthNames = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
                         'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];

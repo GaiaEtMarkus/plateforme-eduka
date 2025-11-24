@@ -31,5 +31,119 @@
     "lu": true,
     "createdAt": "2025-11-17T15:00:00Z",
     "metadata": {}
+  },
+  {
+    "id": "notif-admin-1",
+    "userId": "admin-1",
+    "type": "incident_signale",
+    "titre": "Incident signalé par un intervenant",
+    "message": "Sophie Martin a signalé un retard de 15 minutes sur la mission Angular à ESGI",
+    "lien": "/admin/missions",
+    "lu": false,
+    "createdAt": "2025-11-22T09:30:00Z",
+    "metadata": {
+      "formateurId": "user-1",
+      "missionId": "mission-1"
+    }
+  },
+  {
+    "id": "notif-admin-2",
+    "userId": "admin-1",
+    "type": "mission_demarree",
+    "titre": "Mission démarrée",
+    "message": "Marc Dubois a démarré sa mission React Native à Epitech",
+    "lien": "/admin/missions",
+    "lu": false,
+    "createdAt": "2025-11-22T08:00:00Z",
+    "metadata": {
+      "formateurId": "user-2",
+      "missionId": "mission-5"
+    }
+  },
+  {
+    "id": "notif-admin-3",
+    "userId": "admin-1",
+    "type": "evaluation_recue",
+    "titre": "Nouvelle évaluation reçue",
+    "message": "L'école ENI a évalué la mission DevOps de Sophie Martin (4.8/5)",
+    "lien": "/admin/trainers",
+    "lu": false,
+    "createdAt": "2025-11-21T17:30:00Z",
+    "metadata": {
+      "formateurId": "user-1",
+      "missionId": "mission-2",
+      "note": 4.8
+    }
+  },
+  {
+    "id": "notif-admin-4",
+    "userId": "admin-1",
+    "type": "incident_signale",
+    "titre": "Problème technique signalé",
+    "message": "Pierre Legrand a signalé un problème de connexion WiFi à Ynov Paris",
+    "lien": "/admin/missions",
+    "lu": true,
+    "createdAt": "2025-11-21T14:15:00Z",
+    "metadata": {
+      "formateurId": "user-3",
+      "missionId": "mission-7"
+    }
+  },
+  {
+    "id": "notif-admin-5",
+    "userId": "admin-1",
+    "type": "mission_confirmee",
+    "titre": "Mission confirmée par un intervenant",
+    "message": "Julie Bernard a accepté la mission Kubernetes à Sup de Vinci pour le 28 novembre",
+    "lien": "/admin/missions",
+    "lu": true,
+    "createdAt": "2025-11-20T16:45:00Z",
+    "metadata": {
+      "formateurId": "user-4",
+      "missionId": "mission-8"
+    }
+  },
+  {
+    "id": "notif-admin-6",
+    "userId": "admin-1",
+    "type": "incident_signale",
+    "titre": "Incident élève signalé",
+    "message": "Sophie Martin a signalé un problème de discipline avec un élève à ESGI",
+    "lien": "/admin/missions",
+    "lu": false,
+    "createdAt": "2025-11-22T11:20:00Z",
+    "metadata": {
+      "formateurId": "user-1",
+      "missionId": "mission-1"
+    }
+  },
+  {
+    "id": "notif-admin-7",
+    "userId": "admin-1",
+    "type": "facture_validee",
+    "titre": "Facture en attente de validation",
+    "message": "La facture FAC-2025-012 de Marc Dubois est en attente de votre validation",
+    "lien": "/admin/invoices",
+    "lu": false,
+    "createdAt": "2025-11-22T07:00:00Z",
+    "metadata": {
+      "formateurId": "user-2",
+      "factureId": "facture-12"
+    }
+  },
+  {
+    "id": "notif-admin-8",
+    "userId": "admin-1",
+    "type": "evaluation_recue",
+    "titre": "Évaluation négative reçue",
+    "message": "ISITECH a donné une note de 2.5/5 à la mission de Pierre Legrand - Intervention requise",
+    "lien": "/admin/trainers",
+    "lu": false,
+    "createdAt": "2025-11-21T18:00:00Z",
+    "metadata": {
+      "formateurId": "user-3",
+      "missionId": "mission-6",
+      "note": 2.5
+    }
   }
 ]

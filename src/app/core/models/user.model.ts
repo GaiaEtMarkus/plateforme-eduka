@@ -23,6 +23,28 @@ export interface Disponibilite {
   heureFin: string; // '18:00'
 }
 
+export enum TypeAlerteIntervenant {
+  ABSENCE_RECURRENTE = 'absence_recurrente',
+  RETARD_FREQUENT = 'retard_frequent',
+  EVALUATION_NEGATIVE = 'evaluation_negative',
+  PROBLEME_COMPORTEMENT = 'probleme_comportement',
+  DISPONIBILITE = 'disponibilite',
+  DOCUMENT_MANQUANT = 'document_manquant',
+  AUTRE = 'autre'
+}
+
+export interface AlerteIntervenant {
+  id: string;
+  type: TypeAlerteIntervenant;
+  titre: string;
+  description: string;
+  createdAt: Date;
+  createdBy: string; // userId de l'admin
+  resolue: boolean;
+  resolvedAt?: Date;
+  resolvedBy?: string;
+}
+
 export interface User {
   id: string;
   email: string;
@@ -39,6 +61,9 @@ export interface User {
   adresse?: string;
   ville?: string;
   codePostal?: string;
+
+  // Alertes intervenant
+  alertes?: AlerteIntervenant[];
 
   // Statistiques
   nombreMissions?: number;

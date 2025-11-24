@@ -13,17 +13,29 @@ export enum TypeProposition {
   DIRECTE = 'directe' // Envoyée directement à un formateur spécifique
 }
 
+export interface SessionProposition {
+  numero: number;
+  dateDebut: string; // Format: YYYY-MM-DD
+  heureDebut: string; // Format: HH:mm
+  heureFin: string; // Format: HH:mm
+  duree: number; // Durée en heures
+}
+
 export interface Proposition {
   id: string;
   cours: Cours;
   ecole: Ecole;
   classe: Classe;
 
-  // Dates et horaires
-  dateDebut: Date;
-  dateFin: Date;
-  heureDebut: string;
-  heureFin: string;
+  // Dates et horaires - legacy (à supprimer progressivement)
+  dateDebut?: Date;
+  dateFin?: Date;
+  heureDebut?: string;
+  heureFin?: string;
+
+  // Sessions multiples (nouvelle structure)
+  sessions?: SessionProposition[];
+  volumeHoraire?: number; // Volume horaire total du module
 
   // Type et statut
   type: TypeProposition;
@@ -39,6 +51,12 @@ export interface Proposition {
   description: string;
   remuneration: number;
   dateExpiration: Date;
+
+  // École associée (obligatoire)
+  ecoleId: string;
+
+  // Commentaire admin (visible pour tous)
+  commentaireAdmin?: string;
 
   // Métadonnées
   createdBy: string; // Admin userId

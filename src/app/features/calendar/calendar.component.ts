@@ -46,10 +46,10 @@ export class CalendarComponent implements OnInit {
     for (let day = 1; day <= daysInMonth; day++) {
       const dayDate = new Date(year, month, day);
       const dayMissions = this.missions().filter(m => {
-        const missionDate = new Date(m.dateDebut);
-        return missionDate.getDate() === day &&
-               missionDate.getMonth() === month &&
-               missionDate.getFullYear() === year;
+        if (!m.dateDebut) return false;
+        return m.dateDebut.getDate() === day &&
+               m.dateDebut.getMonth() === month &&
+               m.dateDebut.getFullYear() === year;
       });
       days.push({ date: day, missions: dayMissions });
     }

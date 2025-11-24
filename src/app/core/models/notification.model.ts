@@ -5,6 +5,8 @@ export enum TypeNotification {
   MISSION_CONFIRMEE = 'mission_confirmee',
   MISSION_ANNULEE = 'mission_annulee',
   MISSION_RAPPEL = 'mission_rappel',
+  MISSION_DEMARREE = 'mission_demarree',
+  INCIDENT_SIGNALE = 'incident_signale',
   FACTURE_VALIDEE = 'facture_validee',
   FACTURE_PAYEE = 'facture_payee',
   FACTURE_REFUSEE = 'facture_refusee',

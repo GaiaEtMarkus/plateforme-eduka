@@ -10,8 +10,6 @@ export enum StatutMission {
 
 export enum StatutSuiviMission {
   OK = 'ok',
-  INTERVENANT_TROUVE = 'intervenant_trouve',
-  EN_ATTENTE_INTERVENANT = 'en_attente_intervenant',
   PROBLEME_INTERVENANT = 'probleme_intervenant',
   RETARD = 'retard',
   ABSENCE_INTERVENANT = 'absence_intervenant',
@@ -23,8 +21,26 @@ export enum TypeAlerte {
   ABSENCE = 'absence',
   RETARD = 'retard',
   PROBLEME_TECHNIQUE = 'probleme_technique',
+  PROBLEME_ECOLE = 'probleme_ecole',
+  PROBLEME_ELEVE = 'probleme_eleve',
   ANNULATION = 'annulation',
   AUTRE = 'autre'
+}
+
+export enum TypeIncident {
+  RETARD = 'retard',
+  ABSENCE = 'absence',
+  PROBLEME_ECOLE = 'probleme_ecole',
+  PROBLEME_ELEVE = 'probleme_eleve',
+  AUTRE = 'autre'
+}
+
+export interface Incident {
+  id: string;
+  type: TypeIncident;
+  description: string;
+  createdAt: Date;
+  createdBy: string; // userId du formateur
 }
 
 export interface Alerte {
@@ -47,17 +63,31 @@ export interface FichierNote {
   uploadedBy: string; // userId
 }
 
+export interface SessionMission {
+  numero: number;
+  dateDebut: string; // Format: YYYY-MM-DD
+  heureDebut: string; // Format: HH:mm
+  heureFin: string; // Format: HH:mm
+  duree: number; // Durée en heures
+  effectuee?: boolean; // La session a-t-elle été effectuée?
+  presenceConfirmee?: boolean;
+}
+
 export interface Mission {
   id: string;
   cours: Cours;
   ecole: Ecole;
   classe: Classe;
 
-  // Dates et horaires
-  dateDebut: Date;
-  dateFin: Date;
-  heureDebut: string; // '09:00'
-  heureFin: string; // '12:00'
+  // Dates et horaires - legacy (à supprimer progressivement)
+  dateDebut?: Date;
+  dateFin?: Date;
+  heureDebut?: string; // '09:00'
+  heureFin?: string; // '12:00'
+
+  // Sessions multiples (nouvelle structure)
+  sessions?: SessionMission[];
+  volumeHoraire?: number; // Volume horaire total du module
 
   // Formateur assigné
   formateurId: string;
@@ -70,6 +100,11 @@ export interface Mission {
   // Suivi admin
   statutSuivi?: StatutSuiviMission;
   alertes?: Alerte[];
+
+  // Suivi formateur - Démarrage mission
+  missionDemarree?: boolean;
+  dateDemarrage?: Date;
+  incidents?: Incident[];
 
   // QR Code pour évaluation
   qrCodeUrl?: string;
