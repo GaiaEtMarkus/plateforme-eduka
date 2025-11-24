@@ -41,7 +41,7 @@ export class Login {
     this.authService.login(emailValue, 'password').subscribe({
       next: (user) => {
         this.loading.set(false);
-        // Rediriger selon le rôle
+        // Rediriger selon le rÃ´le
         if (user.role === 'admin') {
           this.router.navigate(['/admin/dashboard']);
         } else {
@@ -50,7 +50,7 @@ export class Login {
       },
       error: (err) => {
         this.loading.set(false);
-        this.error.set('Email non trouvé. Veuillez utiliser un email de la liste.');
+        this.error.set('Email non trouvÃ©. Veuillez utiliser un email de la liste.');
       }
     });
   }
